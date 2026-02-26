@@ -91,7 +91,12 @@
   .settings-save-btn:hover { background: var(--gold); color: #000; }
 
   /* ─── LOBBY ─── */
-  .lobby-container { width: 560px; border: 1px solid var(--border); background: var(--surface); padding: 40px; }
+  .lobby-container { width: 560px; border: 1px solid var(--border); background: var(--surface); padding: 40px; max-height: 90vh; overflow-y: auto; }
+  .lobby-container::-webkit-scrollbar { width: 4px; }
+  .lobby-container::-webkit-scrollbar-track { background: #0a0b0d; }
+  .lobby-container::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+  .lobby-container::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+  #lobby-screen { align-items: center; justify-content: flex-start; padding: 20px 0; overflow-y: auto; }
   .lobby-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
   .back-btn { background: none; border: 1px solid var(--border); color: #666; font-family: 'Share Tech Mono', monospace; font-size: 11px; padding: 6px 12px; cursor: pointer; letter-spacing: 2px; transition: all 0.2s; }
   .back-btn:hover { border-color: var(--gold); color: var(--gold); }
