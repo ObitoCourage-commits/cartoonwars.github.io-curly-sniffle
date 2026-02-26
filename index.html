@@ -490,14 +490,14 @@ function playLocal() {
   myPlayerIndex=-2; isHost=true;
   showScreen('game-screen');
   document.getElementById('p1-name-hud').textContent='▶ ATTACKER · WASD';
-  document.getElementById('p2-name-hud').textContent='DEFENDER · ARROWS ◀';
+  document.getElementById('p2-name-hud').textContent='DEFENDER · ARROWS · /=SHOOT ◀';
   initGame();
   const ffLine = settings.friendlyFire ? '\nFRIENDLY FIRE IS ON — WATCH YOUR SHOTS' : '';
   const aiLine = [];
   if (settings.aiTeammates) aiLine.push(`+${settings.teammateCount} BLUE AI`);
   if (settings.aiEnemies)   aiLine.push(`+${settings.enemyCount} RED AI`);
   showGameOverlay(`<div class="overlay-title">LOCAL PLAY</div>
-    <div class="overlay-sub">P1: WASD · F=SHOOT · R=RELOAD${aiLine.length?' · '+aiLine.join(' · '):''}${ffLine}</div>
+    <div class="overlay-sub">🔵 P1: WASD · F=SHOOT · R=RELOAD<br>🔴 P2: ARROWS · /=SHOOT · .=RELOAD${aiLine.length?' <br>'+aiLine.join(' · '):''}${ffLine}</div>
     <button class="btn" onclick="dismissOverlayAndStart()">DEPLOY</button>`);
 }
 
@@ -670,7 +670,7 @@ function makePlayer(id, team, isBot, spawnIdx){
     botMoveTimer:0, botMoveDir:{x:0,y:0},
     keys: id===0
       ? {up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD',shoot:'KeyF',reload:'KeyR'}
-      : {up:'ArrowUp',down:'ArrowDown',left:'ArrowLeft',right:'ArrowRight',shoot:'NumpadDivide',reload:'NumpadDecimal'}
+      : {up:'ArrowUp',down:'ArrowDown',left:'ArrowLeft',right:'ArrowRight',shoot:'Slash',reload:'Period'}
   };
 }
 
