@@ -692,12 +692,14 @@ function goBack() {
 // ════════════════════════════════════════
 // LOCAL PLAY
 // ════════════════════════════════════════
+let pendingLocalStart = false;
+
 function playLocal() {
   myPlayerIndex=-2; isHost=true;
+  pendingLocalStart = true;
   showScreen('game-screen');
   document.getElementById('p1-name-hud').textContent='▶ ATTACKER · WASD';
   document.getElementById('p2-name-hud').textContent='DEFENDER · ARROWS · /=SHOOT ◀';
-  initGame();
   const ffLine = settings.friendlyFire ? '<br>⚠ FRIENDLY FIRE IS ON — WATCH YOUR SHOTS' : '';
   const aiLine = [];
   if (settings.aiTeammates) aiLine.push(`+${settings.teammateCount} BLUE AI`);
@@ -1484,6 +1486,10 @@ function loop(){
 // ════════════════════════════════════════
 function showGameOverlay(html){const el=document.getElementById('game-overlay');el.innerHTML=html;el.classList.remove('hidden');}
 function dismissOverlayAndStart(){
+  if(pendingLocalStart){
+    pendingLocalStart = false;
+    initGame();
+  }
   document.getElementById('game-overlay').classList.add('hidden');
   gameActive=true;
   if(!gameLoopRunning){gameLoopRunning=true;requestAnimationFrame(loop);}
