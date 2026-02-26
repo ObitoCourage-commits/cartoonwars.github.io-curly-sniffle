@@ -1,16 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <title>R6 Siege</title>
-    
-
-  </head>
-    
-  <body>
-  <!DOCTYPE html>
-<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -652,6 +641,9 @@ let myName = 'PLAYER';
 let roomCode = '';
 let pingTimer = 0, lastPingSent = 0, currentPing = 0;
 
+// Stores the latest input received from the guest (used by host every frame)
+let remoteInput = { up:0, down:0, left:0, right:0, shoot:0, reload:0 };
+
 // Game state (authoritative on HOST, mirrored on GUEST)
 let players, bullets, roundState, scores, round, gameActive, gameLoopRunning;
 const keys = {};
@@ -834,9 +826,9 @@ function handleMessage(msg) {
       break;
 
     case 'input':
-      // Guest sent their input to host
-      if (isHost && players) {
-        applyRemoteInput(players[1], msg);
+      // Guest sent their input — store it, host applies it every frame
+      if (isHost) {
+        remoteInput = { up: msg.up, down: msg.down, left: msg.left, right: msg.right, shoot: msg.shoot, reload: msg.reload };
       }
       break;
 
@@ -887,14 +879,19 @@ function startOnlineGame() {
   const p2n = isHost ? opponentName : myName;
   document.getElementById('p1-name-hud').textContent = `▶ ${p1n}`;
   document.getElementById('p2-name-hud').textContent = `${p2n} ◀`;
+
+  // Guest uses WASD on their own machine
+  const myKeys = myPlayerIndex === 1 ? 'WASD · F=Shoot · R=Reload' : 'WASD · F=Shoot · R=Reload';
+  const roleLabel = myPlayerIndex === 0 ? 'ATTACKER' : myPlayerIndex === 1 ? 'DEFENDER' : '';
+
   initGame();
   showGameOverlay(`<div class="overlay-title">MATCH FOUND</div>
-    <div class="overlay-sub">GET READY</div>`);
+    <div class="overlay-sub">YOU ARE: ${roleLabel} · WASD TO MOVE · F=SHOOT · R=RELOAD</div>`);
   setTimeout(() => {
     document.getElementById('game-overlay').classList.add('hidden');
     gameActive = true;
     if (!gameLoopRunning) { gameLoopRunning = true; requestAnimationFrame(loop); }
-  }, 2000);
+  }, 2500);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -915,6 +912,7 @@ function makePlayer(id) {
     reloading: false, reloadTimer: 0, shootCooldown: 0,
     color: isP1 ? '#1a6bff' : '#ff3a3a',
     darkColor: isP1 ? '#0040aa' : '#aa0000',
+    // Local play: P1=WASD, P2=Arrows. Online: each player uses WASD on their own machine.
     keys: id === 0
       ? { up:'KeyW', down:'KeyS', left:'KeyA', right:'KeyD', shoot:'KeyF', reload:'KeyR' }
       : { up:'ArrowUp', down:'ArrowDown', left:'ArrowLeft', right:'ArrowRight', shoot:'NumpadDivide', reload:'NumpadDecimal' }
@@ -927,6 +925,10 @@ function initGame() {
   bullets = [];
   roundState = 'playing';
   initRound();
+  // Guest is player index 1 but uses WASD on their own keyboard
+  if (myPlayerIndex === 1) {
+    players[1].keys = { up:'KeyW', down:'KeyS', left:'KeyA', right:'KeyD', shoot:'KeyF', reload:'KeyR' };
+  }
   document.getElementById('s1').textContent = 0;
   document.getElementById('s2').textContent = 0;
   document.getElementById('round-info').textContent = 'ROUND 1';
@@ -936,6 +938,10 @@ function initRound() {
   players = [makePlayer(0), makePlayer(1)];
   bullets = [];
   roundState = 'playing';
+  // Guest uses WASD on their own machine
+  if (myPlayerIndex === 1) {
+    players[1].keys = { up:'KeyW', down:'KeyS', left:'KeyA', right:'KeyD', shoot:'KeyF', reload:'KeyR' };
+  }
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -943,9 +949,9 @@ function initRound() {
 // ═══════════════════════════════════════════════════════════
 window.addEventListener('keydown', e => {
   keys[e.code] = true;
-  if (['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Space'].includes(e.code)) e.preventDefault();
+  e.preventDefault();
 });
-window.addEventListener('keyup', e => { keys[e.code] = false; });
+window.addEventListener('keyup', e => { keys[e.code] = false; e.preventDefault(); });
 
 function getMyKeys() {
   if (myPlayerIndex === -2) return null; // local: both handled in update
@@ -1042,17 +1048,19 @@ function update() {
         stepPlayer(p, inp);
       }
     } else {
-      // ONLINE HOST: own player from keys
+      // ONLINE HOST: step own player (P1) from local keys
       const myInp = {
         up: keys[players[0].keys.up]?1:0, down: keys[players[0].keys.down]?1:0,
         left: keys[players[0].keys.left]?1:0, right: keys[players[0].keys.right]?1:0,
         shoot: keys[players[0].keys.shoot]?1:0, reload: keys[players[0].keys.reload]?1:0
       };
       stepPlayer(players[0], myInp);
-      // players[1] already stepped via applyRemoteInput from messages
+
+      // Step guest's player (P2) from the latest remoteInput received
+      stepPlayer(players[1], remoteInput);
     }
 
-    // Bullets (host)
+    // Bullets (host is authoritative)
     for (let i = bullets.length - 1; i >= 0; i--) {
       let b = bullets[i];
       b.x += b.vx; b.y += b.vy; b.life--;
@@ -1070,7 +1078,7 @@ function update() {
       }
     }
 
-    // Broadcast state to guest every 2 frames
+    // Broadcast authoritative state to guest every 2 frames
     if (myPlayerIndex !== -2 && frameCount % 2 === 0) {
       send({ type: 'state',
         p0: { x: players[0].x, y: players[0].y, hp: players[0].hp, ammo: players[0].ammo, reloading: players[0].reloading, reloadTimer: players[0].reloadTimer, alive: players[0].alive, angle: players[0].angle },
@@ -1086,16 +1094,15 @@ function update() {
       send({ type: 'ping', t: Date.now() });
     }
   } else {
-    // GUEST: send own input to host
+    // GUEST: send own inputs to host every single frame for responsiveness
     const p = players[myPlayerIndex];
-    if (frameCount % 2 === 0) {
-      send({ type: 'input',
-        up: keys[p.keys.up]?1:0, down: keys[p.keys.down]?1:0,
-        left: keys[p.keys.left]?1:0, right: keys[p.keys.right]?1:0,
-        shoot: keys[p.keys.shoot]?1:0, reload: keys[p.keys.reload]?1:0
-      });
-    }
-    // Guest-side bullet movement (visual only, state comes from host)
+    send({ type: 'input',
+      up: keys[p.keys.up]?1:0, down: keys[p.keys.down]?1:0,
+      left: keys[p.keys.left]?1:0, right: keys[p.keys.right]?1:0,
+      shoot: keys[p.keys.shoot]?1:0, reload: keys[p.keys.reload]?1:0
+    });
+
+    // Guest-side: smoothly move bullets visually (state will be corrected by host)
     for (let b of bullets) { b.x += b.vx; b.y += b.vy; }
   }
 
@@ -1282,8 +1289,4 @@ function copyCode() {
 }
 </script>
 </body>
-</html>
-    
-  </body>
-  
 </html>
