@@ -951,10 +951,16 @@ function initRound() {
 // INPUT
 // ═══════════════════════════════════════════════════════════
 window.addEventListener('keydown', e => {
+  // Don't intercept keypresses when the user is typing in an input field
+  if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
   keys[e.code] = true;
   e.preventDefault();
 });
-window.addEventListener('keyup', e => { keys[e.code] = false; e.preventDefault(); });
+window.addEventListener('keyup', e => {
+  if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+  keys[e.code] = false;
+  e.preventDefault();
+});
 
 function getMyKeys() {
   if (myPlayerIndex === -2) return null; // local: both handled in update
