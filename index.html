@@ -166,6 +166,13 @@
   #score-display .sep { color: var(--gold); }
   #ping-display { position: absolute; top: 6px; right: 10px; font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #333; letter-spacing: 1px; }
   #ff-badge { position: absolute; bottom: 5px; right: 10px; font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px; color: #ff4444; display: none; }
+  /* ─── CTF HUD ─── */
+  #ctf-hud { display:none; align-items:center; justify-content:space-between; width:800px; padding:5px 12px; background:rgba(10,11,13,0.9); border:1px solid var(--border); border-top:none; font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; }
+  #ctf-hud.active { display:flex; }
+  .ctf-flag-status { display:flex; align-items:center; gap:8px; }
+  .ctf-flag-dot { width:10px;height:10px;border-radius:50%; }
+  .ctf-score-bar { display:flex; align-items:center; gap:12px; color:#666; }
+  .ctf-cap { font-size:18px; font-weight:700; color:#fff; }
   canvas { display: block; border: 1px solid var(--border); border-top: none; cursor: none; }
 
   #game-overlay { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.88); z-index: 100; gap: 20px; }
@@ -296,6 +303,18 @@
           <button class="stepper-btn" onclick="changeStep('rounds-to-win',1)">+</button>
         </div>
       </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">CAPTURE THE FLAG</div>
+          <div class="setting-desc">Steal the enemy flag and bring it to your base to score. First to 3 captures wins.</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="s-ctf-mode">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
     </div>
 
     <button class="settings-save-btn" onclick="saveSettings()">SAVE &amp; RETURN</button>
@@ -373,6 +392,11 @@
     <div id="map-badge" style="position:absolute;bottom:5px;left:10px;font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:#333;"></div>
   </div>
   <canvas id="game" width="800" height="550"></canvas>
+  <div id="ctf-hud">
+    <div class="ctf-flag-status" id="ctf-blue-status"><div class="ctf-flag-dot" style="background:#1a6bff"></div><span id="ctf-blue-text">🚩 BLUE FLAG: AT BASE</span></div>
+    <div class="ctf-score-bar"><span class="ctf-cap" id="ctf-s0" style="color:#1a6bff">0</span><span>CAPTURES</span><span class="ctf-cap" id="ctf-s1" style="color:#ff3a3a">0</span></div>
+    <div class="ctf-flag-status" id="ctf-red-status"><span id="ctf-red-text">🚩 RED FLAG: AT BASE</span><div class="ctf-flag-dot" style="background:#ff3a3a"></div></div>
+  </div>
   <div id="game-overlay">
     <div class="overlay-title">R6 SIEGE</div>
     <div class="overlay-sub">MATCH STARTING...</div>
@@ -386,7 +410,8 @@
 const settings = {
   aiTeammates: false, teammateCount: 1,
   aiEnemies: false,   enemyCount: 1,
-  friendlyFire: false, roundsToWin: 3
+  friendlyFire: false, roundsToWin: 3,
+  ctfMode: false
 };
 
 const stepperCfg = {
@@ -400,6 +425,7 @@ function openSettings() {
   document.getElementById('s-ai-teammates').checked = settings.aiTeammates;
   document.getElementById('s-ai-enemies').checked   = settings.aiEnemies;
   document.getElementById('s-friendly-fire').checked = settings.friendlyFire;
+  document.getElementById('s-ctf-mode').checked = settings.ctfMode;
   document.getElementById('val-teammate-count').textContent = settings.teammateCount;
   document.getElementById('val-enemy-count').textContent    = settings.enemyCount;
   document.getElementById('val-rounds-to-win').textContent  = settings.roundsToWin;
@@ -426,6 +452,7 @@ function saveSettings() {
   settings.aiTeammates  = document.getElementById('s-ai-teammates').checked;
   settings.aiEnemies    = document.getElementById('s-ai-enemies').checked;
   settings.friendlyFire = document.getElementById('s-friendly-fire').checked;
+  settings.ctfMode      = document.getElementById('s-ctf-mode').checked;
   showScreen('menu-screen');
   renderActiveBadges();
 }
@@ -436,6 +463,7 @@ function renderActiveBadges() {
   if (settings.aiEnemies)    badges.push(`+${settings.enemyCount} AI ENEMY`);
   if (settings.friendlyFire) badges.push('FRIENDLY FIRE ON');
   if (settings.roundsToWin !== 3) badges.push(`FIRST TO ${settings.roundsToWin}`);
+  if (settings.ctfMode) badges.push('CAPTURE THE FLAG');
   document.getElementById('active-settings-wrap').innerHTML =
     badges.map(b=>`<span class="settings-badge">${b}</span>`).join('');
 }
@@ -630,6 +658,9 @@ let remoteInput={up:0,down:0,left:0,right:0,shoot:0,reload:0};
 // GAME STATE
 // ════════════════════════════════════════
 let players=[], bullets=[], roundState='playing', scores=[0,0], round=1, gameActive=false, gameLoopRunning=false;
+// CTF state
+let flags=[];   // [{team, x, y, baseX, baseY, carriedBy, returned}]
+let ctfScores=[0,0];
 const keys={};
 
 // ════════════════════════════════════════
@@ -788,6 +819,13 @@ function handleMessage(msg){
         else{round=msg.round;document.getElementById('round-info').textContent=`ROUND ${round}`;}
       }
       break;
+    case 'ctf_match_end':
+      if(!isHost){
+        ctfScores=msg.ctfScores||[0,0];
+        updateCTFHUD();
+        showWinner(msg.winner);
+      }
+      break;
   }
 }
 
@@ -882,6 +920,16 @@ function initGame(){
   document.getElementById('s1').textContent=0;
   document.getElementById('s2').textContent=0;
   document.getElementById('round-info').textContent='ROUND 1';
+  // CTF setup
+  const ctfHud = document.getElementById('ctf-hud');
+  if(settings.ctfMode){
+    ctfScores=[0,0];
+    initFlags();
+    ctfHud.classList.add('active');
+    document.getElementById('round-info').textContent='CAPTURE THE FLAG';
+  } else {
+    ctfHud.classList.remove('active');
+  }
 }
 
 function initRound(){
@@ -899,6 +947,149 @@ function initRound(){
     if(myPlayerIndex===1&&!p.isBot&&p.team===1){
       p.keys={up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD',shoot:'KeyF',reload:'KeyR'};
     }
+  }
+}
+
+// ════════════════════════════════════════
+// CTF LOGIC
+// ════════════════════════════════════════
+function initFlags(){
+  // Place each team's flag near their spawn base center
+  const t0 = activeMap.spawns0[0]; const t1 = activeMap.spawns1[0];
+  const b0 = {x: t0[0]*TILE+TILE/2+TILE, y: t0[1]*TILE+TILE/2};
+  const b1 = {x: t1[0]*TILE+TILE/2-TILE, y: t1[1]*TILE+TILE/2};
+  flags = [
+    {team:0, x:b0.x, y:b0.y, baseX:b0.x, baseY:b0.y, carriedBy:null},
+    {team:1, x:b1.x, y:b1.y, baseX:b1.x, baseY:b1.y, carriedBy:null},
+  ];
+}
+
+function updateCTF(){
+  if(!settings.ctfMode||!flags.length) return;
+  for(const flag of flags){
+    if(flag.carriedBy!==null){
+      const carrier = players.find(p=>p.id===flag.carriedBy);
+      if(!carrier||!carrier.alive){
+        // Drop flag at carrier's last pos (or reset if carrier gone)
+        if(carrier){ flag.x=carrier.x; flag.y=carrier.y; }
+        flag.carriedBy=null;
+      } else {
+        flag.x=carrier.x; flag.y=carrier.y;
+        // Check if carrier brought enemy flag to their own base
+        const ownFlag = flags.find(f=>f.team===carrier.team);
+        if(flag.team!==carrier.team && ownFlag && ownFlag.carriedBy===null){
+          const dx=carrier.x-ownFlag.baseX, dy=carrier.y-ownFlag.baseY;
+          if(dx*dx+dy*dy < 30*30){
+            // CAPTURE!
+            ctfScores[carrier.team]++;
+            flag.x=flag.baseX; flag.y=flag.baseY; flag.carriedBy=null;
+            updateCTFHUD();
+            if(ctfScores[carrier.team]>=settings.roundsToWin){
+              endCTFMatch(carrier.team);
+            } else {
+              // Flash message
+              showRoundMsg(`${carrier.team===0?'🔵 BLUE':'🔴 RED'} CAPTURED THE FLAG!`, 2000);
+            }
+            return;
+          }
+        }
+      }
+    } else {
+      // Check for pickup
+      for(const p of players){
+        if(!p.alive) continue;
+        if(p.team===flag.team) {
+          // Own team: return flag to base if they touch it while it's dropped away from base
+          const dx=p.x-flag.baseX, dy=p.y-flag.baseY;
+          const dxf=flag.x-flag.baseX, dyf=flag.y-flag.baseY;
+          if((dxf*dxf+dyf*dyf)>5 && (dx*dx+dy*dy)<22*22){
+            flag.x=flag.baseX; flag.y=flag.baseY;
+            showRoundMsg(`${flag.team===0?'🔵 BLUE':'🔴 RED'} FLAG RETURNED!`, 1500);
+          }
+          continue;
+        }
+        const dx=p.x-flag.x, dy=p.y-flag.y;
+        if(dx*dx+dy*dy<20*20){ flag.carriedBy=p.id; break; }
+      }
+    }
+  }
+  updateCTFHUD();
+}
+
+function updateCTFHUD(){
+  if(!settings.ctfMode) return;
+  document.getElementById('ctf-s0').textContent=ctfScores[0];
+  document.getElementById('ctf-s1').textContent=ctfScores[1];
+  for(const flag of flags){
+    const isBlue = flag.team===0;
+    const el = document.getElementById(isBlue?'ctf-blue-text':'ctf-red-text');
+    const label = isBlue?'🔵 BLUE FLAG':'🔴 RED FLAG';
+    if(flag.carriedBy!==null){
+      const carrier=players.find(p=>p.id===flag.carriedBy);
+      const team=carrier?carrier.team:-1;
+      el.textContent=`${label}: CARRIED BY ${team===0?'BLUE':'RED'}`;
+      el.style.color=team===0?'#1a6bff':'#ff3a3a';
+    } else {
+      const dx=flag.x-flag.baseX, dy=flag.y-flag.baseY;
+      el.textContent=(dx*dx+dy*dy)<5?`${label}: AT BASE`:`${label}: DROPPED`;
+      el.style.color=flag.carriedBy===null?'#888':'#fff';
+    }
+  }
+}
+
+let roundMsgTimer=null;
+function showRoundMsg(msg, dur=2000){
+  let el=document.getElementById('ctf-round-msg');
+  if(!el){
+    el=document.createElement('div');
+    el.id='ctf-round-msg';
+    el.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.85);border:1px solid #f7a800;color:#f7a800;font-family:"Share Tech Mono",monospace;font-size:18px;letter-spacing:3px;padding:16px 32px;z-index:200;pointer-events:none;';
+    document.body.appendChild(el);
+  }
+  el.textContent=msg; el.style.display='block';
+  if(roundMsgTimer) clearTimeout(roundMsgTimer);
+  roundMsgTimer=setTimeout(()=>{ el.style.display='none'; },dur);
+}
+
+function endCTFMatch(winner){
+  roundState='over';
+  const col=winner===0?'#1a6bff':'#ff3a3a';
+  const label=winner===0?'ATTACKERS':'DEFENDERS';
+  showGameOverlay(`<div class="overlay-title" style="color:${col}">${label}</div>
+    <div id="winner-text">WIN THE MATCH</div>
+    <div class="overlay-sub">CTF SCORE: ${ctfScores[0]} — ${ctfScores[1]}</div>
+    <button class="btn" onclick="location.reload()">MAIN MENU</button>`);
+  gameActive=false;
+  if(myPlayerIndex!==-2) send({type:'ctf_match_end', winner, ctfScores:[...ctfScores]});
+}
+
+function drawCTFFlags(){
+  if(!settings.ctfMode||!flags.length) return;
+  for(const flag of flags){
+    const col = flag.team===0?'#1a6bff':'#ff3a3a';
+    // Draw base zone
+    ctx.save();
+    ctx.beginPath(); ctx.arc(flag.baseX, flag.baseY, 22, 0, Math.PI*2);
+    ctx.strokeStyle=col+'44'; ctx.lineWidth=2; ctx.setLineDash([4,4]); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    // Draw flag icon
+    const carried = flag.carriedBy!==null;
+    ctx.save(); ctx.translate(flag.x, flag.y-(carried?18:14));
+    ctx.shadowColor=col; ctx.shadowBlur=carried?16:8;
+    // Pole
+    ctx.fillStyle='#aaa'; ctx.fillRect(-1,-14,2,18);
+    // Flag banner
+    ctx.fillStyle=col;
+    ctx.beginPath(); ctx.moveTo(1,-14); ctx.lineTo(10,-8); ctx.lineTo(1,-3); ctx.closePath(); ctx.fill();
+    // Pulse ring when carried
+    if(carried){
+      const pulse = 0.5+0.5*Math.sin(Date.now()/150);
+      ctx.beginPath(); ctx.arc(0,0,10+pulse*4,0,Math.PI*2);
+      ctx.strokeStyle=col+'aa'; ctx.lineWidth=1.5; ctx.stroke();
+    }
+    ctx.restore();
   }
 }
 
@@ -954,6 +1145,34 @@ function getBotInput(bot){
     }
   }
 
+  // CTF: bots chase flag or run to base
+  if(settings.ctfMode && flags.length){
+    const enemyFlag = flags.find(f=>f.team!==bot.team);
+    const ownFlag   = flags.find(f=>f.team===bot.team);
+    let target = null;
+    const amCarrying = enemyFlag && enemyFlag.carriedBy===bot.id;
+    if(amCarrying){
+      // Bring it home
+      const of2 = flags.find(f=>f.team===bot.team);
+      target = {x:of2.baseX, y:of2.baseY};
+    } else if(enemyFlag && enemyFlag.carriedBy===null){
+      target = {x:enemyFlag.x, y:enemyFlag.y};
+    } else if(ownFlag && ownFlag.carriedBy!==null){
+      // Chase enemy carrying our flag
+      const thief = players.find(p=>p.id===ownFlag.carriedBy);
+      if(thief) target={x:thief.x, y:thief.y};
+    }
+    if(target){
+      const tdx=target.x-bot.x, tdy=target.y-bot.y;
+      const td=Math.sqrt(tdx*tdx+tdy*tdy);
+      if(td>10){
+        bot.botMoveTimer=0; // force override
+        const ta=Math.atan2(tdy,tdx);
+        bot.botMoveDir={x:Math.cos(ta),y:Math.sin(ta)};
+      }
+    }
+  }
+
   return{
     up:   bot.botMoveDir.y<-0.15?1:0,
     down: bot.botMoveDir.y>0.15?1:0,
@@ -968,7 +1187,22 @@ function getBotInput(bot){
 // STEP PLAYER
 // ════════════════════════════════════════
 function stepPlayer(p, inp){
-  if(!p.alive) return;
+  if(!p.alive){
+    // CTF: respawn after timer
+    if(settings.ctfMode){
+      if(!p.respawnTimer) p.respawnTimer=180;
+      p.respawnTimer--;
+      if(p.respawnTimer<=0){
+        const spawnList=p.team===0?activeMap.spawns0:activeMap.spawns1;
+        const si=players.filter(q=>q.team===p.team&&q.id<=p.id).length-1;
+        const t=spawnList[si%spawnList.length];
+        const pos=tileCenter(t[0],t[1]);
+        p.x=pos.x; p.y=pos.y; p.alive=true; p.hp=100; p.ammo=p.maxAmmo;
+        p.reloading=false; p.reloadTimer=0; p.shootCooldown=0; p.respawnTimer=0;
+      }
+    }
+    return;
+  }
   let dx=inp.right-inp.left, dy=inp.down-inp.up;
   if(dx&&dy){dx*=0.707;dy*=0.707;}
   const nx=Math.max(14,Math.min(W-14,p.x+dx*SPEED));
@@ -1046,11 +1280,16 @@ function update(){
       }
     }
 
+    // CTF logic (host authoritative)
+    updateCTF();
+
     // Broadcast state
     if(myPlayerIndex!==-2&&frameCount%2===0){
       send({type:'state',
         ps:players.map(p=>({id:p.id,x:p.x,y:p.y,hp:p.hp,ammo:p.ammo,reloading:p.reloading,reloadTimer:p.reloadTimer,alive:p.alive,angle:p.angle})),
-        bullets:bullets.map(b=>({x:b.x,y:b.y,vx:b.vx,vy:b.vy,owner:b.owner,ownerTeam:b.ownerTeam,color:b.color}))
+        bullets:bullets.map(b=>({x:b.x,y:b.y,vx:b.vx,vy:b.vy,owner:b.owner,ownerTeam:b.ownerTeam,color:b.color})),
+        flags: flags.map(f=>({team:f.team,x:f.x,y:f.y,carriedBy:f.carriedBy})),
+        ctfScores:[...ctfScores]
       });
     }
 
@@ -1077,6 +1316,10 @@ function applyHostState(msg){
     if(p) for(const k of['x','y','hp','ammo','reloading','reloadTimer','alive','angle']) p[k]=ps[k];
   }
   bullets=msg.bullets.map(b=>({...b,life:30}));
+  if(msg.flags&&flags.length===msg.flags.length){
+    for(let i=0;i<flags.length;i++){flags[i].x=msg.flags[i].x;flags[i].y=msg.flags[i].y;flags[i].carriedBy=msg.flags[i].carriedBy;}
+  }
+  if(msg.ctfScores){ctfScores=msg.ctfScores; updateCTFHUD();}
 }
 
 // ════════════════════════════════════════
@@ -1084,6 +1327,16 @@ function applyHostState(msg){
 // ════════════════════════════════════════
 function checkRoundEnd(){
   if(roundState!=='playing') return;
+  if(settings.ctfMode){
+    // In CTF, drop flag when player dies
+    for(const flag of flags){
+      if(flag.carriedBy!==null){
+        const carrier=players.find(p=>p.id===flag.carriedBy);
+        if(carrier&&!carrier.alive){ flag.carriedBy=null; }
+      }
+    }
+    return; // No round ends in CTF; only flag captures end the match
+  }
   const t0=players.some(p=>p.team===0&&p.alive);
   const t1=players.some(p=>p.team===1&&p.alive);
   if(!t0||!t1) endRound(t0?0:1);
@@ -1217,7 +1470,7 @@ function loop(){
   if(!gameLoopRunning) return;
   if(gameActive) update();
   ctx.clearRect(0,0,W,H);
-  if(players.length){drawMap();drawBullets();players.forEach(drawPlayer);drawRoundOver();}
+  if(players.length){drawMap();if(settings.ctfMode)drawCTFFlags();drawBullets();players.forEach(drawPlayer);drawRoundOver();}
   requestAnimationFrame(loop);
 }
 
