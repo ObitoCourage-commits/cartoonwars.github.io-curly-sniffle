@@ -32,455 +32,141 @@
     user-select: none;
   }
 
-  /* ─── SCREENS ─── */
   .screen { display: none; width: 100%; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
   .screen.active { display: flex; }
 
-  /* ─── MAIN MENU ─── */
-  #menu-screen { gap: 0; }
+  /* ─── MENU ─── */
+  .logo-wrap { text-align: center; margin-bottom: 48px; }
+  .logo-title { font-size: 64px; font-weight: 700; letter-spacing: 10px; color: var(--gold); text-shadow: 0 0 60px rgba(247,168,0,0.35); line-height: 1; }
+  .logo-sub { font-size: 12px; letter-spacing: 6px; color: #444; font-family: 'Share Tech Mono', monospace; margin-top: 8px; }
 
-  .logo-wrap {
-    text-align: center;
-    margin-bottom: 48px;
-  }
-
-  .logo-title {
-    font-size: 64px;
-    font-weight: 700;
-    letter-spacing: 10px;
-    color: var(--gold);
-    text-shadow: 0 0 60px rgba(247,168,0,0.35), 0 0 120px rgba(247,168,0,0.1);
-    line-height: 1;
-  }
-
-  .logo-sub {
-    font-size: 12px;
-    letter-spacing: 6px;
-    color: #444;
-    font-family: 'Share Tech Mono', monospace;
-    margin-top: 8px;
-  }
-
-  .menu-cards {
-    display: flex;
-    gap: 24px;
-  }
-
+  .menu-cards { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 900px; }
   .menu-card {
-    width: 240px;
-    padding: 32px 24px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
+    width: 190px; padding: 26px 18px;
+    border: 1px solid var(--border); background: var(--surface);
+    cursor: pointer; transition: all 0.2s; text-align: center; position: relative; overflow: hidden;
   }
-
-  .menu-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, transparent 60%, rgba(247,168,0,0.04));
-    pointer-events: none;
-  }
-
-  .menu-card:hover {
-    border-color: var(--gold);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(247,168,0,0.1);
-  }
-
-  .card-icon {
-    font-size: 40px;
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .card-title {
-    font-size: 22px;
-    font-weight: 700;
-    letter-spacing: 4px;
-    color: var(--gold);
-    text-transform: uppercase;
-  }
-
-  .card-desc {
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: #555;
-    font-family: 'Share Tech Mono', monospace;
-    margin-top: 8px;
-    line-height: 1.8;
-  }
-
+  .menu-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,transparent 60%,rgba(247,168,0,0.04)); pointer-events:none; }
+  .menu-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(247,168,0,0.1); }
+  .card-icon { font-size: 34px; margin-bottom: 12px; display: block; }
+  .card-title { font-size: 17px; font-weight: 700; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; }
+  .card-desc { font-size: 10px; letter-spacing: 2px; color: #555; font-family: 'Share Tech Mono', monospace; margin-top: 6px; line-height: 1.8; }
   .local-card .card-title { color: #aaa; }
-  .local-card:hover { border-color: #aaa; box-shadow: 0 8px 32px rgba(255,255,255,0.05); }
+  .local-card:hover { border-color: #aaa; }
+  .settings-card .card-title { color: #888; }
+  .settings-card:hover { border-color: #888; }
 
-  /* ─── LOBBY SCREEN ─── */
-  #lobby-screen { gap: 0; }
+  #active-settings-wrap { margin-top: 16px; min-height: 20px; text-align: center; }
+  .settings-badge { display: inline-block; padding: 2px 8px; border: 1px solid #2a2a2a; font-size: 9px; letter-spacing: 2px; color: var(--gold); font-family: 'Share Tech Mono', monospace; margin: 2px; background: rgba(247,168,0,0.06); }
 
-  .lobby-container {
-    width: 560px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    padding: 40px;
-  }
+  /* ─── SETTINGS ─── */
+  .settings-container { width: 580px; border: 1px solid var(--border); background: var(--surface); padding: 40px; }
+  .settings-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .settings-title { font-size: 24px; font-weight: 700; letter-spacing: 5px; color: var(--gold); flex: 1; }
 
-  .lobby-header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin-bottom: 32px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
+  .settings-group { margin-bottom: 24px; }
+  .settings-group-label { font-size: 10px; letter-spacing: 4px; color: #2e2e2e; font-family: 'Share Tech Mono', monospace; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #161616; }
 
-  .back-btn {
-    background: none;
-    border: 1px solid var(--border);
-    color: #666;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    padding: 6px 12px;
-    cursor: pointer;
-    letter-spacing: 2px;
-    transition: all 0.2s;
-  }
+  .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid #111; }
+  .setting-row:last-child { border-bottom: none; }
+  .setting-info { flex: 1; }
+  .setting-name { font-size: 15px; font-weight: 700; letter-spacing: 2px; color: #ccc; }
+  .setting-desc { font-size: 10px; letter-spacing: 1px; color: #444; font-family: 'Share Tech Mono', monospace; margin-top: 3px; }
 
+  /* Toggle */
+  .toggle { position: relative; width: 52px; height: 26px; flex-shrink: 0; cursor: pointer; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-track { position: absolute; inset: 0; background: #1a1a1a; border: 1px solid #333; transition: all 0.2s; }
+  .toggle-thumb { position: absolute; top: 4px; left: 4px; width: 16px; height: 16px; background: #444; transition: all 0.2s; }
+  .toggle input:checked ~ .toggle-track { background: rgba(247,168,0,0.15); border-color: var(--gold); }
+  .toggle input:checked ~ .toggle-thumb { left: 30px; background: var(--gold); }
+
+  /* Stepper */
+  .stepper { display: flex; align-items: center; }
+  .stepper-btn { width: 28px; height: 28px; background: #111; border: 1px solid #333; color: #888; font-size: 16px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; }
+  .stepper-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .stepper-val { width: 36px; height: 28px; background: #0a0b0d; border-top: 1px solid #333; border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: #fff; }
+
+  .settings-save-btn { width: 100%; margin-top: 8px; padding: 14px; background: transparent; border: 2px solid var(--gold); color: var(--gold); font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .settings-save-btn:hover { background: var(--gold); color: #000; }
+
+  /* ─── LOBBY ─── */
+  .lobby-container { width: 560px; border: 1px solid var(--border); background: var(--surface); padding: 40px; }
+  .lobby-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .back-btn { background: none; border: 1px solid var(--border); color: #666; font-family: 'Share Tech Mono', monospace; font-size: 11px; padding: 6px 12px; cursor: pointer; letter-spacing: 2px; transition: all 0.2s; }
   .back-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-  .lobby-title {
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: 5px;
-    color: var(--gold);
-    flex: 1;
-  }
-
-  /* Create party */
+  .lobby-title { font-size: 24px; font-weight: 700; letter-spacing: 5px; color: var(--gold); flex: 1; }
   #create-section { display: flex; flex-direction: column; gap: 20px; }
-
-  .section-label {
-    font-size: 11px;
-    letter-spacing: 4px;
-    color: #555;
-    font-family: 'Share Tech Mono', monospace;
-    text-transform: uppercase;
-  }
-
-  .room-code-display {
-    background: #0a0b0d;
-    border: 2px solid var(--gold);
-    padding: 20px;
-    text-align: center;
-    position: relative;
-  }
-
-  .room-code-value {
-    font-size: 42px;
-    font-weight: 700;
-    letter-spacing: 12px;
-    color: #fff;
-    font-family: 'Share Tech Mono', monospace;
-  }
-
-  .room-code-hint {
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: #444;
-    font-family: 'Share Tech Mono', monospace;
-    margin-top: 6px;
-  }
-
-  .copy-btn {
-    position: absolute;
-    top: 8px; right: 8px;
-    background: none;
-    border: 1px solid var(--border);
-    color: #555;
-    font-size: 10px;
-    font-family: 'Share Tech Mono', monospace;
-    padding: 4px 8px;
-    cursor: pointer;
-    letter-spacing: 1px;
-    transition: all 0.2s;
-  }
-
+  .section-label { font-size: 11px; letter-spacing: 4px; color: #555; font-family: 'Share Tech Mono', monospace; text-transform: uppercase; }
+  .room-code-display { background: #0a0b0d; border: 2px solid var(--gold); padding: 20px; text-align: center; position: relative; }
+  .room-code-value { font-size: 42px; font-weight: 700; letter-spacing: 12px; color: #fff; font-family: 'Share Tech Mono', monospace; }
+  .room-code-hint { font-size: 10px; letter-spacing: 3px; color: #444; font-family: 'Share Tech Mono', monospace; margin-top: 6px; }
+  .copy-btn { position: absolute; top: 8px; right: 8px; background: none; border: 1px solid var(--border); color: #555; font-size: 10px; font-family: 'Share Tech Mono', monospace; padding: 4px 8px; cursor: pointer; letter-spacing: 1px; transition: all 0.2s; }
   .copy-btn:hover { border-color: var(--gold); color: var(--gold); }
-
-  .waiting-status {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 2px;
-    color: #555;
-    padding: 14px;
-    border: 1px solid var(--border);
-  }
-
-  .dot-pulse {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--gold);
-    animation: pulse 1.2s ease-in-out infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.2; transform: scale(0.8); }
-    50% { opacity: 1; transform: scale(1.2); }
-  }
-
+  .waiting-status { display: flex; align-items: center; gap: 10px; font-family: 'Share Tech Mono', monospace; font-size: 12px; letter-spacing: 2px; color: #555; padding: 14px; border: 1px solid var(--border); }
+  .dot-pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:.2;transform:scale(.8)} 50%{opacity:1;transform:scale(1.2)} }
   .dot-pulse.connected { background: #00ff88; animation: none; opacity: 1; }
-
-  /* Player slots */
-  .player-slots {
-    display: flex;
-    gap: 12px;
-    margin: 8px 0;
-  }
-
-  .player-slot {
-    flex: 1;
-    padding: 14px;
-    border: 1px dashed var(--border);
-    text-align: center;
-  }
-
-  .player-slot.filled {
-    border-style: solid;
-    border-color: var(--gold);
-    background: rgba(247,168,0,0.04);
-  }
-
-  .slot-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: #444;
-    font-family: 'Share Tech Mono', monospace;
-  }
-
-  .slot-name {
-    font-size: 16px;
-    font-weight: 700;
-    margin-top: 4px;
-    color: #888;
-  }
-
+  .player-slots { display: flex; gap: 12px; margin: 8px 0; }
+  .player-slot { flex: 1; padding: 14px; border: 1px dashed var(--border); text-align: center; }
+  .player-slot.filled { border-style: solid; border-color: var(--gold); background: rgba(247,168,0,0.04); }
+  .slot-label { font-size: 10px; letter-spacing: 3px; color: #444; font-family: 'Share Tech Mono', monospace; }
+  .slot-name { font-size: 16px; font-weight: 700; margin-top: 4px; color: #888; }
   .slot-name.active { color: var(--gold); }
-
-  .slot-role {
-    font-size: 10px;
-    letter-spacing: 2px;
-    font-family: 'Share Tech Mono', monospace;
-    margin-top: 2px;
-  }
-
-  /* Join section */
+  .slot-role { font-size: 10px; letter-spacing: 2px; font-family: 'Share Tech Mono', monospace; margin-top: 2px; }
   #join-section { display: flex; flex-direction: column; gap: 20px; }
-
-  .code-input-wrap {
-    display: flex;
-    gap: 0;
-  }
-
-  .code-input {
-    flex: 1;
-    background: #0a0b0d;
-    border: 2px solid var(--border);
-    border-right: none;
-    color: #fff;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 8px;
-    padding: 16px 20px;
-    text-transform: uppercase;
-    text-align: center;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
+  .code-input-wrap { display: flex; }
+  .code-input { flex: 1; background: #0a0b0d; border: 2px solid var(--border); border-right: none; color: #fff; font-family: 'Share Tech Mono', monospace; font-size: 28px; font-weight: 700; letter-spacing: 8px; padding: 16px 20px; text-transform: uppercase; text-align: center; outline: none; transition: border-color 0.2s; }
   .code-input:focus { border-color: var(--gold); }
-
-  .join-btn {
-    padding: 16px 28px;
-    background: var(--gold);
-    border: none;
-    color: #000;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
+  .join-btn { padding: 16px 28px; background: var(--gold); border: none; color: #000; font-family: 'Rajdhani', sans-serif; font-size: 15px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
   .join-btn:hover { background: #ffc200; }
   .join-btn:disabled { background: #333; color: #666; cursor: not-allowed; }
-
-  .status-msg {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    padding: 10px 14px;
-    border-left: 2px solid transparent;
-  }
-
+  .status-msg { font-family: 'Share Tech Mono', monospace; font-size: 11px; letter-spacing: 2px; padding: 10px 14px; border-left: 2px solid transparent; }
   .status-msg.info { color: #555; border-color: #333; }
   .status-msg.error { color: #ff4444; border-color: #ff4444; background: rgba(255,68,68,0.05); }
   .status-msg.success { color: #00ff88; border-color: #00ff88; background: rgba(0,255,136,0.05); }
   .status-msg.warn { color: var(--gold); border-color: var(--gold); background: rgba(247,168,0,0.05); }
-
-  /* Deploy / Start button */
-  .deploy-btn {
-    width: 100%;
-    padding: 16px;
-    background: transparent;
-    border: 2px solid var(--gold);
-    color: var(--gold);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 6px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 8px;
-  }
-
+  .deploy-btn { width: 100%; padding: 16px; background: transparent; border: 2px solid var(--gold); color: var(--gold); font-family: 'Rajdhani', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 6px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
   .deploy-btn:hover:not(:disabled) { background: var(--gold); color: #000; }
   .deploy-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-
-  /* ─── GAME SCREEN ─── */
-  #game-screen { gap: 0; justify-content: center; }
-
-  #hud {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 800px;
-    padding: 8px 12px;
-    background: rgba(10,11,13,0.95);
-    border: 1px solid var(--border);
-    border-bottom: 2px solid var(--gold);
-  }
-
-  .player-hud { display: flex; flex-direction: column; gap: 4px; min-width: 180px; }
-  .player-hud.p2 { align-items: flex-end; }
-
-  .player-name {
-    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-    color: #888; font-family: 'Share Tech Mono', monospace;
-  }
-
-  .health-bar-wrap {
-    width: 170px; height: 8px;
-    background: #1a1a1a; border: 1px solid #333;
-  }
-
-  .health-bar { height: 100%; transition: width 0.1s; }
-  #p1-health-bar { background: linear-gradient(90deg, var(--blue), #44aaff); }
-  #p2-health-bar { background: linear-gradient(90deg, var(--red), #ff7a1a); }
-
-  .ammo-display { font-family: 'Share Tech Mono', monospace; font-size: 13px; letter-spacing: 2px; }
-
-  #center-hud { text-align: center; flex: 1; }
-  #round-info { font-size: 11px; color: var(--gold); letter-spacing: 4px; font-family: 'Share Tech Mono', monospace; }
-  #score-display { font-size: 26px; font-weight: 700; letter-spacing: 8px; color: #fff; }
-  #score-display .sep { color: var(--gold); }
-
-  #ping-display {
-    position: absolute;
-    top: 6px; right: 10px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    color: #333;
-    letter-spacing: 1px;
-  }
-
-  canvas { display: block; border: 1px solid var(--border); border-top: none; cursor: none; }
-
-  /* ─── GAME OVERLAY ─── */
-  #game-overlay {
-    position: fixed; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.88);
-    z-index: 100; gap: 20px;
-  }
-
-  #game-overlay.hidden { display: none; }
-
-  .overlay-title {
-    font-size: 52px; font-weight: 700; letter-spacing: 8px;
-    text-transform: uppercase; color: var(--gold);
-    text-shadow: 0 0 40px rgba(247,168,0,0.4);
-  }
-
-  .overlay-sub { font-size: 14px; letter-spacing: 4px; color: #888; font-family: 'Share Tech Mono', monospace; }
-
-  .btn {
-    margin-top: 10px; padding: 12px 40px;
-    background: transparent; border: 2px solid var(--gold);
-    color: var(--gold); font-family: 'Rajdhani', sans-serif;
-    font-size: 16px; font-weight: 700; letter-spacing: 4px;
-    text-transform: uppercase; cursor: pointer; transition: all 0.2s;
-  }
-
-  .btn:hover { background: var(--gold); color: #000; }
-
-  #winner-text { font-size: 22px; letter-spacing: 5px; color: #fff; font-family: 'Share Tech Mono', monospace; }
-
-  /* Divider */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 8px 0;
-  }
-
-  /* Name input */
-  .name-input {
-    background: #0a0b0d;
-    border: 1px solid var(--border);
-    color: #fff;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 14px;
-    letter-spacing: 3px;
-    padding: 10px 14px;
-    outline: none;
-    width: 100%;
-    transition: border-color 0.2s;
-    text-transform: uppercase;
-  }
-
+  .name-input { background: #0a0b0d; border: 1px solid var(--border); color: #fff; font-family: 'Share Tech Mono', monospace; font-size: 14px; letter-spacing: 3px; padding: 10px 14px; outline: none; width: 100%; transition: border-color 0.2s; text-transform: uppercase; }
   .name-input:focus { border-color: var(--gold); }
-
-  .connection-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: #444;
-    padding: 4px 8px;
-    border: 1px solid var(--border);
-  }
-
+  .connection-badge { display: inline-flex; align-items: center; gap: 6px; font-family: 'Share Tech Mono', monospace; font-size: 10px; letter-spacing: 2px; color: #444; padding: 4px 8px; border: 1px solid var(--border); }
   .connection-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #444; }
   .connection-badge.online .dot { background: #00ff88; }
   .connection-badge.online { color: #00ff88; border-color: #00ff8844; }
 
+  /* ─── GAME ─── */
+  #game-screen { gap: 0; justify-content: center; }
+  #hud { display: flex; justify-content: space-between; align-items: center; width: 800px; padding: 8px 12px; background: rgba(10,11,13,0.95); border: 1px solid var(--border); border-bottom: 2px solid var(--gold); position: relative; }
+  .player-hud { display: flex; flex-direction: column; gap: 4px; min-width: 180px; }
+  .player-hud.p2 { align-items: flex-end; }
+  .player-name { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #888; font-family: 'Share Tech Mono', monospace; }
+  .health-bar-wrap { width: 170px; height: 8px; background: #1a1a1a; border: 1px solid #333; }
+  .health-bar { height: 100%; transition: width 0.1s; }
+  #p1-health-bar { background: linear-gradient(90deg, var(--blue), #44aaff); }
+  #p2-health-bar { background: linear-gradient(90deg, var(--red), #ff7a1a); }
+  .ammo-display { font-family: 'Share Tech Mono', monospace; font-size: 13px; letter-spacing: 2px; }
+  #center-hud { text-align: center; flex: 1; }
+  #round-info { font-size: 11px; color: var(--gold); letter-spacing: 4px; font-family: 'Share Tech Mono', monospace; }
+  #score-display { font-size: 26px; font-weight: 700; letter-spacing: 8px; color: #fff; }
+  #score-display .sep { color: var(--gold); }
+  #ping-display { position: absolute; top: 6px; right: 10px; font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #333; letter-spacing: 1px; }
+  #ff-badge { position: absolute; bottom: 5px; right: 10px; font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px; color: #ff4444; display: none; }
+  canvas { display: block; border: 1px solid var(--border); border-top: none; cursor: none; }
+
+  #game-overlay { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.88); z-index: 100; gap: 20px; }
+  #game-overlay.hidden { display: none; }
+  .overlay-title { font-size: 52px; font-weight: 700; letter-spacing: 8px; text-transform: uppercase; color: var(--gold); text-shadow: 0 0 40px rgba(247,168,0,0.4); }
+  .overlay-sub { font-size: 14px; letter-spacing: 4px; color: #888; font-family: 'Share Tech Mono', monospace; text-align: center; max-width: 600px; line-height: 2; }
+  .btn { margin-top: 10px; padding: 12px 40px; background: transparent; border: 2px solid var(--gold); color: var(--gold); font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .btn:hover { background: var(--gold); color: #000; }
+  #winner-text { font-size: 22px; letter-spacing: 5px; color: #fff; font-family: 'Share Tech Mono', monospace; }
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════ MENU SCREEN -->
+<!-- ══════════ MENU -->
 <div id="menu-screen" class="screen active">
   <div class="logo-wrap">
     <div class="logo-title">R6 SIEGE</div>
@@ -499,13 +185,111 @@
     </div>
     <div class="menu-card local-card" onclick="playLocal()">
       <span class="card-icon">⌨️</span>
-      <div class="card-title" style="color:#aaa">Local Play</div>
+      <div class="card-title">Local Play</div>
       <div class="card-desc">Two players<br>one keyboard</div>
     </div>
+    <div class="menu-card settings-card" onclick="openSettings()">
+      <span class="card-icon">⚙️</span>
+      <div class="card-title">Settings</div>
+      <div class="card-desc">Teams · Bots<br>Friendly Fire</div>
+    </div>
+  </div>
+  <div id="active-settings-wrap"></div>
+</div>
+
+<!-- ══════════ SETTINGS -->
+<div id="settings-screen" class="screen">
+  <div class="settings-container">
+    <div class="settings-header">
+      <button class="back-btn" onclick="saveSettings()">◀ BACK</button>
+      <div class="settings-title">MATCH SETTINGS</div>
+    </div>
+
+    <div class="settings-group">
+      <div class="settings-group-label">TEAM COMPOSITION</div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">AI TEAMMATES</div>
+          <div class="setting-desc">Add AI bots to your side (Blue team)</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="s-ai-teammates" onchange="updateStepperVis()">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+
+      <div class="setting-row" id="row-teammate-count" style="opacity:.3;pointer-events:none">
+        <div class="setting-info">
+          <div class="setting-name">TEAMMATE COUNT</div>
+          <div class="setting-desc">Number of AI allies to add to Blue team</div>
+        </div>
+        <div class="stepper">
+          <button class="stepper-btn" onclick="changeStep('teammate-count',-1)">−</button>
+          <div class="stepper-val" id="val-teammate-count">1</div>
+          <button class="stepper-btn" onclick="changeStep('teammate-count',1)">+</button>
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">AI ENEMIES</div>
+          <div class="setting-desc">Add extra AI bots to the enemy team (Red team)</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="s-ai-enemies" onchange="updateStepperVis()">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+
+      <div class="setting-row" id="row-enemy-count" style="opacity:.3;pointer-events:none">
+        <div class="setting-info">
+          <div class="setting-name">ENEMY COUNT</div>
+          <div class="setting-desc">Number of extra AI enemies to add to Red team</div>
+        </div>
+        <div class="stepper">
+          <button class="stepper-btn" onclick="changeStep('enemy-count',-1)">−</button>
+          <div class="stepper-val" id="val-enemy-count">1</div>
+          <button class="stepper-btn" onclick="changeStep('enemy-count',1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="settings-group">
+      <div class="settings-group-label">MATCH RULES</div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">FRIENDLY FIRE</div>
+          <div class="setting-desc">Bullets can damage players on your own team</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="s-friendly-fire">
+          <div class="toggle-track"></div>
+          <div class="toggle-thumb"></div>
+        </label>
+      </div>
+
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-name">ROUNDS TO WIN</div>
+          <div class="setting-desc">How many rounds a team needs to win the match</div>
+        </div>
+        <div class="stepper">
+          <button class="stepper-btn" onclick="changeStep('rounds-to-win',-1)">−</button>
+          <div class="stepper-val" id="val-rounds-to-win">3</div>
+          <button class="stepper-btn" onclick="changeStep('rounds-to-win',1)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="settings-save-btn" onclick="saveSettings()">SAVE &amp; RETURN</button>
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════ LOBBY SCREEN -->
+<!-- ══════════ LOBBY -->
 <div id="lobby-screen" class="screen">
   <div class="lobby-container">
     <div class="lobby-header">
@@ -513,13 +297,8 @@
       <div class="lobby-title" id="lobby-title">CREATE PARTY</div>
       <div class="connection-badge" id="conn-badge"><span class="dot"></span>CONNECTING</div>
     </div>
-
-    <!-- Create section -->
-    <div id="create-section" style="display:none; flex-direction:column; gap:18px;">
-      <div>
-        <div class="section-label">Your Name</div>
-        <input class="name-input" id="host-name" maxlength="12" placeholder="OPERATOR" value="HOST" />
-      </div>
+    <div id="create-section" style="display:none;flex-direction:column;gap:18px;">
+      <div><div class="section-label">Your Name</div><input class="name-input" id="host-name" maxlength="12" placeholder="OPERATOR" value="HOST"/></div>
       <div>
         <div class="section-label">Room Code — Share This</div>
         <div class="room-code-display">
@@ -529,63 +308,36 @@
         </div>
       </div>
       <div class="player-slots">
-        <div class="player-slot filled" id="slot1">
-          <div class="slot-label">PLAYER 1</div>
-          <div class="slot-name active" id="slot1-name">YOU</div>
-          <div class="slot-role" style="color:var(--blue)">ATTACKER</div>
-        </div>
-        <div class="player-slot" id="slot2">
-          <div class="slot-label">PLAYER 2</div>
-          <div class="slot-name" id="slot2-name">WAITING...</div>
-          <div class="slot-role" style="color:#444">DEFENDER</div>
-        </div>
+        <div class="player-slot filled"><div class="slot-label">PLAYER 1</div><div class="slot-name active" id="slot1-name">YOU</div><div class="slot-role" style="color:var(--blue)">ATTACKER</div></div>
+        <div class="player-slot" id="slot2"><div class="slot-label">PLAYER 2</div><div class="slot-name" id="slot2-name">WAITING...</div><div class="slot-role" style="color:#444">DEFENDER</div></div>
       </div>
-      <div class="waiting-status" id="create-status">
-        <div class="dot-pulse" id="create-dot"></div>
-        <span id="create-status-text">Waiting for opponent to connect...</span>
-      </div>
+      <div class="waiting-status"><div class="dot-pulse" id="create-dot"></div><span id="create-status-text">Waiting for opponent to connect...</span></div>
       <button class="deploy-btn" id="host-deploy-btn" onclick="hostStartGame()" disabled>DEPLOY — WAITING FOR PLAYER 2</button>
     </div>
-
-    <!-- Join section -->
-    <div id="join-section" style="display:none; flex-direction:column; gap:18px;">
-      <div>
-        <div class="section-label">Your Name</div>
-        <input class="name-input" id="guest-name" maxlength="12" placeholder="OPERATOR" value="GUEST" />
-      </div>
+    <div id="join-section" style="display:none;flex-direction:column;gap:18px;">
+      <div><div class="section-label">Your Name</div><input class="name-input" id="guest-name" maxlength="12" placeholder="OPERATOR" value="GUEST"/></div>
       <div>
         <div class="section-label">Enter Room Code</div>
         <div class="code-input-wrap">
-          <input class="code-input" id="room-code-input" maxlength="6" placeholder="ABCDEF" />
+          <input class="code-input" id="room-code-input" maxlength="6" placeholder="ABCDEF"/>
           <button class="join-btn" id="join-now-btn" onclick="joinRoom()">JOIN</button>
         </div>
       </div>
       <div class="player-slots">
-        <div class="player-slot" id="jslot1">
-          <div class="slot-label">PLAYER 1</div>
-          <div class="slot-name" id="jslot1-name">HOST</div>
-          <div class="slot-role" style="color:var(--blue)">ATTACKER</div>
-        </div>
-        <div class="player-slot filled" id="jslot2">
-          <div class="slot-label">PLAYER 2</div>
-          <div class="slot-name active" id="jslot2-name">YOU</div>
-          <div class="slot-role" style="color:var(--red)">DEFENDER</div>
-        </div>
+        <div class="player-slot" id="jslot1"><div class="slot-label">PLAYER 1</div><div class="slot-name" id="jslot1-name">HOST</div><div class="slot-role" style="color:var(--blue)">ATTACKER</div></div>
+        <div class="player-slot filled"><div class="slot-label">PLAYER 2</div><div class="slot-name active" id="jslot2-name">YOU</div><div class="slot-role" style="color:var(--red)">DEFENDER</div></div>
       </div>
       <div class="status-msg info" id="join-status">Enter the 6-character code from your host and press JOIN.</div>
     </div>
-
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════ GAME SCREEN -->
+<!-- ══════════ GAME -->
 <div id="game-screen" class="screen">
   <div id="hud" style="position:relative;">
     <div class="player-hud p1">
       <span class="player-name" id="p1-name-hud">▶ ATTACKER</span>
-      <div class="health-bar-wrap">
-        <div class="health-bar" id="p1-health-bar" style="width:100%"></div>
-      </div>
+      <div class="health-bar-wrap"><div class="health-bar" id="p1-health-bar" style="width:100%"></div></div>
       <span class="ammo-display" id="p1-ammo" style="color:var(--blue)">AMM: 30/30</span>
     </div>
     <div id="center-hud">
@@ -594,12 +346,11 @@
     </div>
     <div class="player-hud p2">
       <span class="player-name" id="p2-name-hud">DEFENDER ◀</span>
-      <div class="health-bar-wrap">
-        <div class="health-bar" id="p2-health-bar" style="width:100%"></div>
-      </div>
+      <div class="health-bar-wrap"><div class="health-bar" id="p2-health-bar" style="width:100%"></div></div>
       <span class="ammo-display" id="p2-ammo" style="color:var(--red)">AMM: 30/30</span>
     </div>
     <div id="ping-display">PING: —</div>
+    <div id="ff-badge">⚠ FRIENDLY FIRE</div>
   </div>
   <canvas id="game" width="800" height="550"></canvas>
   <div id="game-overlay">
@@ -609,10 +360,70 @@
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════════
-// CONSTANTS & STATE
-// ═══════════════════════════════════════════════════════════
-const W = 800, H = 550, TILE = 40, SPEED = 2.5;
+// ════════════════════════════════════════
+// SETTINGS
+// ════════════════════════════════════════
+const settings = {
+  aiTeammates: false, teammateCount: 1,
+  aiEnemies: false,   enemyCount: 1,
+  friendlyFire: false, roundsToWin: 3
+};
+
+const stepperCfg = {
+  'teammate-count': { min:1, max:3, key:'teammateCount' },
+  'enemy-count':    { min:1, max:3, key:'enemyCount' },
+  'rounds-to-win':  { min:1, max:9, key:'roundsToWin' }
+};
+
+function openSettings() {
+  // Sync UI to current settings
+  document.getElementById('s-ai-teammates').checked = settings.aiTeammates;
+  document.getElementById('s-ai-enemies').checked   = settings.aiEnemies;
+  document.getElementById('s-friendly-fire').checked = settings.friendlyFire;
+  document.getElementById('val-teammate-count').textContent = settings.teammateCount;
+  document.getElementById('val-enemy-count').textContent    = settings.enemyCount;
+  document.getElementById('val-rounds-to-win').textContent  = settings.roundsToWin;
+  updateStepperVis();
+  showScreen('settings-screen');
+}
+
+function changeStep(id, delta) {
+  const cfg = stepperCfg[id];
+  settings[cfg.key] = Math.max(cfg.min, Math.min(cfg.max, settings[cfg.key] + delta));
+  document.getElementById('val-'+id).textContent = settings[cfg.key];
+}
+
+function updateStepperVis() {
+  const tm = document.getElementById('s-ai-teammates').checked;
+  const en = document.getElementById('s-ai-enemies').checked;
+  document.getElementById('row-teammate-count').style.opacity = tm ? '1' : '0.3';
+  document.getElementById('row-teammate-count').style.pointerEvents = tm ? 'auto' : 'none';
+  document.getElementById('row-enemy-count').style.opacity = en ? '1' : '0.3';
+  document.getElementById('row-enemy-count').style.pointerEvents = en ? 'auto' : 'none';
+}
+
+function saveSettings() {
+  settings.aiTeammates  = document.getElementById('s-ai-teammates').checked;
+  settings.aiEnemies    = document.getElementById('s-ai-enemies').checked;
+  settings.friendlyFire = document.getElementById('s-friendly-fire').checked;
+  showScreen('menu-screen');
+  renderActiveBadges();
+}
+
+function renderActiveBadges() {
+  const badges = [];
+  if (settings.aiTeammates)  badges.push(`+${settings.teammateCount} AI ALLY`);
+  if (settings.aiEnemies)    badges.push(`+${settings.enemyCount} AI ENEMY`);
+  if (settings.friendlyFire) badges.push('FRIENDLY FIRE ON');
+  if (settings.roundsToWin !== 3) badges.push(`FIRST TO ${settings.roundsToWin}`);
+  document.getElementById('active-settings-wrap').innerHTML =
+    badges.map(b=>`<span class="settings-badge">${b}</span>`).join('');
+}
+
+// ════════════════════════════════════════
+// MAP & SPAWN POINTS
+// ════════════════════════════════════════
+const W=800, H=550, TILE=40, SPEED=2.5;
 
 const MAP = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -632,669 +443,615 @@ const MAP = [
   [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 ];
 
-// Networking
-let peer, conn;
-let isHost = false;
-let myPlayerIndex = -1; // 0 = attacker, 1 = defender
-let opponentName = 'OPPONENT';
-let myName = 'PLAYER';
-let roomCode = '';
-let pingTimer = 0, lastPingSent = 0, currentPing = 0;
+// Verified open floor spawn tiles [col, row]
+const TEAM0_SPAWNS = [[1,1],[2,1],[1,2],[2,2],[4,2],[1,5]];
+const TEAM1_SPAWNS = [[17,12],[16,12],[17,9],[16,9],[17,10],[15,10]];
 
-// Stores the latest input received from the guest (used by host every frame)
-let remoteInput = { up:0, down:0, left:0, right:0, shoot:0, reload:0 };
+// ════════════════════════════════════════
+// NETWORKING
+// ════════════════════════════════════════
+let peer=null, conn=null;
+let isHost=false, myPlayerIndex=-1;
+let opponentName='OPPONENT', myName='PLAYER', roomCode='';
+let pingTimer=0, currentPing=0;
+let remoteInput={up:0,down:0,left:0,right:0,shoot:0,reload:0};
 
-// Game state (authoritative on HOST, mirrored on GUEST)
-let players, bullets, roundState, scores, round, gameActive, gameLoopRunning;
-const keys = {};
+// ════════════════════════════════════════
+// GAME STATE
+// ════════════════════════════════════════
+let players=[], bullets=[], roundState='playing', scores=[0,0], round=1, gameActive=false, gameLoopRunning=false;
+const keys={};
 
-// ═══════════════════════════════════════════════════════════
-// SCREEN MANAGEMENT
-// ═══════════════════════════════════════════════════════════
+// ════════════════════════════════════════
+// SCREENS
+// ════════════════════════════════════════
 function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
 function showLobby(mode) {
   showScreen('lobby-screen');
-  document.getElementById('lobby-title').textContent = mode === 'create' ? 'CREATE PARTY' : 'JOIN PARTY';
-  document.getElementById('create-section').style.display = mode === 'create' ? 'flex' : 'none';
-  document.getElementById('join-section').style.display = mode === 'join' ? 'flex' : 'none';
-
-  if (mode === 'create') {
-    setupHostPeer();
-  } else {
-    setupGuestPeer();
-  }
+  document.getElementById('lobby-title').textContent = mode==='create'?'CREATE PARTY':'JOIN PARTY';
+  document.getElementById('create-section').style.display = mode==='create'?'flex':'none';
+  document.getElementById('join-section').style.display   = mode==='join' ?'flex':'none';
+  if (mode==='create') setupHostPeer(); else setupGuestPeer();
 }
 
 function goBack() {
-  if (peer) { peer.destroy(); peer = null; conn = null; }
+  if (peer){peer.destroy();peer=null;conn=null;}
   showScreen('menu-screen');
 }
 
-// ═══════════════════════════════════════════════════════════
-// LOCAL PLAY MODE
-// ═══════════════════════════════════════════════════════════
+// ════════════════════════════════════════
+// LOCAL PLAY
+// ════════════════════════════════════════
 function playLocal() {
-  myPlayerIndex = -2; // local mode sentinel
-  isHost = true;
+  myPlayerIndex=-2; isHost=true;
   showScreen('game-screen');
-  document.getElementById('p1-name-hud').textContent = '▶ ATTACKER · WASD';
-  document.getElementById('p2-name-hud').textContent = 'DEFENDER · ARROWS ◀';
+  document.getElementById('p1-name-hud').textContent='▶ ATTACKER · WASD';
+  document.getElementById('p2-name-hud').textContent='DEFENDER · ARROWS ◀';
   initGame();
-  showGameOverlay(`
-    <div class="overlay-title">LOCAL PLAY</div>
-    <div class="overlay-sub">2 PLAYERS · 1 KEYBOARD</div>
-    <button class="btn" onclick="dismissOverlayAndStart()">DEPLOY</button>
-  `);
+  const ffLine = settings.friendlyFire ? '\nFRIENDLY FIRE IS ON — WATCH YOUR SHOTS' : '';
+  const aiLine = [];
+  if (settings.aiTeammates) aiLine.push(`+${settings.teammateCount} BLUE AI`);
+  if (settings.aiEnemies)   aiLine.push(`+${settings.enemyCount} RED AI`);
+  showGameOverlay(`<div class="overlay-title">LOCAL PLAY</div>
+    <div class="overlay-sub">P1: WASD · F=SHOOT · R=RELOAD${aiLine.length?' · '+aiLine.join(' · '):''}${ffLine}</div>
+    <button class="btn" onclick="dismissOverlayAndStart()">DEPLOY</button>`);
 }
 
-// ═══════════════════════════════════════════════════════════
-// PEER.JS NETWORKING
-// ═══════════════════════════════════════════════════════════
-function genCode() {
-  return Math.random().toString(36).substring(2, 8).toUpperCase();
-}
+// ════════════════════════════════════════
+// PEER.JS
+// ════════════════════════════════════════
+function genCode(){return Math.random().toString(36).substring(2,8).toUpperCase();}
 
-function setupHostPeer() {
-  roomCode = genCode();
-  const badge = document.getElementById('conn-badge');
-  badge.innerHTML = '<span class="dot"></span>CONNECTING';
-
-  peer = new Peer('r6-' + roomCode, {
-    host: '0.peerjs.com', port: 443, secure: true,
-    config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
-  });
-
-  peer.on('open', id => {
-    badge.innerHTML = '<span class="dot" style="background:#00ff88"></span>READY';
+function setupHostPeer(){
+  roomCode=genCode();
+  const badge=document.getElementById('conn-badge');
+  badge.innerHTML='<span class="dot"></span>CONNECTING';
+  peer=new Peer('r6-'+roomCode,{host:'0.peerjs.com',port:443,secure:true,config:{iceServers:[{urls:'stun:stun.l.google.com:19302'}]}});
+  peer.on('open',()=>{
+    badge.innerHTML='<span class="dot" style="background:#00ff88"></span>READY';
     badge.classList.add('online');
-    document.getElementById('room-code').textContent = roomCode;
-    isHost = true;
-    myPlayerIndex = 0;
-    myName = document.getElementById('host-name').value.trim().toUpperCase() || 'HOST';
-    document.getElementById('slot1-name').textContent = myName;
+    document.getElementById('room-code').textContent=roomCode;
+    isHost=true; myPlayerIndex=0;
+    myName=document.getElementById('host-name').value.trim().toUpperCase()||'HOST';
+    document.getElementById('slot1-name').textContent=myName;
   });
-
-  peer.on('connection', c => {
-    conn = c;
-    setupConnHandlers();
+  peer.on('connection',c=>{
+    conn=c; setupConnHandlers();
     document.getElementById('create-dot').classList.add('connected');
-    document.getElementById('create-status-text').textContent = 'Opponent connected! Ready to deploy.';
+    document.getElementById('create-status-text').textContent='Opponent connected! Ready to deploy.';
     document.getElementById('slot2').classList.add('filled');
-    document.getElementById('host-deploy-btn').disabled = false;
-    document.getElementById('host-deploy-btn').textContent = '▶ DEPLOY';
+    document.getElementById('host-deploy-btn').disabled=false;
+    document.getElementById('host-deploy-btn').textContent='▶ DEPLOY';
   });
-
-  peer.on('error', err => {
-    document.getElementById('room-code').textContent = 'ERROR';
-    badge.innerHTML = '<span class="dot" style="background:red"></span>ERROR';
-    console.error('Peer error:', err);
-  });
+  peer.on('error',()=>{document.getElementById('room-code').textContent='ERROR';});
 }
 
-function setupGuestPeer() {
-  const badge = document.getElementById('conn-badge');
-  badge.innerHTML = '<span class="dot"></span>READY';
+function setupGuestPeer(){
+  const badge=document.getElementById('conn-badge');
+  badge.innerHTML='<span class="dot" style="background:#00ff88"></span>READY';
   badge.classList.add('online');
-  // Guest peer ID is random
-  peer = new Peer(undefined, {
-    host: '0.peerjs.com', port: 443, secure: true,
-    config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
-  });
-
-  peer.on('open', id => {
-    // Ready to join
-  });
-
-  peer.on('error', err => {
-    setJoinStatus('Connection error: ' + err.type, 'error');
-  });
+  peer=new Peer(undefined,{host:'0.peerjs.com',port:443,secure:true,config:{iceServers:[{urls:'stun:stun.l.google.com:19302'}]}});
+  peer.on('error',err=>{setJoinStatus('Connection error: '+err.type,'error');});
 }
 
-function joinRoom() {
-  const codeRaw = document.getElementById('room-code-input').value.trim().toUpperCase();
-  if (codeRaw.length < 4) { setJoinStatus('Enter a valid room code.', 'error'); return; }
-
-  myName = document.getElementById('guest-name').value.trim().toUpperCase() || 'GUEST';
-  document.getElementById('jslot2-name').textContent = myName;
-  isHost = false;
-  myPlayerIndex = 1;
-  roomCode = codeRaw;
-
-  setJoinStatus('Connecting to host...', 'warn');
-  document.getElementById('join-now-btn').disabled = true;
-
-  const targetId = 'r6-' + codeRaw;
-  conn = peer.connect(targetId, { reliable: true });
-
-  conn.on('open', () => {
-    setJoinStatus('Connected! Waiting for host to start...', 'success');
-    document.getElementById('jslot1-name').textContent = 'HOST';
+function joinRoom(){
+  const codeRaw=document.getElementById('room-code-input').value.trim().toUpperCase();
+  if(codeRaw.length<4){setJoinStatus('Enter a valid room code.','error');return;}
+  myName=document.getElementById('guest-name').value.trim().toUpperCase()||'GUEST';
+  document.getElementById('jslot2-name').textContent=myName;
+  isHost=false; myPlayerIndex=1; roomCode=codeRaw;
+  setJoinStatus('Connecting to host...','warn');
+  document.getElementById('join-now-btn').disabled=true;
+  conn=peer.connect('r6-'+codeRaw,{reliable:true});
+  conn.on('open',()=>{
+    setJoinStatus('Connected! Waiting for host to start...','success');
     document.getElementById('jslot1').classList.add('filled');
     setupConnHandlers();
-    send({ type: 'hello', name: myName });
+    send({type:'hello',name:myName});
   });
-
-  conn.on('error', err => {
-    setJoinStatus('Could not connect. Check the code and try again.', 'error');
-    document.getElementById('join-now-btn').disabled = false;
-  });
+  conn.on('error',()=>{setJoinStatus('Could not connect. Check the code.','error');document.getElementById('join-now-btn').disabled=false;});
 }
 
-function setupConnHandlers() {
-  conn.on('data', handleMessage);
-  conn.on('close', () => {
-    if (gameActive) {
+function setupConnHandlers(){
+  conn.on('data',handleMessage);
+  conn.on('close',()=>{
+    if(gameActive){
       showGameOverlay(`<div class="overlay-title">DISCONNECTED</div>
         <div class="overlay-sub">OPPONENT LEFT THE MATCH</div>
         <button class="btn" onclick="location.reload()">MAIN MENU</button>`);
-      gameActive = false;
+      gameActive=false;
     }
   });
 }
 
-function send(data) {
-  if (conn && conn.open) {
-    try { conn.send(data); } catch(e){}
-  }
-}
+function send(data){if(conn&&conn.open){try{conn.send(data);}catch(e){}}}
 
-// ═══════════════════════════════════════════════════════════
-// MESSAGE HANDLING
-// ═══════════════════════════════════════════════════════════
-function handleMessage(msg) {
-  switch(msg.type) {
+// ════════════════════════════════════════
+// MESSAGES
+// ════════════════════════════════════════
+function handleMessage(msg){
+  switch(msg.type){
     case 'hello':
-      opponentName = msg.name;
-      if (isHost) {
-        document.getElementById('slot2-name').textContent = opponentName;
-        send({ type: 'welcome', name: myName });
-      }
+      opponentName=msg.name;
+      if(isHost){document.getElementById('slot2-name').textContent=opponentName;send({type:'welcome',name:myName});}
       break;
-
     case 'welcome':
-      opponentName = msg.name;
-      document.getElementById('jslot1-name').textContent = opponentName;
+      opponentName=msg.name;
+      document.getElementById('jslot1-name').textContent=opponentName;
       break;
-
     case 'start':
-      // Host tells guest to start
+      // Guest receives host's settings snapshot
+      Object.assign(settings, msg.settings);
       startOnlineGame();
       break;
-
     case 'input':
-      // Guest sent their input — store it, host applies it every frame
-      if (isHost) {
-        remoteInput = { up: msg.up, down: msg.down, left: msg.left, right: msg.right, shoot: msg.shoot, reload: msg.reload };
-      }
+      if(isHost) remoteInput={up:msg.up,down:msg.down,left:msg.left,right:msg.right,shoot:msg.shoot,reload:msg.reload};
       break;
-
     case 'state':
-      // Host sends game state to guest
-      if (!isHost && players) {
-        applyHostState(msg);
-      }
+      if(!isHost) applyHostState(msg);
       break;
-
     case 'ping':
-      send({ type: 'pong', t: msg.t });
+      send({type:'pong',t:msg.t});
       break;
-
     case 'pong':
-      currentPing = Date.now() - msg.t;
-      document.getElementById('ping-display').textContent = `PING: ${currentPing}ms`;
+      currentPing=Date.now()-msg.t;
+      document.getElementById('ping-display').textContent=`PING: ${currentPing}ms`;
       break;
-
     case 'round_end':
-      if (!isHost) {
+      if(!isHost){
         scores[msg.winner]++;
-        document.getElementById('s1').textContent = scores[0];
-        document.getElementById('s2').textContent = scores[1];
-        if (msg.matchOver) {
-          showWinner(msg.winner);
-        } else {
-          round = msg.round;
-          document.getElementById('round-info').textContent = `ROUND ${round}`;
-        }
+        document.getElementById('s1').textContent=scores[0];
+        document.getElementById('s2').textContent=scores[1];
+        if(msg.matchOver) showWinner(msg.winner);
+        else{round=msg.round;document.getElementById('round-info').textContent=`ROUND ${round}`;}
       }
       break;
   }
 }
 
-// ═══════════════════════════════════════════════════════════
-// HOST START / GAME INIT
-// ═══════════════════════════════════════════════════════════
-function hostStartGame() {
-  myName = document.getElementById('host-name').value.trim().toUpperCase() || 'HOST';
-  send({ type: 'start', hostName: myName, guestName: opponentName });
+// ════════════════════════════════════════
+// GAME START
+// ════════════════════════════════════════
+function hostStartGame(){
+  myName=document.getElementById('host-name').value.trim().toUpperCase()||'HOST';
+  send({type:'start', settings:{...settings}});
   startOnlineGame();
 }
 
-function startOnlineGame() {
+function startOnlineGame(){
   showScreen('game-screen');
-  const p1n = isHost ? myName : opponentName;
-  const p2n = isHost ? opponentName : myName;
-  document.getElementById('p1-name-hud').textContent = `▶ ${p1n}`;
-  document.getElementById('p2-name-hud').textContent = `${p2n} ◀`;
-
-  // Guest uses WASD on their own machine
-  const myKeys = myPlayerIndex === 1 ? 'WASD · F=Shoot · R=Reload' : 'WASD · F=Shoot · R=Reload';
-  const roleLabel = myPlayerIndex === 0 ? 'ATTACKER' : myPlayerIndex === 1 ? 'DEFENDER' : '';
-
+  const p1n=isHost?myName:opponentName;
+  const p2n=isHost?opponentName:myName;
+  document.getElementById('p1-name-hud').textContent=`▶ ${p1n}`;
+  document.getElementById('p2-name-hud').textContent=`${p2n} ◀`;
+  const roleLabel=myPlayerIndex===0?'ATTACKER':'DEFENDER';
   initGame();
+  const ffLine = settings.friendlyFire ? '\n⚠ FRIENDLY FIRE IS ON' : '';
   showGameOverlay(`<div class="overlay-title">MATCH FOUND</div>
-    <div class="overlay-sub">YOU ARE: ${roleLabel} · WASD TO MOVE · F=SHOOT · R=RELOAD</div>`);
-  setTimeout(() => {
+    <div class="overlay-sub">YOU ARE: ${roleLabel} · WASD=MOVE · F=SHOOT · R=RELOAD${ffLine}</div>`);
+  setTimeout(()=>{
     document.getElementById('game-overlay').classList.add('hidden');
-    gameActive = true;
-    if (!gameLoopRunning) { gameLoopRunning = true; requestAnimationFrame(loop); }
-  }, 2500);
+    gameActive=true;
+    if(!gameLoopRunning){gameLoopRunning=true;requestAnimationFrame(loop);}
+  },2800);
 }
 
-// ═══════════════════════════════════════════════════════════
-// GAME INIT
-// ═══════════════════════════════════════════════════════════
-const canvas = document.getElementById('game');
-const ctx = canvas.getContext('2d');
+// ════════════════════════════════════════
+// CANVAS & INIT
+// ════════════════════════════════════════
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
 
-function makePlayer(id) {
-  const isP1 = id === 0;
-  // Spawn positions: center of safe open floor tiles
-  // Blue (P1): tile col=1, row=1 → pixel (60, 60)
-  // Red  (P2): tile col=17, row=12 → pixel (700, 500) — confirmed open floor
+function tileCenter(col,row){return{x:col*TILE+TILE/2, y:row*TILE+TILE/2};}
+
+function makePlayer(id, team, isBot, spawnIdx){
+  const spawnList = team===0 ? TEAM0_SPAWNS : TEAM1_SPAWNS;
+  const t = spawnList[spawnIdx % spawnList.length];
+  const pos = tileCenter(t[0], t[1]);
+
+  // Per-team color palette (index within team)
+  const pal0 = [{c:'#1a6bff',d:'#0040aa'},{c:'#44ccff',d:'#1166aa'},{c:'#00aadd',d:'#005577'}];
+  const pal1 = [{c:'#ff3a3a',d:'#aa0000'},{c:'#ff8800',d:'#994400'},{c:'#dd22aa',d:'#880055'}];
+  const pal = team===0 ? pal0 : pal1;
+  const ci = spawnIdx % pal.length;
+
   return {
-    id, alive: true,
-    x: isP1 ? 60 : 700,
-    y: isP1 ? 60 : 500,
-    angle: isP1 ? 0 : Math.PI,
-    hp: 100, maxHp: 100,
-    ammo: 30, maxAmmo: 30,
-    reloading: false, reloadTimer: 0, shootCooldown: 0,
-    color: isP1 ? '#1a6bff' : '#ff3a3a',
-    darkColor: isP1 ? '#0040aa' : '#aa0000',
-    // Local play: P1=WASD, P2=Arrows. Online: each player uses WASD on their own machine.
-    keys: id === 0
-      ? { up:'KeyW', down:'KeyS', left:'KeyA', right:'KeyD', shoot:'KeyF', reload:'KeyR' }
-      : { up:'ArrowUp', down:'ArrowDown', left:'ArrowLeft', right:'ArrowRight', shoot:'NumpadDivide', reload:'NumpadDecimal' }
+    id, team, isBot, alive:true,
+    x:pos.x, y:pos.y,
+    angle: team===0 ? 0 : Math.PI,
+    hp:100, maxHp:100,
+    ammo:30, maxAmmo:30,
+    reloading:false, reloadTimer:0, shootCooldown:0,
+    color:pal[ci].c, darkColor:pal[ci].d,
+    botMoveTimer:0, botMoveDir:{x:0,y:0},
+    keys: id===0
+      ? {up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD',shoot:'KeyF',reload:'KeyR'}
+      : {up:'ArrowUp',down:'ArrowDown',left:'ArrowLeft',right:'ArrowRight',shoot:'NumpadDivide',reload:'NumpadDecimal'}
   };
 }
 
-function initGame() {
-  scores = [0, 0];
-  round = 1;
-  bullets = [];
-  roundState = 'playing';
-  initRound();
-  // Guest is player index 1 but uses WASD on their own keyboard
-  if (myPlayerIndex === 1) {
-    players[1].keys = { up:'KeyW', down:'KeyS', left:'KeyA', right:'KeyD', shoot:'KeyF', reload:'KeyR' };
+function buildPlayers(){
+  players=[];
+  // Team 0: human + optional bots
+  players.push(makePlayer(players.length, 0, false, 0));
+  if(settings.aiTeammates){
+    for(let i=0;i<settings.teammateCount;i++) players.push(makePlayer(players.length,0,true,i+1));
   }
-  document.getElementById('s1').textContent = 0;
-  document.getElementById('s2').textContent = 0;
-  document.getElementById('round-info').textContent = 'ROUND 1';
-}
-
-function initRound() {
-  players = [makePlayer(0), makePlayer(1)];
-  bullets = [];
-  roundState = 'playing';
-  // Guest uses WASD on their own machine
-  if (myPlayerIndex === 1) {
-    players[1].keys = { up:'KeyW', down:'KeyS', left:'KeyA', right:'KeyD', shoot:'KeyF', reload:'KeyR' };
+  // Team 1: human (or CPU in local) + optional bots
+  players.push(makePlayer(players.length, 1, false, 0));
+  if(settings.aiEnemies){
+    for(let i=0;i<settings.enemyCount;i++) players.push(makePlayer(players.length,1,true,i+1));
+  }
+  // Guest key override — guest is on their own machine, uses WASD
+  if(myPlayerIndex===1){
+    const gp = players.find(p=>!p.isBot&&p.team===1);
+    if(gp) gp.keys={up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD',shoot:'KeyF',reload:'KeyR'};
   }
 }
 
-// ═══════════════════════════════════════════════════════════
+function initGame(){
+  scores=[0,0]; round=1; bullets=[]; roundState='playing';
+  gameLoopRunning=false; gameActive=false;
+  document.getElementById('ff-badge').style.display = settings.friendlyFire?'block':'none';
+  buildPlayers();
+  document.getElementById('s1').textContent=0;
+  document.getElementById('s2').textContent=0;
+  document.getElementById('round-info').textContent='ROUND 1';
+}
+
+function initRound(){
+  bullets=[]; roundState='playing';
+  let si0=0, si1=0;
+  for(let p of players){
+    const si = p.team===0 ? si0++ : si1++;
+    const spawnList = p.team===0 ? TEAM0_SPAWNS : TEAM1_SPAWNS;
+    const t = spawnList[si % spawnList.length];
+    const pos = tileCenter(t[0], t[1]);
+    p.x=pos.x; p.y=pos.y; p.alive=true; p.hp=100; p.ammo=30;
+    p.reloading=false; p.reloadTimer=0; p.shootCooldown=0;
+    p.angle = p.team===0 ? 0 : Math.PI;
+    // Re-apply guest key override each round
+    if(myPlayerIndex===1&&!p.isBot&&p.team===1){
+      p.keys={up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD',shoot:'KeyF',reload:'KeyR'};
+    }
+  }
+}
+
+// ════════════════════════════════════════
 // INPUT
-// ═══════════════════════════════════════════════════════════
-window.addEventListener('keydown', e => {
-  // Don't intercept keypresses when the user is typing in an input field
-  if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
-  keys[e.code] = true;
-  e.preventDefault();
+// ════════════════════════════════════════
+window.addEventListener('keydown',e=>{
+  if(document.activeElement&&document.activeElement.tagName==='INPUT') return;
+  keys[e.code]=true; e.preventDefault();
 });
-window.addEventListener('keyup', e => {
-  if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
-  keys[e.code] = false;
-  e.preventDefault();
+window.addEventListener('keyup',e=>{
+  if(document.activeElement&&document.activeElement.tagName==='INPUT') return;
+  keys[e.code]=false; e.preventDefault();
 });
 
-function getMyKeys() {
-  if (myPlayerIndex === -2) return null; // local: both handled in update
-  const p = players[myPlayerIndex];
-  return {
-    up: keys[p.keys.up] ? 1 : 0,
-    down: keys[p.keys.down] ? 1 : 0,
-    left: keys[p.keys.left] ? 1 : 0,
-    right: keys[p.keys.right] ? 1 : 0,
-    shoot: keys[p.keys.shoot] ? 1 : 0,
-    reload: keys[p.keys.reload] ? 1 : 0,
-  };
-}
-
-// ═══════════════════════════════════════════════════════════
-// PHYSICS HELPERS
-// ═══════════════════════════════════════════════════════════
-function isSolid(tx, ty) {
-  if (ty < 0 || ty >= MAP.length || tx < 0 || tx >= MAP[0].length) return true;
-  return MAP[ty][tx] === 1;
-}
-
-function isBlockingBullet(tx, ty) {
-  if (ty < 0 || ty >= MAP.length || tx < 0 || tx >= MAP[0].length) return true;
-  return MAP[ty][tx] >= 1;
-}
-
-function circleRect(cx, cy, r, rx, ry) {
-  let nx = Math.max(rx, Math.min(cx, rx + TILE));
-  let ny = Math.max(ry, Math.min(cy, ry + TILE));
-  return (cx-nx)**2 + (cy-ny)**2 < r*r;
-}
-
-function wallCollide(px, py) {
-  const r = 12;
-  const checks = [
-    [Math.floor((px-r)/TILE), Math.floor((py-r)/TILE)],
-    [Math.floor((px+r)/TILE), Math.floor((py-r)/TILE)],
-    [Math.floor((px-r)/TILE), Math.floor((py+r)/TILE)],
-    [Math.floor((px+r)/TILE), Math.floor((py+r)/TILE)],
-  ];
-  for (let [tx,ty] of checks) if (isSolid(tx,ty) && circleRect(px,py,r,tx*TILE,ty*TILE)) return true;
+// ════════════════════════════════════════
+// PHYSICS
+// ════════════════════════════════════════
+function isSolid(tx,ty){if(ty<0||ty>=MAP.length||tx<0||tx>=MAP[0].length)return true;return MAP[ty][tx]===1;}
+function isBlockingBullet(tx,ty){if(ty<0||ty>=MAP.length||tx<0||tx>=MAP[0].length)return true;return MAP[ty][tx]>=1;}
+function circleRect(cx,cy,r,rx,ry){const nx=Math.max(rx,Math.min(cx,rx+TILE)),ny=Math.max(ry,Math.min(cy,ry+TILE));return(cx-nx)**2+(cy-ny)**2<r*r;}
+function wallCollide(px,py){
+  const r=12;
+  const ch=[[Math.floor((px-r)/TILE),Math.floor((py-r)/TILE)],[Math.floor((px+r)/TILE),Math.floor((py-r)/TILE)],[Math.floor((px-r)/TILE),Math.floor((py+r)/TILE)],[Math.floor((px+r)/TILE),Math.floor((py+r)/TILE)]];
+  for(const[tx,ty]of ch) if(isSolid(tx,ty)&&circleRect(px,py,r,tx*TILE,ty*TILE)) return true;
   return false;
 }
 
-// ═══════════════════════════════════════════════════════════
-// MOVE + SHOOT (takes explicit input state)
-// ═══════════════════════════════════════════════════════════
-function stepPlayer(p, inp) {
-  if (!p.alive) return;
-  let other = players[1 - p.id];
-  if (other.alive) p.angle = Math.atan2(other.y - p.y, other.x - p.x);
+// ════════════════════════════════════════
+// BOT AI
+// ════════════════════════════════════════
+function getBotInput(bot){
+  const enemies=players.filter(p=>p.alive&&p.team!==bot.team);
+  if(!enemies.length) return{up:0,down:0,left:0,right:0,shoot:0,reload:0};
 
-  let dx = (inp.right - inp.left), dy = (inp.down - inp.up);
-  if (dx && dy) { dx *= 0.707; dy *= 0.707; }
-  let nx = Math.max(14, Math.min(W-14, p.x + dx * SPEED));
-  let ny = Math.max(14, Math.min(H-14, p.y + dy * SPEED));
-  if (!wallCollide(nx, p.y)) p.x = nx;
-  if (!wallCollide(p.x, ny)) p.y = ny;
+  // Pick nearest enemy
+  let nearest=enemies[0], nd=Infinity;
+  for(const e of enemies){const d=(e.x-bot.x)**2+(e.y-bot.y)**2;if(d<nd){nd=d;nearest=e;}}
+  const dx=nearest.x-bot.x, dy=nearest.y-bot.y;
+  const dist=Math.sqrt(dx*dx+dy*dy);
+  bot.angle=Math.atan2(dy,dx);
 
-  if (p.reloading) { if (--p.reloadTimer <= 0) { p.reloading = false; p.ammo = p.maxAmmo; } }
-  if (inp.reload && !p.reloading && p.ammo < p.maxAmmo) { p.reloading = true; p.reloadTimer = 120; }
-  if (p.ammo === 0 && !p.reloading) { p.reloading = true; p.reloadTimer = 120; }
-  if (p.shootCooldown > 0) p.shootCooldown--;
-  if (inp.shoot && p.shootCooldown === 0 && !p.reloading && p.ammo > 0) {
-    p.ammo--;
-    p.shootCooldown = 10;
-    const sp = (Math.random() - 0.5) * 0.08;
-    bullets.push({ x: p.x + Math.cos(p.angle)*16, y: p.y + Math.sin(p.angle)*16, vx: Math.cos(p.angle+sp)*10, vy: Math.sin(p.angle+sp)*10, owner: p.id, life: 80, color: p.color });
+  // Recalculate move direction periodically
+  bot.botMoveTimer--;
+  if(bot.botMoveTimer<=0){
+    bot.botMoveTimer=25+Math.random()*35|0;
+    if(dist>130){
+      const jitter=(Math.random()-0.5)*0.7;
+      bot.botMoveDir={x:Math.cos(bot.angle+jitter),y:Math.sin(bot.angle+jitter)};
+    } else {
+      const perp=bot.angle+Math.PI/2*(Math.random()<0.5?1:-1);
+      bot.botMoveDir={x:Math.cos(perp),y:Math.sin(perp)};
+    }
+  }
+
+  return{
+    up:   bot.botMoveDir.y<-0.15?1:0,
+    down: bot.botMoveDir.y>0.15?1:0,
+    left: bot.botMoveDir.x<-0.15?1:0,
+    right:bot.botMoveDir.x>0.15?1:0,
+    shoot: dist<300 ? 1:0,
+    reload: (bot.ammo<5&&!bot.reloading)?1:0
+  };
+}
+
+// ════════════════════════════════════════
+// STEP PLAYER
+// ════════════════════════════════════════
+function stepPlayer(p, inp){
+  if(!p.alive) return;
+  let dx=inp.right-inp.left, dy=inp.down-inp.up;
+  if(dx&&dy){dx*=0.707;dy*=0.707;}
+  const nx=Math.max(14,Math.min(W-14,p.x+dx*SPEED));
+  const ny=Math.max(14,Math.min(H-14,p.y+dy*SPEED));
+  if(!wallCollide(nx,p.y)) p.x=nx;
+  if(!wallCollide(p.x,ny)) p.y=ny;
+
+  if(p.reloading){if(--p.reloadTimer<=0){p.reloading=false;p.ammo=p.maxAmmo;}}
+  if(inp.reload&&!p.reloading&&p.ammo<p.maxAmmo){p.reloading=true;p.reloadTimer=120;}
+  if(p.ammo===0&&!p.reloading){p.reloading=true;p.reloadTimer=120;}
+  if(p.shootCooldown>0) p.shootCooldown--;
+  if(inp.shoot&&p.shootCooldown===0&&!p.reloading&&p.ammo>0){
+    p.ammo--;p.shootCooldown=10;
+    const sp=(Math.random()-0.5)*0.10;
+    bullets.push({x:p.x+Math.cos(p.angle)*16,y:p.y+Math.sin(p.angle)*16,vx:Math.cos(p.angle+sp)*10,vy:Math.sin(p.angle+sp)*10,owner:p.id,ownerTeam:p.team,life:80,color:p.color});
+  }
+  // Human auto-aims at nearest enemy
+  if(!p.isBot){
+    const enemies=players.filter(e=>e.alive&&e.team!==p.team);
+    if(enemies.length){
+      let best=enemies[0],bd=Infinity;
+      for(const e of enemies){const d=(e.x-p.x)**2+(e.y-p.y)**2;if(d<bd){bd=d;best=e;}}
+      p.angle=Math.atan2(best.y-p.y,best.x-p.x);
+    }
   }
 }
 
-function applyRemoteInput(p, inp) {
-  stepPlayer(p, inp);
-}
+// ════════════════════════════════════════
+// UPDATE LOOP
+// ════════════════════════════════════════
+let frameCount=0;
 
-// ═══════════════════════════════════════════════════════════
-// UPDATE (host is authoritative)
-// ═══════════════════════════════════════════════════════════
-let frameCount = 0;
+function update(){
+  if(roundState!=='playing') return;
 
-function update() {
-  if (roundState !== 'playing') return;
-
-  if (isHost || myPlayerIndex === -2) {
-    // LOCAL: drive both players from keyboard
-    if (myPlayerIndex === -2) {
-      for (let p of players) {
-        const inp = {
-          up: keys[p.keys.up]?1:0, down: keys[p.keys.down]?1:0,
-          left: keys[p.keys.left]?1:0, right: keys[p.keys.right]?1:0,
-          shoot: keys[p.keys.shoot]?1:0, reload: keys[p.keys.reload]?1:0
-        };
-        stepPlayer(p, inp);
+  if(isHost||myPlayerIndex===-2){
+    // Step all players
+    for(const p of players){
+      if(p.isBot){
+        stepPlayer(p, getBotInput(p));
+        continue;
       }
-    } else {
-      // ONLINE HOST: step own player (P1) from local keys
-      const myInp = {
-        up: keys[players[0].keys.up]?1:0, down: keys[players[0].keys.down]?1:0,
-        left: keys[players[0].keys.left]?1:0, right: keys[players[0].keys.right]?1:0,
-        shoot: keys[players[0].keys.shoot]?1:0, reload: keys[players[0].keys.reload]?1:0
-      };
-      stepPlayer(players[0], myInp);
-
-      // Step guest's player (P2) from the latest remoteInput received
-      stepPlayer(players[1], remoteInput);
+      // Human player input
+      if(myPlayerIndex===-2){
+        // Local: read keyboard per player
+        const inp={up:keys[p.keys.up]?1:0,down:keys[p.keys.down]?1:0,left:keys[p.keys.left]?1:0,right:keys[p.keys.right]?1:0,shoot:keys[p.keys.shoot]?1:0,reload:keys[p.keys.reload]?1:0};
+        stepPlayer(p,inp);
+      } else if(p.team===0&&!p.isBot){
+        // Online: host's own character
+        const me=players[0];
+        const inp={up:keys[me.keys.up]?1:0,down:keys[me.keys.down]?1:0,left:keys[me.keys.left]?1:0,right:keys[me.keys.right]?1:0,shoot:keys[me.keys.shoot]?1:0,reload:keys[me.keys.reload]?1:0};
+        stepPlayer(p,inp);
+      } else if(p.team===1&&!p.isBot){
+        // Online: guest character driven by remoteInput
+        stepPlayer(p, remoteInput);
+      }
     }
 
-    // Bullets (host is authoritative)
-    for (let i = bullets.length - 1; i >= 0; i--) {
-      let b = bullets[i];
-      b.x += b.vx; b.y += b.vy; b.life--;
-      let tx = Math.floor(b.x/TILE), ty = Math.floor(b.y/TILE);
-      if (isBlockingBullet(tx,ty) || b.life<=0 || b.x<0||b.x>W||b.y<0||b.y>H) { bullets.splice(i,1); continue; }
-      for (let p of players) {
-        if (p.id !== b.owner && p.alive) {
-          if ((b.x-p.x)**2+(b.y-p.y)**2 < 14*14) {
-            p.hp = Math.max(0, p.hp - (15 + Math.random()*10|0));
-            bullets.splice(i,1);
-            if (p.hp <= 0) { p.alive = false; endRound(b.owner); }
-            break;
-          }
+    // Process bullets
+    for(let i=bullets.length-1;i>=0;i--){
+      const b=bullets[i];
+      b.x+=b.vx; b.y+=b.vy; b.life--;
+      const tx=Math.floor(b.x/TILE), ty=Math.floor(b.y/TILE);
+      if(isBlockingBullet(tx,ty)||b.life<=0||b.x<0||b.x>W||b.y<0||b.y>H){bullets.splice(i,1);continue;}
+      for(const p of players){
+        if(!p.alive||p.id===b.owner) continue;
+        // Skip friendly unless FF on
+        if(p.team===b.ownerTeam&&!settings.friendlyFire) continue;
+        if((b.x-p.x)**2+(b.y-p.y)**2<14*14){
+          p.hp=Math.max(0,p.hp-(15+Math.random()*10|0));
+          bullets.splice(i,1);
+          if(p.hp<=0){p.alive=false;checkRoundEnd();}
+          break;
         }
       }
     }
 
-    // Broadcast authoritative state to guest every 2 frames
-    if (myPlayerIndex !== -2 && frameCount % 2 === 0) {
-      send({ type: 'state',
-        p0: { x: players[0].x, y: players[0].y, hp: players[0].hp, ammo: players[0].ammo, reloading: players[0].reloading, reloadTimer: players[0].reloadTimer, alive: players[0].alive, angle: players[0].angle },
-        p1: { x: players[1].x, y: players[1].y, hp: players[1].hp, ammo: players[1].ammo, reloading: players[1].reloading, reloadTimer: players[1].reloadTimer, alive: players[1].alive, angle: players[1].angle },
-        bullets: bullets.map(b=>({x:b.x,y:b.y,vx:b.vx,vy:b.vy,owner:b.owner,color:b.color}))
+    // Broadcast state
+    if(myPlayerIndex!==-2&&frameCount%2===0){
+      send({type:'state',
+        ps:players.map(p=>({id:p.id,x:p.x,y:p.y,hp:p.hp,ammo:p.ammo,reloading:p.reloading,reloadTimer:p.reloadTimer,alive:p.alive,angle:p.angle})),
+        bullets:bullets.map(b=>({x:b.x,y:b.y,vx:b.vx,vy:b.vy,owner:b.owner,ownerTeam:b.ownerTeam,color:b.color}))
       });
     }
 
     // Ping
     pingTimer++;
-    if (pingTimer > 60 && myPlayerIndex !== -2) {
-      pingTimer = 0;
-      send({ type: 'ping', t: Date.now() });
-    }
-  } else {
-    // GUEST: send own inputs to host every single frame for responsiveness
-    const p = players[myPlayerIndex];
-    send({ type: 'input',
-      up: keys[p.keys.up]?1:0, down: keys[p.keys.down]?1:0,
-      left: keys[p.keys.left]?1:0, right: keys[p.keys.right]?1:0,
-      shoot: keys[p.keys.shoot]?1:0, reload: keys[p.keys.reload]?1:0
-    });
+    if(pingTimer>60&&myPlayerIndex!==-2){pingTimer=0;send({type:'ping',t:Date.now()});}
 
-    // Guest-side: smoothly move bullets visually (state will be corrected by host)
-    for (let b of bullets) { b.x += b.vx; b.y += b.vy; }
+  } else {
+    // GUEST — send inputs
+    const guestP=players.find(p=>!p.isBot&&p.team===1);
+    if(guestP) send({type:'input',up:keys[guestP.keys.up]?1:0,down:keys[guestP.keys.down]?1:0,left:keys[guestP.keys.left]?1:0,right:keys[guestP.keys.right]?1:0,shoot:keys[guestP.keys.shoot]?1:0,reload:keys[guestP.keys.reload]?1:0});
+    // Visual bullet extrapolation
+    for(const b of bullets){b.x+=b.vx;b.y+=b.vy;}
   }
 
   frameCount++;
   updateHUD();
 }
 
-function applyHostState(msg) {
-  if (!players) return;
-  for (let key of ['x','y','hp','ammo','reloading','reloadTimer','alive','angle']) {
-    players[0][key] = msg.p0[key];
-    players[1][key] = msg.p1[key];
+function applyHostState(msg){
+  if(!players||!msg.ps) return;
+  for(const ps of msg.ps){
+    const p=players.find(p=>p.id===ps.id);
+    if(p) for(const k of['x','y','hp','ammo','reloading','reloadTimer','alive','angle']) p[k]=ps[k];
   }
-  bullets = msg.bullets.map(b => ({ ...b, life: 30 }));
+  bullets=msg.bullets.map(b=>({...b,life:30}));
 }
 
-// ═══════════════════════════════════════════════════════════
-// ROUND / MATCH MANAGEMENT
-// ═══════════════════════════════════════════════════════════
-function endRound(winner) {
-  if (roundState !== 'playing') return;
-  roundState = 'over';
+// ════════════════════════════════════════
+// ROUND / WIN
+// ════════════════════════════════════════
+function checkRoundEnd(){
+  if(roundState!=='playing') return;
+  const t0=players.some(p=>p.team===0&&p.alive);
+  const t1=players.some(p=>p.team===1&&p.alive);
+  if(!t0||!t1) endRound(t0?0:1);
+}
+
+function endRound(winner){
+  if(roundState!=='playing') return;
+  roundState='over';
   scores[winner]++;
-  document.getElementById('s1').textContent = scores[0];
-  document.getElementById('s2').textContent = scores[1];
-
-  const matchOver = scores[0] >= 3 || scores[1] >= 3;
-  if (myPlayerIndex !== -2) {
-    send({ type: 'round_end', winner, round: round + 1, matchOver });
-  }
-
-  setTimeout(() => {
-    if (matchOver) {
-      showWinner(winner);
-    } else {
-      round++;
-      document.getElementById('round-info').textContent = `ROUND ${round}`;
-      initRound();
-    }
-  }, 1800);
+  document.getElementById('s1').textContent=scores[0];
+  document.getElementById('s2').textContent=scores[1];
+  const matchOver=scores[0]>=settings.roundsToWin||scores[1]>=settings.roundsToWin;
+  if(myPlayerIndex!==-2) send({type:'round_end',winner,round:round+1,matchOver});
+  setTimeout(()=>{
+    if(matchOver) showWinner(winner);
+    else{round++;document.getElementById('round-info').textContent=`ROUND ${round}`;initRound();}
+  },1800);
 }
 
-function showWinner(winner) {
-  const isMe = winner === myPlayerIndex || myPlayerIndex === -2;
-  const col = winner === 0 ? '#1a6bff' : '#ff3a3a';
-  const role = winner === 0 ? 'ATTACKER' : 'DEFENDER';
-  showGameOverlay(`
-    <div class="overlay-title" style="color:${col}">${role}</div>
-    <div id="winner-text">WINS THE MATCH</div>
-    <div class="overlay-sub">SCORE: ${scores[0]} — ${scores[1]}</div>
-    <button class="btn" onclick="location.reload()">MAIN MENU</button>
-  `);
-  gameActive = false;
+function showWinner(winner){
+  const col=winner===0?'#1a6bff':'#ff3a3a';
+  const label=winner===0?'ATTACKERS':'DEFENDERS';
+  showGameOverlay(`<div class="overlay-title" style="color:${col}">${label}</div>
+    <div id="winner-text">WIN THE MATCH</div>
+    <div class="overlay-sub">FINAL SCORE: ${scores[0]} — ${scores[1]}</div>
+    <button class="btn" onclick="location.reload()">MAIN MENU</button>`);
+  gameActive=false;
 }
 
-// ═══════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 // HUD
-// ═══════════════════════════════════════════════════════════
-function updateHUD() {
-  if (!players) return;
-  const p1 = players[0], p2 = players[1];
-  document.getElementById('p1-health-bar').style.width = (p1.hp/p1.maxHp*100) + '%';
-  document.getElementById('p2-health-bar').style.width = (p2.hp/p2.maxHp*100) + '%';
-  document.getElementById('p1-ammo').textContent = p1.reloading ? 'RELOADING...' : `AMM: ${p1.ammo}/${p1.maxAmmo}`;
-  document.getElementById('p2-ammo').textContent = p2.reloading ? 'RELOADING...' : `AMM: ${p2.ammo}/${p2.maxAmmo}`;
+// ════════════════════════════════════════
+function updateHUD(){
+  if(!players.length) return;
+  const p1=players.find(p=>p.team===0&&!p.isBot)||players[0];
+  const p2=players.find(p=>p.team===1&&!p.isBot)||players.find(p=>p.team===1);
+  if(p1){document.getElementById('p1-health-bar').style.width=(p1.hp/100*100)+'%';document.getElementById('p1-ammo').textContent=p1.reloading?'RELOADING...':`AMM: ${p1.ammo}/${p1.maxAmmo}`;}
+  if(p2){document.getElementById('p2-health-bar').style.width=(p2.hp/100*100)+'%';document.getElementById('p2-ammo').textContent=p2.reloading?'RELOADING...':`AMM: ${p2.ammo}/${p2.maxAmmo}`;}
 }
 
-// ═══════════════════════════════════════════════════════════
+// ════════════════════════════════════════
 // DRAW
-// ═══════════════════════════════════════════════════════════
-function drawMap() {
-  for (let row = 0; row < MAP.length; row++) {
-    for (let col = 0; col < MAP[row].length; col++) {
-      let cell = MAP[row][col], x = col*TILE, y = row*TILE;
-      if (cell === 1) {
-        ctx.fillStyle = '#0d0f14'; ctx.fillRect(x,y,TILE,TILE);
-        ctx.fillStyle = '#181c24'; ctx.fillRect(x+1,y+1,TILE-2,TILE-2);
-        ctx.strokeStyle = '#f7a80022'; ctx.lineWidth = 0.5; ctx.strokeRect(x,y,TILE,TILE);
-      } else if (cell === 2) {
-        ctx.fillStyle = '#1a1e2a'; ctx.fillRect(x,y,TILE,TILE);
-        ctx.fillStyle = '#2a3040'; ctx.fillRect(x+4,y+4,TILE-8,TILE-8);
-        ctx.strokeStyle = '#f7a80044'; ctx.lineWidth = 1; ctx.strokeRect(x+4,y+4,TILE-8,TILE-8);
+// ════════════════════════════════════════
+function drawMap(){
+  for(let row=0;row<MAP.length;row++){
+    for(let col=0;col<MAP[row].length;col++){
+      const cell=MAP[row][col],x=col*TILE,y=row*TILE;
+      if(cell===1){
+        ctx.fillStyle='#0d0f14';ctx.fillRect(x,y,TILE,TILE);
+        ctx.fillStyle='#181c24';ctx.fillRect(x+1,y+1,TILE-2,TILE-2);
+        ctx.strokeStyle='#f7a80020';ctx.lineWidth=0.5;ctx.strokeRect(x,y,TILE,TILE);
+      } else if(cell===2){
+        ctx.fillStyle='#1a1e2a';ctx.fillRect(x,y,TILE,TILE);
+        ctx.fillStyle='#2a3040';ctx.fillRect(x+4,y+4,TILE-8,TILE-8);
+        ctx.strokeStyle='#f7a80044';ctx.lineWidth=1;ctx.strokeRect(x+4,y+4,TILE-8,TILE-8);
       } else {
-        ctx.fillStyle = (row+col)%2===0 ? '#111318' : '#12141a'; ctx.fillRect(x,y,TILE,TILE);
+        ctx.fillStyle=(row+col)%2===0?'#111318':'#12141a';ctx.fillRect(x,y,TILE,TILE);
       }
     }
   }
 }
 
-function drawPlayer(p) {
-  if (!p.alive) return;
-  ctx.save(); ctx.translate(p.x, p.y);
-  ctx.shadowColor = p.color; ctx.shadowBlur = 14;
-  ctx.beginPath(); ctx.arc(0,0,12,0,Math.PI*2); ctx.fillStyle = p.darkColor; ctx.fill();
-  ctx.strokeStyle = p.color; ctx.lineWidth = 2; ctx.stroke();
-  ctx.shadowBlur = 0;
+function drawPlayer(p){
+  if(!p.alive) return;
+  const r=p.isBot?9:12;
+  ctx.save();ctx.translate(p.x,p.y);
+  ctx.shadowColor=p.color;ctx.shadowBlur=p.isBot?6:14;
+  ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fillStyle=p.darkColor;ctx.fill();
+  ctx.strokeStyle=p.color;ctx.lineWidth=p.isBot?1.5:2;ctx.stroke();
+  ctx.shadowBlur=0;
 
   // "YOU" indicator ring
-  if (p.id === myPlayerIndex) {
-    ctx.beginPath(); ctx.arc(0,0,16,0,Math.PI*2);
-    ctx.strokeStyle = p.color + '55'; ctx.lineWidth = 1; ctx.stroke();
+  const isMe=(myPlayerIndex===-2&&p.id===0)||(myPlayerIndex===0&&p.id===0)||(myPlayerIndex===1&&!p.isBot&&p.team===1);
+  if(isMe){ctx.beginPath();ctx.arc(0,0,r+4,0,Math.PI*2);ctx.strokeStyle=p.color+'44';ctx.lineWidth=1;ctx.stroke();}
+
+  // Bot marker (small triangle above)
+  if(p.isBot){
+    ctx.fillStyle=p.color+'99';
+    ctx.beginPath();ctx.moveTo(0,-14);ctx.lineTo(-3,-19);ctx.lineTo(3,-19);ctx.closePath();ctx.fill();
   }
 
   ctx.rotate(p.angle);
-  ctx.fillStyle = p.color; ctx.fillRect(10,-2,14,4);
-  ctx.beginPath(); ctx.arc(0,0,3,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
+  ctx.fillStyle=p.color;ctx.fillRect(r-2,-2,p.isBot?10:13,4);
+  ctx.beginPath();ctx.arc(0,0,2.5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
   ctx.restore();
 
-  if (p.reloading) {
-    const prog = 1 - (p.reloadTimer/120);
-    ctx.beginPath(); ctx.arc(p.x,p.y,17,-Math.PI/2,-Math.PI/2+Math.PI*2*prog);
-    ctx.strokeStyle = '#f7a800'; ctx.lineWidth=2; ctx.stroke();
+  // Reload ring
+  if(p.reloading){
+    const prog=1-(p.reloadTimer/120);
+    ctx.beginPath();ctx.arc(p.x,p.y,r+5,-Math.PI/2,-Math.PI/2+Math.PI*2*prog);
+    ctx.strokeStyle='#f7a800';ctx.lineWidth=2;ctx.stroke();
   }
-}
-
-function drawBullets() {
-  for (let b of bullets) {
-    ctx.save();
-    ctx.shadowColor = b.color; ctx.shadowBlur = 8;
-    ctx.beginPath(); ctx.arc(b.x,b.y,3,0,Math.PI*2); ctx.fillStyle='#fff'; ctx.fill();
-    ctx.beginPath(); ctx.arc(b.x,b.y,2,0,Math.PI*2); ctx.fillStyle=b.color; ctx.fill();
-    ctx.restore();
+  // Bot HP bar
+  if(p.isBot&&p.hp<100){
+    ctx.fillStyle='#111';ctx.fillRect(p.x-14,p.y-24,28,3);
+    ctx.fillStyle=p.color;ctx.fillRect(p.x-14,p.y-24,28*(p.hp/100),3);
   }
-}
-
-function drawRoundOver() {
-  if (roundState === 'over') {
-    ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(0,0,W,H);
-    let dead = players.find(p => !p.alive);
-    if (dead) {
-      ctx.fillStyle = dead.color + '99'; ctx.font = 'bold 18px Rajdhani';
-      ctx.textAlign = 'center';
-      const name = dead.id === 0 ? 'ATTACKER' : 'DEFENDER';
-      ctx.fillText(`${name} ELIMINATED`, W/2, H/2-10);
-      ctx.fillStyle = '#f7a800'; ctx.font = '13px Share Tech Mono';
-      ctx.fillText(`ROUND TO ${dead.id===0?'DEFENDER':'ATTACKER'}`, W/2, H/2+16);
+  // Friendly fire warning glow when FF is on and player is on same team as "me"
+  if(settings.friendlyFire){
+    const myTeam = myPlayerIndex===-2 ? -1 : (myPlayerIndex===0?0:1);
+    if(myTeam!==(-1)&&p.team===myTeam&&!isMe){
+      ctx.beginPath();ctx.arc(p.x,p.y,r+6,0,Math.PI*2);
+      ctx.strokeStyle='#ff440033';ctx.lineWidth=2;ctx.stroke();
     }
   }
 }
 
-function loop(ts) {
-  if (!gameLoopRunning) return;
-  if (gameActive) update();
-  ctx.clearRect(0,0,W,H);
-  if (players) {
-    drawMap();
-    drawBullets();
-    players.forEach(drawPlayer);
-    drawRoundOver();
+function drawBullets(){
+  for(const b of bullets){
+    ctx.save();ctx.shadowColor=b.color;ctx.shadowBlur=8;
+    ctx.beginPath();ctx.arc(b.x,b.y,3,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.beginPath();ctx.arc(b.x,b.y,2,0,Math.PI*2);ctx.fillStyle=b.color;ctx.fill();
+    ctx.restore();
   }
+}
+
+function drawRoundOver(){
+  if(roundState==='over'){
+    ctx.fillStyle='rgba(0,0,0,0.45)';ctx.fillRect(0,0,W,H);
+    const winTeam=players.some(p=>p.team===0&&p.alive)?0:1;
+    ctx.fillStyle=(winTeam===0?'#1a6bff':'#ff3a3a')+'99';
+    ctx.font='bold 18px Rajdhani';ctx.textAlign='center';
+    ctx.fillText(`${winTeam===0?'ATTACKERS':'DEFENDERS'} WIN THE ROUND`,W/2,H/2-10);
+    ctx.fillStyle='#f7a800';ctx.font='13px Share Tech Mono';
+    ctx.fillText(`SCORE: ${scores[0]} — ${scores[1]}`,W/2,H/2+16);
+  }
+}
+
+function loop(){
+  if(!gameLoopRunning) return;
+  if(gameActive) update();
+  ctx.clearRect(0,0,W,H);
+  if(players.length){drawMap();drawBullets();players.forEach(drawPlayer);drawRoundOver();}
   requestAnimationFrame(loop);
 }
 
-// ═══════════════════════════════════════════════════════════
-// OVERLAY HELPERS
-// ═══════════════════════════════════════════════════════════
-function showGameOverlay(html) {
-  const el = document.getElementById('game-overlay');
-  el.innerHTML = html;
-  el.classList.remove('hidden');
-}
-
-function dismissOverlayAndStart() {
+// ════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════
+function showGameOverlay(html){const el=document.getElementById('game-overlay');el.innerHTML=html;el.classList.remove('hidden');}
+function dismissOverlayAndStart(){
   document.getElementById('game-overlay').classList.add('hidden');
-  gameActive = true;
-  if (!gameLoopRunning) { gameLoopRunning = true; requestAnimationFrame(loop); }
+  gameActive=true;
+  if(!gameLoopRunning){gameLoopRunning=true;requestAnimationFrame(loop);}
 }
-
-function setJoinStatus(msg, type='info') {
-  const el = document.getElementById('join-status');
-  el.textContent = msg;
-  el.className = `status-msg ${type}`;
-}
-
-function copyCode() {
-  const code = document.getElementById('room-code').textContent;
-  if (code !== '——') {
-    navigator.clipboard.writeText(code).then(() => {
-      const btn = document.querySelector('.copy-btn');
-      btn.textContent = 'COPIED!';
-      setTimeout(() => btn.textContent = 'COPY', 1500);
-    });
-  }
+function setJoinStatus(msg,type='info'){const el=document.getElementById('join-status');el.textContent=msg;el.className=`status-msg ${type}`;}
+function copyCode(){
+  const code=document.getElementById('room-code').textContent;
+  if(code!=='——'){navigator.clipboard.writeText(code).then(()=>{const btn=document.querySelector('.copy-btn');btn.textContent='COPIED!';setTimeout(()=>btn.textContent='COPY',1500);});}
 }
 </script>
 </body>
