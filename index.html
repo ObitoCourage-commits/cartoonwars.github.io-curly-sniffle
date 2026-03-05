@@ -15,6 +15,7 @@
     --bg: #0a0b0d;
     --surface: #0f1117;
     --border: #1e2330;
+    --green: #00ff88;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,59 +37,103 @@
   .screen.active { display: flex; }
 
   /* ─── MENU ─── */
-  .logo-wrap { text-align: center; margin-bottom: 48px; }
+  .logo-wrap { text-align: center; margin-bottom: 32px; }
   .logo-title { font-size: 64px; font-weight: 700; letter-spacing: 10px; color: var(--gold); text-shadow: 0 0 60px rgba(247,168,0,0.35); line-height: 1; }
   .logo-sub { font-size: 12px; letter-spacing: 6px; color: #444; font-family: 'Share Tech Mono', monospace; margin-top: 8px; }
 
-  .menu-cards { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; max-width: 900px; }
+  .menu-top-bar { display:flex; align-items:center; justify-content:center; gap:16px; margin-bottom:24px; }
+  .coin-badge { display:flex; align-items:center; gap:7px; background:rgba(247,168,0,0.07); border:1px solid rgba(247,168,0,0.25); padding:7px 14px; font-family:'Share Tech Mono',monospace; font-size:13px; letter-spacing:2px; color:var(--gold); }
+  .win-badge { background:rgba(0,255,136,0.06); border-color:rgba(0,255,136,0.2); color:var(--green); }
+
+  .menu-cards { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; max-width: 960px; }
   .menu-card {
-    width: 190px; padding: 26px 18px;
+    width: 170px; padding: 22px 16px;
     border: 1px solid var(--border); background: var(--surface);
     cursor: pointer; transition: all 0.2s; text-align: center; position: relative; overflow: hidden;
   }
   .menu-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,transparent 60%,rgba(247,168,0,0.04)); pointer-events:none; }
   .menu-card:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(247,168,0,0.1); }
-  .card-icon { font-size: 34px; margin-bottom: 12px; display: block; }
-  .card-title { font-size: 17px; font-weight: 700; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; }
+  .card-icon { font-size: 30px; margin-bottom: 10px; display: block; }
+  .card-title { font-size: 15px; font-weight: 700; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; }
   .card-desc { font-size: 10px; letter-spacing: 2px; color: #555; font-family: 'Share Tech Mono', monospace; margin-top: 6px; line-height: 1.8; }
   .local-card .card-title { color: #aaa; }
   .local-card:hover { border-color: #aaa; }
   .settings-card .card-title { color: #888; }
   .settings-card:hover { border-color: #888; }
+  .arsenal-card .card-title { color: var(--green); }
+  .arsenal-card:hover { border-color: var(--green); box-shadow: 0 8px 32px rgba(0,255,136,0.08); }
 
-  #active-settings-wrap { margin-top: 16px; min-height: 20px; text-align: center; }
+  #active-settings-wrap { margin-top: 12px; min-height: 20px; text-align: center; }
   .settings-badge { display: inline-block; padding: 2px 8px; border: 1px solid #2a2a2a; font-size: 9px; letter-spacing: 2px; color: var(--gold); font-family: 'Share Tech Mono', monospace; margin: 2px; background: rgba(247,168,0,0.06); }
 
   /* ─── SETTINGS ─── */
   .settings-container { width: 580px; border: 1px solid var(--border); background: var(--surface); padding: 40px; }
   .settings-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
   .settings-title { font-size: 24px; font-weight: 700; letter-spacing: 5px; color: var(--gold); flex: 1; }
-
   .settings-group { margin-bottom: 24px; }
   .settings-group-label { font-size: 10px; letter-spacing: 4px; color: #2e2e2e; font-family: 'Share Tech Mono', monospace; text-transform: uppercase; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #161616; }
-
   .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid #111; }
   .setting-row:last-child { border-bottom: none; }
   .setting-info { flex: 1; }
   .setting-name { font-size: 15px; font-weight: 700; letter-spacing: 2px; color: #ccc; }
   .setting-desc { font-size: 10px; letter-spacing: 1px; color: #444; font-family: 'Share Tech Mono', monospace; margin-top: 3px; }
-
-  /* Toggle */
   .toggle { position: relative; width: 52px; height: 26px; flex-shrink: 0; cursor: pointer; }
   .toggle input { opacity: 0; width: 0; height: 0; }
   .toggle-track { position: absolute; inset: 0; background: #1a1a1a; border: 1px solid #333; transition: all 0.2s; }
   .toggle-thumb { position: absolute; top: 4px; left: 4px; width: 16px; height: 16px; background: #444; transition: all 0.2s; }
   .toggle input:checked ~ .toggle-track { background: rgba(247,168,0,0.15); border-color: var(--gold); }
   .toggle input:checked ~ .toggle-thumb { left: 30px; background: var(--gold); }
-
-  /* Stepper */
   .stepper { display: flex; align-items: center; }
   .stepper-btn { width: 28px; height: 28px; background: #111; border: 1px solid #333; color: #888; font-size: 16px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; }
   .stepper-btn:hover { border-color: var(--gold); color: var(--gold); }
   .stepper-val { width: 36px; height: 28px; background: #0a0b0d; border-top: 1px solid #333; border-bottom: 1px solid #333; display: flex; align-items: center; justify-content: center; font-family: 'Share Tech Mono', monospace; font-size: 14px; color: #fff; }
-
   .settings-save-btn { width: 100%; margin-top: 8px; padding: 14px; background: transparent; border: 2px solid var(--gold); color: var(--gold); font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 5px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
   .settings-save-btn:hover { background: var(--gold); color: #000; }
+
+  /* ─── ARSENAL ─── */
+  #arsenal-screen { overflow-y: auto; padding: 20px 0; justify-content: flex-start; }
+  .arsenal-wrap { width: 800px; border: 1px solid var(--border); background: var(--surface); padding: 36px; }
+  .arsenal-header { display:flex; align-items:center; gap:16px; margin-bottom:28px; padding-bottom:20px; border-bottom:1px solid var(--border); }
+  .arsenal-title { font-size:24px; font-weight:700; letter-spacing:5px; color:var(--green); flex:1; }
+  .arsenal-coins { font-family:'Share Tech Mono',monospace; font-size:13px; color:var(--gold); display:flex; align-items:center; gap:6px; }
+
+  .weapon-category { margin-bottom:28px; }
+  .wcat-label { font-size:10px; letter-spacing:4px; color:#2a2a2a; font-family:'Share Tech Mono',monospace; text-transform:uppercase; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid #161616; }
+  .weapon-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+
+  .wcard { border:1px solid var(--border); background:#0a0b0d; padding:14px 12px; position:relative; overflow:hidden; transition:all 0.18s; }
+  .wcard.owned { cursor:pointer; }
+  .wcard.owned:hover { border-color:#444; transform:translateY(-2px); }
+  .wcard.equipped { border-color:var(--green); background:rgba(0,255,136,0.03); }
+  .wcard.locked { opacity:0.6; }
+  .wcard.locked:hover { border-color:#ff8800; cursor:pointer; }
+
+  .wcard-emoji { font-size:26px; margin-bottom:8px; display:block; }
+  .wcard-name { font-size:13px; font-weight:700; letter-spacing:2px; color:#ccc; text-transform:uppercase; }
+  .wcard-type { font-size:9px; letter-spacing:2px; color:#3a3a3a; font-family:'Share Tech Mono',monospace; margin-top:2px; text-transform:uppercase; }
+  .wcard-desc { font-size:10px; letter-spacing:1px; color:#444; font-family:'Share Tech Mono',monospace; margin-top:6px; line-height:1.7; }
+
+  .stat-bars { margin-top:10px; display:flex; flex-direction:column; gap:3px; }
+  .stat-row { display:flex; align-items:center; gap:6px; }
+  .stat-lbl { font-size:9px; letter-spacing:1px; color:#333; font-family:'Share Tech Mono',monospace; width:46px; }
+  .stat-bg { flex:1; height:3px; background:#181818; }
+  .stat-fill { height:3px; transition:width 0.3s; }
+
+  .wcard-cost { margin-top:10px; display:flex; align-items:center; gap:5px; font-family:'Share Tech Mono',monospace; font-size:11px; }
+  .cost-free { color:var(--green); }
+  .cost-gold { color:var(--gold); }
+  .cost-dim { color:#444; }
+
+  .wbtn { width:100%; margin-top:8px; padding:7px; background:transparent; font-family:'Share Tech Mono',monospace; font-size:10px; letter-spacing:2px; cursor:pointer; transition:all 0.2s; }
+  .wbtn-unlock { border:1px solid var(--gold); color:var(--gold); }
+  .wbtn-unlock:hover:not(:disabled) { background:rgba(247,168,0,0.12); }
+  .wbtn-unlock:disabled { border-color:#2a2a2a; color:#333; cursor:not-allowed; }
+  .wbtn-equip { border:1px solid var(--green); color:var(--green); }
+  .wbtn-equip:hover { background:rgba(0,255,136,0.1); }
+  .wbtn-equipped { border:1px solid var(--green); color:var(--green); background:rgba(0,255,136,0.07); cursor:default; }
+
+  .arsenal-tip { margin-top:20px; padding:14px; border:1px solid #161616; background:rgba(0,255,136,0.02); font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; color:#444; line-height:2; }
+  .arsenal-tip span { color:var(--gold); }
 
   /* ─── LOBBY ─── */
   .lobby-container { width: 560px; border: 1px solid var(--border); background: var(--surface); padding: 40px; max-height: 90vh; overflow-y: auto; }
@@ -143,10 +188,7 @@
 
   /* ─── MAP PICKER ─── */
   .map-picker-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .map-card {
-    border: 1px solid var(--border); background: #0a0b0d;
-    padding: 10px; cursor: pointer; transition: all 0.18s; position: relative; overflow: hidden;
-  }
+  .map-card { border: 1px solid var(--border); background: #0a0b0d; padding: 10px; cursor: pointer; transition: all 0.18s; position: relative; overflow: hidden; }
   .map-card:hover { border-color: #555; }
   .map-card.selected { border-color: var(--gold); background: rgba(247,168,0,0.05); }
   .map-card.selected::after { content:'✓ SELECTED'; position:absolute; top:7px; right:8px; color:var(--gold); font-size:9px; font-family:'Share Tech Mono',monospace; letter-spacing:1px; }
@@ -165,13 +207,13 @@
   #p1-health-bar { background: linear-gradient(90deg, var(--blue), #44aaff); }
   #p2-health-bar { background: linear-gradient(90deg, var(--red), #ff7a1a); }
   .ammo-display { font-family: 'Share Tech Mono', monospace; font-size: 13px; letter-spacing: 2px; }
+  .weapon-name-hud { font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px; color: #3a3a3a; margin-top: 1px; }
   #center-hud { text-align: center; flex: 1; }
   #round-info { font-size: 11px; color: var(--gold); letter-spacing: 4px; font-family: 'Share Tech Mono', monospace; }
   #score-display { font-size: 26px; font-weight: 700; letter-spacing: 8px; color: #fff; }
   #score-display .sep { color: var(--gold); }
   #ping-display { position: absolute; top: 6px; right: 10px; font-family: 'Share Tech Mono', monospace; font-size: 10px; color: #333; letter-spacing: 1px; }
   #ff-badge { position: absolute; bottom: 5px; right: 10px; font-family: 'Share Tech Mono', monospace; font-size: 9px; letter-spacing: 2px; color: #ff4444; display: none; }
-  /* ─── CTF HUD ─── */
   #ctf-hud { display:none; align-items:center; justify-content:space-between; width:800px; padding:5px 12px; background:rgba(10,11,13,0.9); border:1px solid var(--border); border-top:none; font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:2px; }
   #ctf-hud.active { display:flex; }
   .ctf-flag-status { display:flex; align-items:center; gap:8px; }
@@ -179,7 +221,6 @@
   .ctf-score-bar { display:flex; align-items:center; gap:12px; color:#666; }
   .ctf-cap { font-size:18px; font-weight:700; color:#fff; }
   canvas { display: block; border: 1px solid var(--border); border-top: none; cursor: none; }
-
   #game-overlay { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.88); z-index: 100; gap: 20px; }
   #game-overlay.hidden { display: none; }
   .overlay-title { font-size: 52px; font-weight: 700; letter-spacing: 8px; text-transform: uppercase; color: var(--gold); text-shadow: 0 0 40px rgba(247,168,0,0.4); }
@@ -187,6 +228,25 @@
   .btn { margin-top: 10px; padding: 12px 40px; background: transparent; border: 2px solid var(--gold); color: var(--gold); font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
   .btn:hover { background: var(--gold); color: #000; }
   #winner-text { font-size: 22px; letter-spacing: 5px; color: #fff; font-family: 'Share Tech Mono', monospace; }
+
+  /* ─── REWARD POPUP ─── */
+  #reward-popup { position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,0.88); z-index:300; }
+  #reward-popup.show { display:flex; }
+  .reward-card { width:400px; border:2px solid var(--gold); background:var(--surface); padding:38px; text-align:center; animation:rewardIn 0.35s cubic-bezier(0.2,0.8,0.2,1.1); }
+  @keyframes rewardIn { from{transform:scale(0.75);opacity:0} to{transform:scale(1);opacity:1} }
+  .reward-headline { font-size:11px; letter-spacing:5px; color:#555; font-family:'Share Tech Mono',monospace; margin-bottom:10px; }
+  .reward-outcome { font-size:38px; font-weight:700; letter-spacing:6px; margin-bottom:18px; }
+  .reward-outcome.win { color:var(--gold); text-shadow:0 0 30px rgba(247,168,0,0.4); }
+  .reward-outcome.loss { color:#ff3a3a; text-shadow:0 0 30px rgba(255,58,58,0.3); }
+  .reward-total { font-size:52px; font-weight:700; color:var(--gold); text-shadow:0 0 40px rgba(247,168,0,0.5); line-height:1; }
+  .reward-total-label { font-family:'Share Tech Mono',monospace; font-size:11px; letter-spacing:3px; color:#555; margin-top:4px; margin-bottom:20px; }
+  .reward-lines { border:1px solid var(--border); padding:12px 16px; margin-bottom:20px; text-align:left; }
+  .reward-line { display:flex; justify-content:space-between; align-items:center; font-family:'Share Tech Mono',monospace; font-size:11px; padding:5px 0; border-bottom:1px solid #0f0f0f; }
+  .reward-line:last-child { border-bottom:none; }
+  .rl-label { color:#555; letter-spacing:1px; }
+  .rl-val { color:var(--gold); letter-spacing:1px; }
+  .reward-collect { width:100%; padding:13px; background:transparent; border:2px solid var(--gold); color:var(--gold); font-family:'Rajdhani',sans-serif; font-size:16px; font-weight:700; letter-spacing:5px; cursor:pointer; transition:all 0.2s; }
+  .reward-collect:hover { background:var(--gold); color:#000; }
 </style>
 </head>
 <body>
@@ -196,6 +256,10 @@
   <div class="logo-wrap">
     <div class="logo-title">R6 SIEGE</div>
     <div class="logo-sub">ONLINE · TACTICAL SHOOTER</div>
+  </div>
+  <div class="menu-top-bar">
+    <div class="coin-badge">🪙 <span id="menu-coins">0</span> COINS</div>
+    <div class="coin-badge win-badge">🏆 <span id="menu-wins">0</span> WINS</div>
   </div>
   <div class="menu-cards">
     <div class="menu-card" onclick="showLobby('create')">
@@ -218,6 +282,11 @@
       <div class="card-title">Settings</div>
       <div class="card-desc">Teams · Bots<br>Friendly Fire</div>
     </div>
+    <div class="menu-card arsenal-card" onclick="openArsenal()">
+      <span class="card-icon">🔫</span>
+      <div class="card-title">Arsenal</div>
+      <div class="card-desc">Unlock weapons<br>with earned coins</div>
+    </div>
   </div>
   <div id="active-settings-wrap"></div>
 </div>
@@ -229,100 +298,56 @@
       <button class="back-btn" onclick="saveSettings()">◀ BACK</button>
       <div class="settings-title">MATCH SETTINGS</div>
     </div>
-
     <div class="settings-group">
       <div class="settings-group-label">TEAM COMPOSITION</div>
-
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">AI TEAMMATES</div>
-          <div class="setting-desc">Add AI bots to your side (Blue team)</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="s-ai-teammates" onchange="updateStepperVis()">
-          <div class="toggle-track"></div>
-          <div class="toggle-thumb"></div>
-        </label>
+        <div class="setting-info"><div class="setting-name">AI TEAMMATES</div><div class="setting-desc">Add AI bots to your side (Blue team)</div></div>
+        <label class="toggle"><input type="checkbox" id="s-ai-teammates" onchange="updateStepperVis()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
       </div>
-
       <div class="setting-row" id="row-teammate-count" style="opacity:.3;pointer-events:none">
-        <div class="setting-info">
-          <div class="setting-name">TEAMMATE COUNT</div>
-          <div class="setting-desc">Number of AI allies to add to Blue team</div>
-        </div>
-        <div class="stepper">
-          <button class="stepper-btn" onclick="changeStep('teammate-count',-1)">−</button>
-          <div class="stepper-val" id="val-teammate-count">1</div>
-          <button class="stepper-btn" onclick="changeStep('teammate-count',1)">+</button>
-        </div>
+        <div class="setting-info"><div class="setting-name">TEAMMATE COUNT</div><div class="setting-desc">Number of AI allies to add to Blue team</div></div>
+        <div class="stepper"><button class="stepper-btn" onclick="changeStep('teammate-count',-1)">−</button><div class="stepper-val" id="val-teammate-count">1</div><button class="stepper-btn" onclick="changeStep('teammate-count',1)">+</button></div>
       </div>
-
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">AI ENEMIES</div>
-          <div class="setting-desc">Add extra AI bots to the enemy team (Red team)</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="s-ai-enemies" onchange="updateStepperVis()">
-          <div class="toggle-track"></div>
-          <div class="toggle-thumb"></div>
-        </label>
+        <div class="setting-info"><div class="setting-name">AI ENEMIES</div><div class="setting-desc">Add extra AI bots to the enemy team (Red team)</div></div>
+        <label class="toggle"><input type="checkbox" id="s-ai-enemies" onchange="updateStepperVis()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
       </div>
-
       <div class="setting-row" id="row-enemy-count" style="opacity:.3;pointer-events:none">
-        <div class="setting-info">
-          <div class="setting-name">ENEMY COUNT</div>
-          <div class="setting-desc">Number of extra AI enemies to add to Red team</div>
-        </div>
-        <div class="stepper">
-          <button class="stepper-btn" onclick="changeStep('enemy-count',-1)">−</button>
-          <div class="stepper-val" id="val-enemy-count">1</div>
-          <button class="stepper-btn" onclick="changeStep('enemy-count',1)">+</button>
-        </div>
+        <div class="setting-info"><div class="setting-name">ENEMY COUNT</div><div class="setting-desc">Number of extra AI enemies to add to Red team</div></div>
+        <div class="stepper"><button class="stepper-btn" onclick="changeStep('enemy-count',-1)">−</button><div class="stepper-val" id="val-enemy-count">1</div><button class="stepper-btn" onclick="changeStep('enemy-count',1)">+</button></div>
       </div>
     </div>
-
     <div class="settings-group">
       <div class="settings-group-label">MATCH RULES</div>
-
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">FRIENDLY FIRE</div>
-          <div class="setting-desc">Bullets can damage players on your own team</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="s-friendly-fire">
-          <div class="toggle-track"></div>
-          <div class="toggle-thumb"></div>
-        </label>
+        <div class="setting-info"><div class="setting-name">FRIENDLY FIRE</div><div class="setting-desc">Bullets can damage players on your own team</div></div>
+        <label class="toggle"><input type="checkbox" id="s-friendly-fire"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
       </div>
-
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">ROUNDS TO WIN</div>
-          <div class="setting-desc">How many rounds a team needs to win the match</div>
-        </div>
-        <div class="stepper">
-          <button class="stepper-btn" onclick="changeStep('rounds-to-win',-1)">−</button>
-          <div class="stepper-val" id="val-rounds-to-win">3</div>
-          <button class="stepper-btn" onclick="changeStep('rounds-to-win',1)">+</button>
-        </div>
+        <div class="setting-info"><div class="setting-name">ROUNDS TO WIN</div><div class="setting-desc">How many rounds a team needs to win the match</div></div>
+        <div class="stepper"><button class="stepper-btn" onclick="changeStep('rounds-to-win',-1)">−</button><div class="stepper-val" id="val-rounds-to-win">3</div><button class="stepper-btn" onclick="changeStep('rounds-to-win',1)">+</button></div>
       </div>
-
       <div class="setting-row">
-        <div class="setting-info">
-          <div class="setting-name">CAPTURE THE FLAG</div>
-          <div class="setting-desc">Steal the enemy flag and bring it to your base to score. First to 3 captures wins.</div>
-        </div>
-        <label class="toggle">
-          <input type="checkbox" id="s-ctf-mode">
-          <div class="toggle-track"></div>
-          <div class="toggle-thumb"></div>
-        </label>
+        <div class="setting-info"><div class="setting-name">CAPTURE THE FLAG</div><div class="setting-desc">Steal the enemy flag and bring it to your base to score. First to 3 captures wins.</div></div>
+        <label class="toggle"><input type="checkbox" id="s-ctf-mode"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
       </div>
     </div>
-
     <button class="settings-save-btn" onclick="saveSettings()">SAVE &amp; RETURN</button>
+  </div>
+</div>
+
+<!-- ══════════ ARSENAL -->
+<div id="arsenal-screen" class="screen">
+  <div class="arsenal-wrap">
+    <div class="arsenal-header">
+      <button class="back-btn" onclick="showScreen('menu-screen')">◀ BACK</button>
+      <div class="arsenal-title">⚔ ARSENAL</div>
+      <div class="arsenal-coins">🪙 <span id="arsenal-coins-display">0</span> COINS</div>
+    </div>
+    <div id="arsenal-grid"></div>
+    <div class="arsenal-tip">
+      EARN COINS: <span>+50</span> WIN · <span>+15</span> PARTICIPATION · <span>+10</span> PER KILL · <span>+25</span> CTF CAPTURE
+    </div>
   </div>
 </div>
 
@@ -348,12 +373,7 @@
         <div class="player-slot filled"><div class="slot-label">PLAYER 1</div><div class="slot-name active" id="slot1-name">YOU</div><div class="slot-role" style="color:var(--blue)">ATTACKER</div></div>
         <div class="player-slot" id="slot2"><div class="slot-label">PLAYER 2</div><div class="slot-name" id="slot2-name">WAITING...</div><div class="slot-role" style="color:#444">DEFENDER</div></div>
       </div>
-      <div>
-        <div class="section-label" style="margin-bottom:10px;">Select Map</div>
-        <div class="map-picker-grid" id="map-picker-grid">
-          <!-- filled by JS -->
-        </div>
-      </div>
+      <div><div class="section-label" style="margin-bottom:10px;">Select Map</div><div class="map-picker-grid" id="map-picker-grid"></div></div>
       <div class="waiting-status"><div class="dot-pulse" id="create-dot"></div><span id="create-status-text">Waiting for opponent to connect...</span></div>
       <button class="deploy-btn" id="host-deploy-btn" onclick="hostStartGame()" disabled>DEPLOY — WAITING FOR PLAYER 2</button>
     </div>
@@ -361,10 +381,7 @@
       <div><div class="section-label">Your Name</div><input class="name-input" id="guest-name" maxlength="12" placeholder="OPERATOR" value="GUEST"/></div>
       <div>
         <div class="section-label">Enter Room Code</div>
-        <div class="code-input-wrap">
-          <input class="code-input" id="room-code-input" maxlength="6" placeholder="ABCDEF"/>
-          <button class="join-btn" id="join-now-btn" onclick="joinRoom()">JOIN</button>
-        </div>
+        <div class="code-input-wrap"><input class="code-input" id="room-code-input" maxlength="6" placeholder="ABCDEF"/><button class="join-btn" id="join-now-btn" onclick="joinRoom()">JOIN</button></div>
       </div>
       <div class="player-slots">
         <div class="player-slot" id="jslot1"><div class="slot-label">PLAYER 1</div><div class="slot-name" id="jslot1-name">HOST</div><div class="slot-role" style="color:var(--blue)">ATTACKER</div></div>
@@ -382,6 +399,7 @@
       <span class="player-name" id="p1-name-hud">▶ ATTACKER</span>
       <div class="health-bar-wrap"><div class="health-bar" id="p1-health-bar" style="width:100%"></div></div>
       <span class="ammo-display" id="p1-ammo" style="color:var(--blue)">AMM: 30/30</span>
+      <span class="weapon-name-hud" id="p1-weapon-hud">ASSAULT RIFLE</span>
     </div>
     <div id="center-hud">
       <div id="round-info">ROUND 1</div>
@@ -391,6 +409,7 @@
       <span class="player-name" id="p2-name-hud">DEFENDER ◀</span>
       <div class="health-bar-wrap"><div class="health-bar" id="p2-health-bar" style="width:100%"></div></div>
       <span class="ammo-display" id="p2-ammo" style="color:var(--red)">AMM: 30/30</span>
+      <span class="weapon-name-hud" id="p2-weapon-hud" style="text-align:right">ASSAULT RIFLE</span>
     </div>
     <div id="ping-display">PING: —</div>
     <div id="ff-badge">⚠ FRIENDLY FIRE</div>
@@ -408,7 +427,230 @@
   </div>
 </div>
 
+<!-- ══════════ REWARD POPUP -->
+<div id="reward-popup">
+  <div class="reward-card">
+    <div class="reward-headline">MATCH COMPLETE</div>
+    <div class="reward-outcome" id="reward-outcome-text">VICTORY</div>
+    <div class="reward-total" id="reward-total">+0</div>
+    <div class="reward-total-label">COINS EARNED</div>
+    <div class="reward-lines" id="reward-lines"></div>
+    <button class="reward-collect" onclick="closeReward()">COLLECT &amp; RETURN</button>
+  </div>
+</div>
+
 <script>
+// ════════════════════════════════════════
+// WEAPON DEFINITIONS
+// ════════════════════════════════════════
+const WEAPONS = [
+  {
+    id: 'ar', name: 'ASSAULT RIFLE', type: 'ASSAULT', emoji: '🔫',
+    cost: 0, desc: 'Reliable all-rounder. Free starter weapon.',
+    dmg: [14,20], cd: 10, ammo: 30, reload: 120, speed: 2.5, bspd: 10, spread: 0.10,
+    color: '#4488ff', pellets: 1
+  },
+  {
+    id: 'smg', name: 'SMG', type: 'SUBMACHINE', emoji: '⚡',
+    cost: 0, desc: 'Blazing fire rate, high spread. Free starter.',
+    dmg: [8,12], cd: 4, ammo: 45, reload: 90, speed: 3.0, bspd: 11, spread: 0.20,
+    color: '#44ffaa', pellets: 1
+  },
+  {
+    id: 'shotgun', name: 'SHOTGUN', type: 'SHOTGUN', emoji: '💥',
+    cost: 120, desc: 'Devastating up close. Fires 4 pellets per shot.',
+    dmg: [16,24], cd: 32, ammo: 8, reload: 160, speed: 2.3, bspd: 9, spread: 0.40,
+    color: '#ff8844', pellets: 4
+  },
+  {
+    id: 'sniper', name: 'SNIPER', type: 'MARKSMAN', emoji: '🎯',
+    cost: 200, desc: 'One-shot potential. Slow fire rate, low ammo.',
+    dmg: [58,75], cd: 65, ammo: 5, reload: 190, speed: 2.0, bspd: 17, spread: 0.02,
+    color: '#ff4444', pellets: 1
+  },
+  {
+    id: 'pistol', name: 'PISTOL', type: 'SIDEARM', emoji: '🔧',
+    cost: 80, desc: 'Quick and nimble. Great backup weapon.',
+    dmg: [11,17], cd: 14, ammo: 12, reload: 75, speed: 2.9, bspd: 12, spread: 0.09,
+    color: '#ffee44', pellets: 1
+  },
+  {
+    id: 'lmg', name: 'LMG', type: 'SUPPORT', emoji: '🔩',
+    cost: 300, desc: 'Massive 80-round mag. Sustained suppression.',
+    dmg: [11,16], cd: 6, ammo: 80, reload: 220, speed: 2.0, bspd: 9, spread: 0.22,
+    color: '#cc44ff', pellets: 1
+  },
+  {
+    id: 'revolver', name: 'REVOLVER', type: 'SIDEARM', emoji: '🌀',
+    cost: 150, desc: 'High damage per shot. Only 6 rounds — make them count.',
+    dmg: [28,40], cd: 24, ammo: 6, reload: 145, speed: 2.6, bspd: 13, spread: 0.05,
+    color: '#ffaa00', pellets: 1
+  },
+  {
+    id: 'burst', name: 'BURST RIFLE', type: 'ASSAULT', emoji: '🔆',
+    cost: 250, desc: '3-round burst on each trigger pull. Precise and punchy.',
+    dmg: [15,21], cd: 7, ammo: 24, reload: 110, speed: 2.5, bspd: 11, spread: 0.07,
+    color: '#00ddff', pellets: 1
+  },
+  {
+    id: 'minigun', name: 'MINIGUN', type: 'HEAVY', emoji: '🔥',
+    cost: 500, desc: 'Absolute chaos. 150 rounds, shreds everything in sight.',
+    dmg: [9,13], cd: 2, ammo: 150, reload: 320, speed: 1.6, bspd: 8, spread: 0.32,
+    color: '#ff2222', pellets: 1
+  },
+  {
+    id: 'laser', name: 'LASER RIFLE', type: 'ENERGY', emoji: '🌟',
+    cost: 400, desc: 'Near-instant hitscan beam. Tiny spread, medium damage.',
+    dmg: [20,27], cd: 11, ammo: 20, reload: 130, speed: 2.4, bspd: 20, spread: 0.02,
+    color: '#88ff00', pellets: 1
+  },
+];
+
+function getWeaponById(id) { return WEAPONS.find(w=>w.id===id) || WEAPONS[0]; }
+
+// ════════════════════════════════════════
+// ECONOMY  (localStorage)
+// ════════════════════════════════════════
+function loadEco() {
+  try {
+    return JSON.parse(localStorage.getItem('r6_eco') || 'null') || {
+      coins: 0, wins: 0, unlocked: ['ar','smg'], equipped: 'ar'
+    };
+  } catch(e) {
+    return { coins: 0, wins: 0, unlocked: ['ar','smg'], equipped: 'ar' };
+  }
+}
+function saveEco(eco) {
+  try { localStorage.setItem('r6_eco', JSON.stringify(eco)); } catch(e) {}
+}
+function equippedWeapon() { return getWeaponById(loadEco().equipped); }
+
+function awardCoins({ won, kills, ctfCaptures }) {
+  const eco = loadEco();
+  const lines = [];
+  let total = 0;
+  const add = (label, amt) => { total += amt; lines.push({label, amt}); };
+  if (won)  add('VICTORY BONUS', 50);
+  else      add('PARTICIPATION', 15);
+  if (kills > 0)        add(`KILLS ×${kills}`, kills * 10);
+  if (ctfCaptures > 0)  add(`CTF CAPTURES ×${ctfCaptures}`, ctfCaptures * 25);
+  eco.coins += total;
+  if (won) eco.wins++;
+  saveEco(eco);
+  return { total, lines, won };
+}
+
+function showReward({ won, kills, ctfCaptures }) {
+  const { total, lines } = awardCoins({ won, kills, ctfCaptures });
+  const el = document.getElementById('reward-outcome-text');
+  el.textContent = won ? '🏆 VICTORY' : '💀 DEFEAT';
+  el.className = 'reward-outcome ' + (won ? 'win' : 'loss');
+  document.getElementById('reward-total').textContent = `+${total}`;
+  document.getElementById('reward-lines').innerHTML = lines.map(l =>
+    `<div class="reward-line"><span class="rl-label">${l.label}</span><span class="rl-val">+${l.amt} 🪙</span></div>`
+  ).join('');
+  document.getElementById('reward-popup').classList.add('show');
+  refreshMenuCoins();
+}
+
+function closeReward() {
+  document.getElementById('reward-popup').classList.remove('show');
+  showScreen('menu-screen');
+}
+
+function refreshMenuCoins() {
+  const eco = loadEco();
+  document.getElementById('menu-coins').textContent = eco.coins;
+  document.getElementById('menu-wins').textContent = eco.wins;
+}
+
+// ════════════════════════════════════════
+// ARSENAL UI
+// ════════════════════════════════════════
+function openArsenal() {
+  renderArsenal();
+  showScreen('arsenal-screen');
+}
+
+function renderArsenal() {
+  const eco = loadEco();
+  document.getElementById('arsenal-coins-display').textContent = eco.coins;
+
+  const cats = [...new Set(WEAPONS.map(w=>w.type))];
+  let html = '';
+  for (const cat of cats) {
+    const group = WEAPONS.filter(w=>w.type===cat);
+    html += `<div class="weapon-category"><div class="wcat-label">${cat}</div><div class="weapon-grid">`;
+    for (const w of group) {
+      const owned    = eco.unlocked.includes(w.id);
+      const equipped = eco.equipped === w.id;
+      const canBuy   = eco.coins >= w.cost;
+
+      // stat percentages
+      const dmgPct   = Math.round((w.dmg[1]/75)*100);
+      const firePct  = Math.round(((65-w.cd)/63)*100);
+      const rangePct = Math.round((1-w.spread)*100);
+      const ammoPct  = Math.round((w.ammo/150)*100);
+
+      let statusClass = equipped ? 'wcard equipped' : (owned ? 'wcard owned' : 'wcard locked');
+      let costHtml = w.cost === 0
+        ? `<span class="cost-free">FREE</span>`
+        : owned
+          ? `<span class="cost-free">OWNED ✓</span>`
+          : `<span class="${canBuy?'cost-gold':'cost-dim'}">🪙 ${w.cost}</span>`;
+
+      let actionHtml = '';
+      if (equipped) {
+        actionHtml = `<button class="wbtn wbtn-equipped" disabled>✓ EQUIPPED</button>`;
+      } else if (owned) {
+        actionHtml = `<button class="wbtn wbtn-equip" onclick="equipWeapon('${w.id}')">EQUIP</button>`;
+      } else {
+        actionHtml = `<button class="wbtn wbtn-unlock" onclick="buyWeapon('${w.id}')" ${canBuy?'':'disabled'}>
+          ${canBuy ? `UNLOCK — ${w.cost} 🪙` : `NEED ${w.cost-eco.coins} MORE 🪙`}
+        </button>`;
+      }
+
+      html += `<div class="${statusClass}">
+        <span class="wcard-emoji">${w.emoji}</span>
+        <div class="wcard-name">${w.name}</div>
+        <div class="wcard-type">${w.type}${w.pellets>1?' · ×'+w.pellets+' PELLETS':''}</div>
+        <div class="wcard-desc">${w.desc}</div>
+        <div class="stat-bars">
+          <div class="stat-row"><span class="stat-lbl">DAMAGE</span><div class="stat-bg"><div class="stat-fill" style="width:${dmgPct}%;background:${w.color}"></div></div></div>
+          <div class="stat-row"><span class="stat-lbl">FIRE RT</span><div class="stat-bg"><div class="stat-fill" style="width:${firePct}%;background:${w.color}"></div></div></div>
+          <div class="stat-row"><span class="stat-lbl">RANGE</span><div class="stat-bg"><div class="stat-fill" style="width:${rangePct}%;background:${w.color}"></div></div></div>
+          <div class="stat-row"><span class="stat-lbl">AMMO</span><div class="stat-bg"><div class="stat-fill" style="width:${ammoPct}%;background:${w.color}"></div></div></div>
+        </div>
+        <div class="wcard-cost">${costHtml}</div>
+        ${actionHtml}
+      </div>`;
+    }
+    html += `</div></div>`;
+  }
+  document.getElementById('arsenal-grid').innerHTML = html;
+}
+
+function buyWeapon(id) {
+  const eco = loadEco();
+  const w = getWeaponById(id);
+  if (eco.coins < w.cost || eco.unlocked.includes(id)) return;
+  eco.coins -= w.cost;
+  eco.unlocked.push(id);
+  saveEco(eco);
+  renderArsenal();
+  refreshMenuCoins();
+}
+
+function equipWeapon(id) {
+  const eco = loadEco();
+  if (!eco.unlocked.includes(id)) return;
+  eco.equipped = id;
+  saveEco(eco);
+  renderArsenal();
+  refreshMenuCoins();
+  renderActiveBadges();
+}
+
 // ════════════════════════════════════════
 // SETTINGS
 // ════════════════════════════════════════
@@ -426,33 +668,29 @@ const stepperCfg = {
 };
 
 function openSettings() {
-  // Sync UI to current settings
-  document.getElementById('s-ai-teammates').checked = settings.aiTeammates;
-  document.getElementById('s-ai-enemies').checked   = settings.aiEnemies;
+  document.getElementById('s-ai-teammates').checked  = settings.aiTeammates;
+  document.getElementById('s-ai-enemies').checked    = settings.aiEnemies;
   document.getElementById('s-friendly-fire').checked = settings.friendlyFire;
-  document.getElementById('s-ctf-mode').checked = settings.ctfMode;
+  document.getElementById('s-ctf-mode').checked      = settings.ctfMode;
   document.getElementById('val-teammate-count').textContent = settings.teammateCount;
   document.getElementById('val-enemy-count').textContent    = settings.enemyCount;
   document.getElementById('val-rounds-to-win').textContent  = settings.roundsToWin;
   updateStepperVis();
   showScreen('settings-screen');
 }
-
 function changeStep(id, delta) {
   const cfg = stepperCfg[id];
   settings[cfg.key] = Math.max(cfg.min, Math.min(cfg.max, settings[cfg.key] + delta));
   document.getElementById('val-'+id).textContent = settings[cfg.key];
 }
-
 function updateStepperVis() {
   const tm = document.getElementById('s-ai-teammates').checked;
   const en = document.getElementById('s-ai-enemies').checked;
-  document.getElementById('row-teammate-count').style.opacity = tm ? '1' : '0.3';
-  document.getElementById('row-teammate-count').style.pointerEvents = tm ? 'auto' : 'none';
-  document.getElementById('row-enemy-count').style.opacity = en ? '1' : '0.3';
-  document.getElementById('row-enemy-count').style.pointerEvents = en ? 'auto' : 'none';
+  document.getElementById('row-teammate-count').style.opacity = tm?'1':'0.3';
+  document.getElementById('row-teammate-count').style.pointerEvents = tm?'auto':'none';
+  document.getElementById('row-enemy-count').style.opacity = en?'1':'0.3';
+  document.getElementById('row-enemy-count').style.pointerEvents = en?'auto':'none';
 }
-
 function saveSettings() {
   settings.aiTeammates  = document.getElementById('s-ai-teammates').checked;
   settings.aiEnemies    = document.getElementById('s-ai-enemies').checked;
@@ -461,7 +699,6 @@ function saveSettings() {
   showScreen('menu-screen');
   renderActiveBadges();
 }
-
 function renderActiveBadges() {
   const badges = [];
   if (settings.aiTeammates)  badges.push(`+${settings.teammateCount} AI ALLY`);
@@ -469,6 +706,8 @@ function renderActiveBadges() {
   if (settings.friendlyFire) badges.push('FRIENDLY FIRE ON');
   if (settings.roundsToWin !== 3) badges.push(`FIRST TO ${settings.roundsToWin}`);
   if (settings.ctfMode) badges.push('CAPTURE THE FLAG');
+  const eq = equippedWeapon();
+  if (eq.id !== 'ar') badges.push(`${eq.emoji} ${eq.name}`);
   document.getElementById('active-settings-wrap').innerHTML =
     badges.map(b=>`<span class="settings-badge">${b}</span>`).join('');
 }
@@ -486,10 +725,8 @@ function renderMapPicker() {
       <div class="map-card-desc">${m.desc}</div>
     </div>
   `).join('');
-  // Draw previews after DOM update
   requestAnimationFrame(() => MAPS.forEach(m => drawMapPreview(m)));
 }
-
 function drawMapPreview(mapDef) {
   const c = document.getElementById('map-preview-'+mapDef.id);
   if (!c) return;
@@ -506,44 +743,37 @@ function drawMapPreview(mapDef) {
       else { cx.fillStyle=(row+col)%2===0?t.floor1:t.floor2; cx.fillRect(x,y,tw,th); }
     }
   }
-  // Draw spawn dots
   cx.fillStyle='#1a6bff88';
   for (const [sc,sr] of mapDef.spawns0.slice(0,2)) cx.fillRect(sc*tw+tw/2-1.5, sr*th+th/2-1.5, 3, 3);
   cx.fillStyle='#ff3a3a88';
   for (const [sc,sr] of mapDef.spawns1.slice(0,2)) cx.fillRect(sc*tw+tw/2-1.5, sr*th+th/2-1.5, 3, 3);
 }
-
 function selectMap(id) {
   selectedMapId = id;
   document.querySelectorAll('.map-card').forEach(c => c.classList.remove('selected'));
   const card = document.getElementById('map-card-'+id);
   if (card) card.classList.add('selected');
 }
-
 function selectLocalMap(id) {
   selectedMapId = id;
-  // Update button styles in the overlay
   MAPS.forEach(m => {
     const btn = document.getElementById('lmap-btn-'+m.id);
     if (!btn) return;
     const sel = m.id === id;
-    btn.style.background = sel ? 'var(--gold)' : 'transparent';
+    btn.style.background  = sel ? 'var(--gold)' : 'transparent';
     btn.style.borderColor = sel ? 'var(--gold)' : '#333';
-    btn.style.color = sel ? '#000' : '#888';
+    btn.style.color       = sel ? '#000' : '#888';
   });
 }
 
 // ════════════════════════════════════════
 // MAPS
 // ════════════════════════════════════════
-const W=800, H=550, TILE=40, SPEED=2.5;
+const W=800, H=550, TILE=40;
 
-// Each map: grid (0=floor,1=wall,2=cover), spawns, theme colors, name, description
 const MAPS = [
   {
-    id: 0,
-    name: 'BORDER',
-    desc: 'Symmetric · Classic',
+    id: 0, name: 'BORDER', desc: 'Symmetric · Classic',
     theme: { floor1:'#111318', floor2:'#12141a', wall1:'#0d0f14', wall2:'#181c24', cover1:'#1a1e2a', cover2:'#2a3040', wallStroke:'#f7a80020', coverStroke:'#f7a80044' },
     grid: [
       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -566,9 +796,7 @@ const MAPS = [
     spawns1: [[17,12],[16,12],[17,9],[16,9],[17,10],[15,10]],
   },
   {
-    id: 1,
-    name: 'CHALET',
-    desc: 'Narrow corridors · High cover',
+    id: 1, name: 'CHALET', desc: 'Narrow corridors · High cover',
     theme: { floor1:'#0e1208', floor2:'#101408', wall1:'#0a0e05', wall2:'#141a08', cover1:'#1a2410', cover2:'#243018', wallStroke:'#88cc0020', coverStroke:'#88cc0055' },
     grid: [
       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -591,9 +819,7 @@ const MAPS = [
     spawns1: [[17,12],[16,12],[17,13],[16,13],[18,12],[17,11]],
   },
   {
-    id: 2,
-    name: 'CONSULATE',
-    desc: 'Open center · Side rooms',
+    id: 2, name: 'CONSULATE', desc: 'Open center · Side rooms',
     theme: { floor1:'#130e0a', floor2:'#160f0b', wall1:'#0d0905', wall2:'#1a1008', cover1:'#2a1a10', cover2:'#3a2418', wallStroke:'#cc660020', coverStroke:'#cc660055' },
     grid: [
       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -616,9 +842,7 @@ const MAPS = [
     spawns1: [[17,12],[16,12],[17,13],[16,13],[18,12],[17,11]],
   },
   {
-    id: 3,
-    name: 'SKYSCRAPER',
-    desc: 'Maze · Close quarters',
+    id: 3, name: 'SKYSCRAPER', desc: 'Maze · Close quarters',
     theme: { floor1:'#0a0d13', floor2:'#0c1018', wall1:'#080b11', wall2:'#10151e', cover1:'#141c2e', cover2:'#1c2840', wallStroke:'#4488ff20', coverStroke:'#4488ff55' },
     grid: [
       [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
@@ -643,12 +867,7 @@ const MAPS = [
 ];
 
 let selectedMapId = 0;
-let activeMap = MAPS[0]; // the currently loaded map
-
-// Verified open floor spawn tiles [col, row]
-// (now per-map inside MAPS array, but keep these as fallback)
-const TEAM0_SPAWNS = [[1,1],[2,1],[1,2],[2,2],[4,2],[1,5]];
-const TEAM1_SPAWNS = [[17,12],[16,12],[17,9],[16,9],[17,10],[15,10]];
+let activeMap = MAPS[0];
 
 // ════════════════════════════════════════
 // NETWORKING
@@ -663,9 +882,8 @@ let remoteInput={up:0,down:0,left:0,right:0,shoot:0,reload:0};
 // GAME STATE
 // ════════════════════════════════════════
 let players=[], bullets=[], roundState='playing', scores=[0,0], round=1, gameActive=false, gameLoopRunning=false;
-// CTF state
-let flags=[];   // [{team, x, y, baseX, baseY, carriedBy, returned}]
-let ctfScores=[0,0];
+let flags=[], ctfScores=[0,0];
+let matchKills=0, matchCaptures=0;   // tracked for reward
 const keys={};
 
 // ════════════════════════════════════════
@@ -675,7 +893,6 @@ function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-
 function showLobby(mode) {
   showScreen('lobby-screen');
   document.getElementById('lobby-title').textContent = mode==='create'?'CREATE PARTY':'JOIN PARTY';
@@ -683,7 +900,6 @@ function showLobby(mode) {
   document.getElementById('join-section').style.display   = mode==='join' ?'flex':'none';
   if (mode==='create') { setupHostPeer(); renderMapPicker(); } else setupGuestPeer();
 }
-
 function goBack() {
   if (peer){peer.destroy();peer=null;conn=null;}
   showScreen('menu-screen');
@@ -693,21 +909,21 @@ function goBack() {
 // LOCAL PLAY
 // ════════════════════════════════════════
 let pendingLocalStart = false;
-
 function playLocal() {
-  myPlayerIndex=-2; isHost=true;
-  pendingLocalStart = true;
+  myPlayerIndex=-2; isHost=true; pendingLocalStart=true;
+  matchKills=0; matchCaptures=0;
   showScreen('game-screen');
   document.getElementById('p1-name-hud').textContent='▶ ATTACKER · WASD';
-  document.getElementById('p2-name-hud').textContent='DEFENDER · ARROWS · /=SHOOT ◀';
-  const ffLine = settings.friendlyFire ? '<br>⚠ FRIENDLY FIRE IS ON — WATCH YOUR SHOTS' : '';
+  document.getElementById('p2-name-hud').textContent='DEFENDER · ARROWS ◀';
+  const eq = equippedWeapon();
+  const ffLine = settings.friendlyFire ? '<br>⚠ FRIENDLY FIRE IS ON' : '';
   const aiLine = [];
   if (settings.aiTeammates) aiLine.push(`+${settings.teammateCount} BLUE AI`);
   if (settings.aiEnemies)   aiLine.push(`+${settings.enemyCount} RED AI`);
   const mapButtons = MAPS.map(m=>`<button onclick="selectLocalMap(${m.id})" id="lmap-btn-${m.id}" style="padding:6px 14px;margin:3px;background:${m.id===selectedMapId?'var(--gold)':'transparent'};border:1px solid ${m.id===selectedMapId?'var(--gold)':'#333'};color:${m.id===selectedMapId?'#000':'#888'};font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;cursor:pointer;">${m.name}</button>`).join('');
   showGameOverlay(`<div class="overlay-title">LOCAL PLAY</div>
     <div class="overlay-sub">
-      🔵 P1: WASD · F=SHOOT · R=RELOAD<br>
+      🔵 P1: WASD · F=SHOOT · R=RELOAD · WEAPON: ${eq.emoji} ${eq.name}<br>
       🔴 P2: ARROW KEYS · /=SHOOT · .=RELOAD
       ${aiLine.length?'<br>'+aiLine.join(' · '):''}${ffLine}
     </div>
@@ -720,7 +936,6 @@ function playLocal() {
 // PEER.JS
 // ════════════════════════════════════════
 function genCode(){return Math.random().toString(36).substring(2,8).toUpperCase();}
-
 function setupHostPeer(){
   roomCode=genCode();
   const badge=document.getElementById('conn-badge');
@@ -744,7 +959,6 @@ function setupHostPeer(){
   });
   peer.on('error',()=>{document.getElementById('room-code').textContent='ERROR';});
 }
-
 function setupGuestPeer(){
   const badge=document.getElementById('conn-badge');
   badge.innerHTML='<span class="dot" style="background:#00ff88"></span>READY';
@@ -752,7 +966,6 @@ function setupGuestPeer(){
   peer=new Peer(undefined,{host:'0.peerjs.com',port:443,secure:true,config:{iceServers:[{urls:'stun:stun.l.google.com:19302'}]}});
   peer.on('error',err=>{setJoinStatus('Connection error: '+err.type,'error');});
 }
-
 function joinRoom(){
   const codeRaw=document.getElementById('room-code-input').value.trim().toUpperCase();
   if(codeRaw.length<4){setJoinStatus('Enter a valid room code.','error');return;}
@@ -770,7 +983,6 @@ function joinRoom(){
   });
   conn.on('error',()=>{setJoinStatus('Could not connect. Check the code.','error');document.getElementById('join-now-btn').disabled=false;});
 }
-
 function setupConnHandlers(){
   conn.on('data',handleMessage);
   conn.on('close',()=>{
@@ -782,7 +994,6 @@ function setupConnHandlers(){
     }
   });
 }
-
 function send(data){if(conn&&conn.open){try{conn.send(data);}catch(e){}}}
 
 // ════════════════════════════════════════
@@ -799,7 +1010,6 @@ function handleMessage(msg){
       document.getElementById('jslot1-name').textContent=opponentName;
       break;
     case 'start':
-      // Guest receives host's settings snapshot and map choice
       Object.assign(settings, msg.settings);
       selectedMapId = msg.mapId ?? 0;
       startOnlineGame();
@@ -822,7 +1032,7 @@ function handleMessage(msg){
         scores[msg.winner]++;
         document.getElementById('s1').textContent=scores[0];
         document.getElementById('s2').textContent=scores[1];
-        if(msg.matchOver) showWinner(msg.winner);
+        if(msg.matchOver) triggerReward(msg.winner);
         else{round=msg.round;document.getElementById('round-info').textContent=`ROUND ${round}`;}
       }
       break;
@@ -830,7 +1040,7 @@ function handleMessage(msg){
       if(!isHost){
         ctfScores=msg.ctfScores||[0,0];
         updateCTFHUD();
-        showWinner(msg.winner);
+        triggerReward(msg.winner);
       }
       break;
   }
@@ -844,8 +1054,8 @@ function hostStartGame(){
   send({type:'start', settings:{...settings}, mapId: selectedMapId});
   startOnlineGame();
 }
-
 function startOnlineGame(){
+  matchKills=0; matchCaptures=0;
   showScreen('game-screen');
   const p1n=isHost?myName:opponentName;
   const p2n=isHost?opponentName:myName;
@@ -853,9 +1063,10 @@ function startOnlineGame(){
   document.getElementById('p2-name-hud').textContent=`${p2n} ◀`;
   const roleLabel=myPlayerIndex===0?'ATTACKER':'DEFENDER';
   initGame();
+  const eq = equippedWeapon();
   const ffLine = settings.friendlyFire ? '\n⚠ FRIENDLY FIRE IS ON' : '';
   showGameOverlay(`<div class="overlay-title">MATCH FOUND</div>
-    <div class="overlay-sub">YOU ARE: ${roleLabel} · WASD=MOVE · F=SHOOT · R=RELOAD${ffLine}</div>`);
+    <div class="overlay-sub">YOU ARE: ${roleLabel} · WASD=MOVE · F=SHOOT · R=RELOAD${ffLine}<br>WEAPON: ${eq.emoji} ${eq.name}</div>`);
   setTimeout(()=>{
     document.getElementById('game-overlay').classList.add('hidden');
     gameActive=true;
@@ -868,28 +1079,39 @@ function startOnlineGame(){
 // ════════════════════════════════════════
 const canvas=document.getElementById('game');
 const ctx=canvas.getContext('2d');
-
 function tileCenter(col,row){return{x:col*TILE+TILE/2, y:row*TILE+TILE/2};}
 
-function makePlayer(id, team, isBot, spawnIdx){
+function makePlayer(id, team, isBot, spawnIdx) {
   const spawnList = team===0 ? activeMap.spawns0 : activeMap.spawns1;
   const t = spawnList[spawnIdx % spawnList.length];
   const pos = tileCenter(t[0], t[1]);
-
-  // Per-team color palette (index within team)
   const pal0 = [{c:'#1a6bff',d:'#0040aa'},{c:'#44ccff',d:'#1166aa'},{c:'#00aadd',d:'#005577'}];
   const pal1 = [{c:'#ff3a3a',d:'#aa0000'},{c:'#ff8800',d:'#994400'},{c:'#dd22aa',d:'#880055'}];
   const pal = team===0 ? pal0 : pal1;
   const ci = spawnIdx % pal.length;
+
+  // Determine weapon:
+  // - P1 human (team 0, not bot) on local or host → use equipped
+  // - P2 human (team 1, not bot) → use equipped too (same device for local)
+  // - Bots get a random base weapon
+  let wep = WEAPONS[0];
+  if (!isBot) {
+    wep = equippedWeapon();
+  } else {
+    // Bots randomly pick from common weapons
+    const botPool = ['ar','smg','pistol','shotgun'];
+    wep = getWeaponById(botPool[Math.floor(Math.random()*botPool.length)]);
+  }
 
   return {
     id, team, isBot, alive:true,
     x:pos.x, y:pos.y,
     angle: team===0 ? 0 : Math.PI,
     hp:100, maxHp:100,
-    ammo:30, maxAmmo:30,
+    ammo:wep.ammo, maxAmmo:wep.ammo,
     reloading:false, reloadTimer:0, shootCooldown:0,
     color:pal[ci].c, darkColor:pal[ci].d,
+    weapon: wep,
     botMoveTimer:0, botMoveDir:{x:0,y:0},
     keys: id===0
       ? {up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD',shoot:'KeyF',reload:'KeyR'}
@@ -899,21 +1121,23 @@ function makePlayer(id, team, isBot, spawnIdx){
 
 function buildPlayers(){
   players=[];
-  // Team 0: human + optional bots
   players.push(makePlayer(players.length, 0, false, 0));
   if(settings.aiTeammates){
     for(let i=0;i<settings.teammateCount;i++) players.push(makePlayer(players.length,0,true,i+1));
   }
-  // Team 1: human (or CPU in local) + optional bots
   players.push(makePlayer(players.length, 1, false, 0));
   if(settings.aiEnemies){
     for(let i=0;i<settings.enemyCount;i++) players.push(makePlayer(players.length,1,true,i+1));
   }
-  // Guest key override — guest is on their own machine, uses WASD
   if(myPlayerIndex===1){
     const gp = players.find(p=>!p.isBot&&p.team===1);
     if(gp) gp.keys={up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD',shoot:'KeyF',reload:'KeyR'};
   }
+  // Update HUD weapon names
+  const hp1 = players.find(p=>p.team===0&&!p.isBot);
+  const hp2 = players.find(p=>p.team===1&&!p.isBot);
+  if(hp1) document.getElementById('p1-weapon-hud').textContent = hp1.weapon.name;
+  if(hp2) document.getElementById('p2-weapon-hud').textContent = hp2.weapon.name;
 }
 
 function initGame(){
@@ -927,11 +1151,9 @@ function initGame(){
   document.getElementById('s1').textContent=0;
   document.getElementById('s2').textContent=0;
   document.getElementById('round-info').textContent='ROUND 1';
-  // CTF setup
   const ctfHud = document.getElementById('ctf-hud');
   if(settings.ctfMode){
-    ctfScores=[0,0];
-    initFlags();
+    ctfScores=[0,0]; initFlags();
     ctfHud.classList.add('active');
     document.getElementById('round-info').textContent='CAPTURE THE FLAG';
   } else {
@@ -947,10 +1169,9 @@ function initRound(){
     const spawnList = p.team===0 ? activeMap.spawns0 : activeMap.spawns1;
     const t = spawnList[si % spawnList.length];
     const pos = tileCenter(t[0], t[1]);
-    p.x=pos.x; p.y=pos.y; p.alive=true; p.hp=100; p.ammo=30;
+    p.x=pos.x; p.y=pos.y; p.alive=true; p.hp=100; p.ammo=p.maxAmmo;
     p.reloading=false; p.reloadTimer=0; p.shootCooldown=0;
     p.angle = p.team===0 ? 0 : Math.PI;
-    // Re-apply guest key override each round
     if(myPlayerIndex===1&&!p.isBot&&p.team===1){
       p.keys={up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD',shoot:'KeyF',reload:'KeyR'};
     }
@@ -961,7 +1182,6 @@ function initRound(){
 // CTF LOGIC
 // ════════════════════════════════════════
 function initFlags(){
-  // Place each team's flag near their spawn base center
   const t0 = activeMap.spawns0[0]; const t1 = activeMap.spawns1[0];
   const b0 = {x: t0[0]*TILE+TILE/2+TILE, y: t0[1]*TILE+TILE/2};
   const b1 = {x: t1[0]*TILE+TILE/2-TILE, y: t1[1]*TILE+TILE/2};
@@ -970,43 +1190,38 @@ function initFlags(){
     {team:1, x:b1.x, y:b1.y, baseX:b1.x, baseY:b1.y, carriedBy:null},
   ];
 }
-
 function updateCTF(){
   if(!settings.ctfMode||!flags.length) return;
   for(const flag of flags){
     if(flag.carriedBy!==null){
       const carrier = players.find(p=>p.id===flag.carriedBy);
       if(!carrier||!carrier.alive){
-        // Drop flag at carrier's last pos (or reset if carrier gone)
         if(carrier){ flag.x=carrier.x; flag.y=carrier.y; }
         flag.carriedBy=null;
       } else {
         flag.x=carrier.x; flag.y=carrier.y;
-        // Check if carrier brought enemy flag to their own base
         const ownFlag = flags.find(f=>f.team===carrier.team);
         if(flag.team!==carrier.team && ownFlag && ownFlag.carriedBy===null){
           const dx=carrier.x-ownFlag.baseX, dy=carrier.y-ownFlag.baseY;
           if(dx*dx+dy*dy < 30*30){
-            // CAPTURE!
             ctfScores[carrier.team]++;
+            // Track capture for local human player
+            if(!carrier.isBot){
+              const isMyPlayer = (myPlayerIndex===-2&&carrier.team===0)||(carrier.team===myPlayerIndex);
+              if(isMyPlayer) matchCaptures++;
+            }
             flag.x=flag.baseX; flag.y=flag.baseY; flag.carriedBy=null;
             updateCTFHUD();
-            if(ctfScores[carrier.team]>=settings.roundsToWin){
-              endCTFMatch(carrier.team);
-            } else {
-              // Flash message
-              showRoundMsg(`${carrier.team===0?'🔵 BLUE':'🔴 RED'} CAPTURED THE FLAG!`, 2000);
-            }
+            if(ctfScores[carrier.team]>=settings.roundsToWin) endCTFMatch(carrier.team);
+            else showRoundMsg(`${carrier.team===0?'🔵 BLUE':'🔴 RED'} CAPTURED THE FLAG!`, 2000);
             return;
           }
         }
       }
     } else {
-      // Check for pickup
       for(const p of players){
         if(!p.alive) continue;
-        if(p.team===flag.team) {
-          // Own team: return flag to base if they touch it while it's dropped away from base
+        if(p.team===flag.team){
           const dx=p.x-flag.baseX, dy=p.y-flag.baseY;
           const dxf=flag.x-flag.baseX, dyf=flag.y-flag.baseY;
           if((dxf*dxf+dyf*dyf)>5 && (dx*dx+dy*dy)<22*22){
@@ -1022,7 +1237,6 @@ function updateCTF(){
   }
   updateCTFHUD();
 }
-
 function updateCTFHUD(){
   if(!settings.ctfMode) return;
   document.getElementById('ctf-s0').textContent=ctfScores[0];
@@ -1039,58 +1253,38 @@ function updateCTFHUD(){
     } else {
       const dx=flag.x-flag.baseX, dy=flag.y-flag.baseY;
       el.textContent=(dx*dx+dy*dy)<5?`${label}: AT BASE`:`${label}: DROPPED`;
-      el.style.color=flag.carriedBy===null?'#888':'#fff';
+      el.style.color='#888';
     }
   }
 }
-
 let roundMsgTimer=null;
 function showRoundMsg(msg, dur=2000){
   let el=document.getElementById('ctf-round-msg');
-  if(!el){
-    el=document.createElement('div');
-    el.id='ctf-round-msg';
-    el.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.85);border:1px solid #f7a800;color:#f7a800;font-family:"Share Tech Mono",monospace;font-size:18px;letter-spacing:3px;padding:16px 32px;z-index:200;pointer-events:none;';
-    document.body.appendChild(el);
-  }
+  if(!el){el=document.createElement('div');el.id='ctf-round-msg';el.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.85);border:1px solid #f7a800;color:#f7a800;font-family:"Share Tech Mono",monospace;font-size:18px;letter-spacing:3px;padding:16px 32px;z-index:200;pointer-events:none;';document.body.appendChild(el);}
   el.textContent=msg; el.style.display='block';
   if(roundMsgTimer) clearTimeout(roundMsgTimer);
   roundMsgTimer=setTimeout(()=>{ el.style.display='none'; },dur);
 }
-
 function endCTFMatch(winner){
-  roundState='over';
-  const col=winner===0?'#1a6bff':'#ff3a3a';
-  const label=winner===0?'ATTACKERS':'DEFENDERS';
-  showGameOverlay(`<div class="overlay-title" style="color:${col}">${label}</div>
-    <div id="winner-text">WIN THE MATCH</div>
-    <div class="overlay-sub">CTF SCORE: ${ctfScores[0]} — ${ctfScores[1]}</div>
-    <button class="btn" onclick="location.reload()">MAIN MENU</button>`);
-  gameActive=false;
+  roundState='over'; gameActive=false;
   if(myPlayerIndex!==-2) send({type:'ctf_match_end', winner, ctfScores:[...ctfScores]});
+  const myTeam = myPlayerIndex===-2 ? 0 : myPlayerIndex;
+  triggerReward(winner, myTeam);
 }
-
 function drawCTFFlags(){
   if(!settings.ctfMode||!flags.length) return;
   for(const flag of flags){
     const col = flag.team===0?'#1a6bff':'#ff3a3a';
-    // Draw base zone
     ctx.save();
     ctx.beginPath(); ctx.arc(flag.baseX, flag.baseY, 22, 0, Math.PI*2);
-    ctx.strokeStyle=col+'44'; ctx.lineWidth=2; ctx.setLineDash([4,4]); ctx.stroke();
-    ctx.setLineDash([]);
+    ctx.strokeStyle=col+'44'; ctx.lineWidth=2; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
     ctx.restore();
-
-    // Draw flag icon
     const carried = flag.carriedBy!==null;
     ctx.save(); ctx.translate(flag.x, flag.y-(carried?18:14));
     ctx.shadowColor=col; ctx.shadowBlur=carried?16:8;
-    // Pole
     ctx.fillStyle='#aaa'; ctx.fillRect(-1,-14,2,18);
-    // Flag banner
     ctx.fillStyle=col;
     ctx.beginPath(); ctx.moveTo(1,-14); ctx.lineTo(10,-8); ctx.lineTo(1,-3); ctx.closePath(); ctx.fill();
-    // Pulse ring when carried
     if(carried){
       const pulse = 0.5+0.5*Math.sin(Date.now()/150);
       ctx.beginPath(); ctx.arc(0,0,10+pulse*4,0,Math.PI*2);
@@ -1131,71 +1325,40 @@ function wallCollide(px,py){
 function getBotInput(bot){
   const enemies=players.filter(p=>p.alive&&p.team!==bot.team);
   if(!enemies.length) return{up:0,down:0,left:0,right:0,shoot:0,reload:0};
-
-  // Pick nearest enemy
   let nearest=enemies[0], nd=Infinity;
   for(const e of enemies){const d=(e.x-bot.x)**2+(e.y-bot.y)**2;if(d<nd){nd=d;nearest=e;}}
   const dx=nearest.x-bot.x, dy=nearest.y-bot.y;
   const dist=Math.sqrt(dx*dx+dy*dy);
   bot.angle=Math.atan2(dy,dx);
-
-  // Recalculate move direction periodically
   bot.botMoveTimer--;
   if(bot.botMoveTimer<=0){
     bot.botMoveTimer=25+Math.random()*35|0;
-    if(dist>130){
-      const jitter=(Math.random()-0.5)*0.7;
-      bot.botMoveDir={x:Math.cos(bot.angle+jitter),y:Math.sin(bot.angle+jitter)};
-    } else {
-      const perp=bot.angle+Math.PI/2*(Math.random()<0.5?1:-1);
-      bot.botMoveDir={x:Math.cos(perp),y:Math.sin(perp)};
-    }
+    if(dist>130){ const jitter=(Math.random()-0.5)*0.7; bot.botMoveDir={x:Math.cos(bot.angle+jitter),y:Math.sin(bot.angle+jitter)}; }
+    else { const perp=bot.angle+Math.PI/2*(Math.random()<0.5?1:-1); bot.botMoveDir={x:Math.cos(perp),y:Math.sin(perp)}; }
   }
-
-  // CTF: bots chase flag or run to base
   if(settings.ctfMode && flags.length){
     const enemyFlag = flags.find(f=>f.team!==bot.team);
     const ownFlag   = flags.find(f=>f.team===bot.team);
     let target = null;
     const amCarrying = enemyFlag && enemyFlag.carriedBy===bot.id;
-    if(amCarrying){
-      // Bring it home
-      const of2 = flags.find(f=>f.team===bot.team);
-      target = {x:of2.baseX, y:of2.baseY};
-    } else if(enemyFlag && enemyFlag.carriedBy===null){
-      target = {x:enemyFlag.x, y:enemyFlag.y};
-    } else if(ownFlag && ownFlag.carriedBy!==null){
-      // Chase enemy carrying our flag
-      const thief = players.find(p=>p.id===ownFlag.carriedBy);
-      if(thief) target={x:thief.x, y:thief.y};
-    }
-    if(target){
-      const tdx=target.x-bot.x, tdy=target.y-bot.y;
-      const td=Math.sqrt(tdx*tdx+tdy*tdy);
-      if(td>10){
-        bot.botMoveTimer=0; // force override
-        const ta=Math.atan2(tdy,tdx);
-        bot.botMoveDir={x:Math.cos(ta),y:Math.sin(ta)};
-      }
-    }
+    if(amCarrying){ const of2=flags.find(f=>f.team===bot.team); target={x:of2.baseX,y:of2.baseY}; }
+    else if(enemyFlag && enemyFlag.carriedBy===null){ target={x:enemyFlag.x,y:enemyFlag.y}; }
+    else if(ownFlag && ownFlag.carriedBy!==null){ const thief=players.find(p=>p.id===ownFlag.carriedBy); if(thief) target={x:thief.x,y:thief.y}; }
+    if(target){ const tdx=target.x-bot.x, tdy=target.y-bot.y; const td=Math.sqrt(tdx*tdx+tdy*tdy); if(td>10){ bot.botMoveTimer=0; const ta=Math.atan2(tdy,tdx); bot.botMoveDir={x:Math.cos(ta),y:Math.sin(ta)}; } }
   }
-
   return{
-    up:   bot.botMoveDir.y<-0.15?1:0,
-    down: bot.botMoveDir.y>0.15?1:0,
-    left: bot.botMoveDir.x<-0.15?1:0,
-    right:bot.botMoveDir.x>0.15?1:0,
-    shoot: dist<300 ? 1:0,
-    reload: (bot.ammo<5&&!bot.reloading)?1:0
+    up:bot.botMoveDir.y<-0.15?1:0, down:bot.botMoveDir.y>0.15?1:0,
+    left:bot.botMoveDir.x<-0.15?1:0, right:bot.botMoveDir.x>0.15?1:0,
+    shoot: dist<300?1:0,
+    reload: (bot.ammo<Math.ceil(bot.maxAmmo*0.2)&&!bot.reloading)?1:0
   };
 }
 
 // ════════════════════════════════════════
-// STEP PLAYER
+// STEP PLAYER  (weapon-aware)
 // ════════════════════════════════════════
 function stepPlayer(p, inp){
   if(!p.alive){
-    // CTF: respawn after timer
     if(settings.ctfMode){
       if(!p.respawnTimer) p.respawnTimer=180;
       p.respawnTimer--;
@@ -1210,23 +1373,34 @@ function stepPlayer(p, inp){
     }
     return;
   }
+  const spd = p.weapon ? p.weapon.speed : 2.5;
   let dx=inp.right-inp.left, dy=inp.down-inp.up;
   if(dx&&dy){dx*=0.707;dy*=0.707;}
-  const nx=Math.max(14,Math.min(W-14,p.x+dx*SPEED));
-  const ny=Math.max(14,Math.min(H-14,p.y+dy*SPEED));
+  const nx=Math.max(14,Math.min(W-14,p.x+dx*spd));
+  const ny=Math.max(14,Math.min(H-14,p.y+dy*spd));
   if(!wallCollide(nx,p.y)) p.x=nx;
   if(!wallCollide(p.x,ny)) p.y=ny;
 
-  if(p.reloading){if(--p.reloadTimer<=0){p.reloading=false;p.ammo=p.maxAmmo;}}
-  if(inp.reload&&!p.reloading&&p.ammo<p.maxAmmo){p.reloading=true;p.reloadTimer=120;}
-  if(p.ammo===0&&!p.reloading){p.reloading=true;p.reloadTimer=120;}
+  const wep = p.weapon || WEAPONS[0];
+  if(p.reloading){ if(--p.reloadTimer<=0){ p.reloading=false; p.ammo=p.maxAmmo; } }
+  if(inp.reload&&!p.reloading&&p.ammo<p.maxAmmo){ p.reloading=true; p.reloadTimer=wep.reload; }
+  if(p.ammo===0&&!p.reloading){ p.reloading=true; p.reloadTimer=wep.reload; }
   if(p.shootCooldown>0) p.shootCooldown--;
+
   if(inp.shoot&&p.shootCooldown===0&&!p.reloading&&p.ammo>0){
-    p.ammo--;p.shootCooldown=10;
-    const sp=(Math.random()-0.5)*0.10;
-    bullets.push({x:p.x+Math.cos(p.angle)*16,y:p.y+Math.sin(p.angle)*16,vx:Math.cos(p.angle+sp)*10,vy:Math.sin(p.angle+sp)*10,owner:p.id,ownerTeam:p.team,life:80,color:p.color});
+    p.ammo--; p.shootCooldown=wep.cd;
+    const pellets = wep.pellets || 1;
+    for(let i=0;i<pellets;i++){
+      const sp=(Math.random()-0.5)*wep.spread;
+      bullets.push({
+        x:p.x+Math.cos(p.angle)*16, y:p.y+Math.sin(p.angle)*16,
+        vx:Math.cos(p.angle+sp)*wep.bspd, vy:Math.sin(p.angle+sp)*wep.bspd,
+        owner:p.id, ownerTeam:p.team, life:80,
+        color:wep.color,
+        dmgMin:wep.dmg[0], dmgMax:wep.dmg[1]
+      });
+    }
   }
-  // Human auto-aims at nearest enemy
   if(!p.isBot){
     const enemies=players.filter(e=>e.alive&&e.team!==p.team);
     if(enemies.length){
@@ -1241,34 +1415,22 @@ function stepPlayer(p, inp){
 // UPDATE LOOP
 // ════════════════════════════════════════
 let frameCount=0;
-
 function update(){
   if(roundState!=='playing') return;
-
   if(isHost||myPlayerIndex===-2){
-    // Step all players
     for(const p of players){
-      if(p.isBot){
-        stepPlayer(p, getBotInput(p));
-        continue;
-      }
-      // Human player input
+      if(p.isBot){ stepPlayer(p, getBotInput(p)); continue; }
       if(myPlayerIndex===-2){
-        // Local: read keyboard per player
         const inp={up:keys[p.keys.up]?1:0,down:keys[p.keys.down]?1:0,left:keys[p.keys.left]?1:0,right:keys[p.keys.right]?1:0,shoot:keys[p.keys.shoot]?1:0,reload:keys[p.keys.reload]?1:0};
         stepPlayer(p,inp);
       } else if(p.team===0&&!p.isBot){
-        // Online: host's own character
         const me=players[0];
         const inp={up:keys[me.keys.up]?1:0,down:keys[me.keys.down]?1:0,left:keys[me.keys.left]?1:0,right:keys[me.keys.right]?1:0,shoot:keys[me.keys.shoot]?1:0,reload:keys[me.keys.reload]?1:0};
         stepPlayer(p,inp);
       } else if(p.team===1&&!p.isBot){
-        // Online: guest character driven by remoteInput
         stepPlayer(p, remoteInput);
       }
     }
-
-    // Process bullets
     for(let i=bullets.length-1;i>=0;i--){
       const b=bullets[i];
       b.x+=b.vx; b.y+=b.vy; b.life--;
@@ -1276,42 +1438,41 @@ function update(){
       if(isBlockingBullet(tx,ty)||b.life<=0||b.x<0||b.x>W||b.y<0||b.y>H){bullets.splice(i,1);continue;}
       for(const p of players){
         if(!p.alive||p.id===b.owner) continue;
-        // Skip friendly unless FF on
         if(p.team===b.ownerTeam&&!settings.friendlyFire) continue;
         if((b.x-p.x)**2+(b.y-p.y)**2<14*14){
-          p.hp=Math.max(0,p.hp-(15+Math.random()*10|0));
+          const dmg = b.dmgMin + Math.random()*(b.dmgMax-b.dmgMin)|0;
+          p.hp=Math.max(0,p.hp-dmg);
           bullets.splice(i,1);
-          if(p.hp<=0){p.alive=false;checkRoundEnd();}
+          if(p.hp<=0){
+            p.alive=false;
+            // Count kill for local human player
+            const shooter = players.find(s=>s.id===b.owner);
+            if(shooter&&!shooter.isBot){
+              const isMine = (myPlayerIndex===-2&&shooter.team===0)||(shooter.team===myPlayerIndex);
+              if(isMine) matchKills++;
+            }
+            checkRoundEnd();
+          }
           break;
         }
       }
     }
-
-    // CTF logic (host authoritative)
     updateCTF();
-
-    // Broadcast state
     if(myPlayerIndex!==-2&&frameCount%2===0){
       send({type:'state',
         ps:players.map(p=>({id:p.id,x:p.x,y:p.y,hp:p.hp,ammo:p.ammo,reloading:p.reloading,reloadTimer:p.reloadTimer,alive:p.alive,angle:p.angle})),
-        bullets:bullets.map(b=>({x:b.x,y:b.y,vx:b.vx,vy:b.vy,owner:b.owner,ownerTeam:b.ownerTeam,color:b.color})),
+        bullets:bullets.map(b=>({x:b.x,y:b.y,vx:b.vx,vy:b.vy,owner:b.owner,ownerTeam:b.ownerTeam,color:b.color,dmgMin:b.dmgMin,dmgMax:b.dmgMax})),
         flags: flags.map(f=>({team:f.team,x:f.x,y:f.y,carriedBy:f.carriedBy})),
         ctfScores:[...ctfScores]
       });
     }
-
-    // Ping
     pingTimer++;
     if(pingTimer>60&&myPlayerIndex!==-2){pingTimer=0;send({type:'ping',t:Date.now()});}
-
   } else {
-    // GUEST — send inputs
     const guestP=players.find(p=>!p.isBot&&p.team===1);
     if(guestP) send({type:'input',up:keys[guestP.keys.up]?1:0,down:keys[guestP.keys.down]?1:0,left:keys[guestP.keys.left]?1:0,right:keys[guestP.keys.right]?1:0,shoot:keys[guestP.keys.shoot]?1:0,reload:keys[guestP.keys.reload]?1:0});
-    // Visual bullet extrapolation
     for(const b of bullets){b.x+=b.vx;b.y+=b.vy;}
   }
-
   frameCount++;
   updateHUD();
 }
@@ -1335,20 +1496,13 @@ function applyHostState(msg){
 function checkRoundEnd(){
   if(roundState!=='playing') return;
   if(settings.ctfMode){
-    // In CTF, drop flag when player dies
-    for(const flag of flags){
-      if(flag.carriedBy!==null){
-        const carrier=players.find(p=>p.id===flag.carriedBy);
-        if(carrier&&!carrier.alive){ flag.carriedBy=null; }
-      }
-    }
-    return; // No round ends in CTF; only flag captures end the match
+    for(const flag of flags){ if(flag.carriedBy!==null){ const c=players.find(p=>p.id===flag.carriedBy); if(c&&!c.alive) flag.carriedBy=null; } }
+    return;
   }
   const t0=players.some(p=>p.team===0&&p.alive);
   const t1=players.some(p=>p.team===1&&p.alive);
   if(!t0||!t1) endRound(t0?0:1);
 }
-
 function endRound(winner){
   if(roundState!=='playing') return;
   roundState='over';
@@ -1358,19 +1512,18 @@ function endRound(winner){
   const matchOver=scores[0]>=settings.roundsToWin||scores[1]>=settings.roundsToWin;
   if(myPlayerIndex!==-2) send({type:'round_end',winner,round:round+1,matchOver});
   setTimeout(()=>{
-    if(matchOver) showWinner(winner);
+    if(matchOver) triggerReward(winner);
     else{round++;document.getElementById('round-info').textContent=`ROUND ${round}`;initRound();}
   },1800);
 }
 
-function showWinner(winner){
-  const col=winner===0?'#1a6bff':'#ff3a3a';
-  const label=winner===0?'ATTACKERS':'DEFENDERS';
-  showGameOverlay(`<div class="overlay-title" style="color:${col}">${label}</div>
-    <div id="winner-text">WIN THE MATCH</div>
-    <div class="overlay-sub">FINAL SCORE: ${scores[0]} — ${scores[1]}</div>
-    <button class="btn" onclick="location.reload()">MAIN MENU</button>`);
+function triggerReward(winner) {
   gameActive=false;
+  const myTeam = myPlayerIndex===-2 ? 0 : myPlayerIndex;
+  const won = winner===myTeam;
+  setTimeout(()=>{
+    showReward({ won, kills: matchKills, ctfCaptures: matchCaptures });
+  }, 500);
 }
 
 // ════════════════════════════════════════
@@ -1380,8 +1533,14 @@ function updateHUD(){
   if(!players.length) return;
   const p1=players.find(p=>p.team===0&&!p.isBot)||players[0];
   const p2=players.find(p=>p.team===1&&!p.isBot)||players.find(p=>p.team===1);
-  if(p1){document.getElementById('p1-health-bar').style.width=(p1.hp/100*100)+'%';document.getElementById('p1-ammo').textContent=p1.reloading?'RELOADING...':`AMM: ${p1.ammo}/${p1.maxAmmo}`;}
-  if(p2){document.getElementById('p2-health-bar').style.width=(p2.hp/100*100)+'%';document.getElementById('p2-ammo').textContent=p2.reloading?'RELOADING...':`AMM: ${p2.ammo}/${p2.maxAmmo}`;}
+  if(p1){
+    document.getElementById('p1-health-bar').style.width=(p1.hp/100*100)+'%';
+    document.getElementById('p1-ammo').textContent=p1.reloading?'RELOADING...':`AMM: ${p1.ammo}/${p1.maxAmmo}`;
+  }
+  if(p2){
+    document.getElementById('p2-health-bar').style.width=(p2.hp/100*100)+'%';
+    document.getElementById('p2-ammo').textContent=p2.reloading?'RELOADING...':`AMM: ${p2.ammo}/${p2.maxAmmo}`;
+  }
 }
 
 // ════════════════════════════════════════
@@ -1406,7 +1565,6 @@ function drawMap(){
     }
   }
 }
-
 function drawPlayer(p){
   if(!p.alive) return;
   const r=p.isBot?9:12;
@@ -1415,43 +1573,31 @@ function drawPlayer(p){
   ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fillStyle=p.darkColor;ctx.fill();
   ctx.strokeStyle=p.color;ctx.lineWidth=p.isBot?1.5:2;ctx.stroke();
   ctx.shadowBlur=0;
-
-  // "YOU" indicator ring
   const isMe=(myPlayerIndex===-2&&p.id===0)||(myPlayerIndex===0&&p.id===0)||(myPlayerIndex===1&&!p.isBot&&p.team===1);
   if(isMe){ctx.beginPath();ctx.arc(0,0,r+4,0,Math.PI*2);ctx.strokeStyle=p.color+'44';ctx.lineWidth=1;ctx.stroke();}
-
-  // Bot marker (small triangle above)
-  if(p.isBot){
-    ctx.fillStyle=p.color+'99';
-    ctx.beginPath();ctx.moveTo(0,-14);ctx.lineTo(-3,-19);ctx.lineTo(3,-19);ctx.closePath();ctx.fill();
-  }
-
+  if(p.isBot){ctx.fillStyle=p.color+'99';ctx.beginPath();ctx.moveTo(0,-14);ctx.lineTo(-3,-19);ctx.lineTo(3,-19);ctx.closePath();ctx.fill();}
   ctx.rotate(p.angle);
-  ctx.fillStyle=p.color;ctx.fillRect(r-2,-2,p.isBot?10:13,4);
+  // Draw barrel — length and thickness reflect weapon type
+  const wep = p.weapon || WEAPONS[0];
+  const blen = Math.round(8 + wep.bspd * 0.5);
+  const bthk = wep.id==='lmg'||wep.id==='minigun' ? 5 : wep.id==='sniper' ? 2 : 4;
+  ctx.fillStyle=wep.color; ctx.fillRect(r-2,-bthk/2,blen,bthk);
   ctx.beginPath();ctx.arc(0,0,2.5,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
   ctx.restore();
-
-  // Reload ring
   if(p.reloading){
-    const prog=1-(p.reloadTimer/120);
+    const prog=1-(p.reloadTimer/(wep.reload||120));
     ctx.beginPath();ctx.arc(p.x,p.y,r+5,-Math.PI/2,-Math.PI/2+Math.PI*2*prog);
     ctx.strokeStyle='#f7a800';ctx.lineWidth=2;ctx.stroke();
   }
-  // Bot HP bar
   if(p.isBot&&p.hp<100){
     ctx.fillStyle='#111';ctx.fillRect(p.x-14,p.y-24,28,3);
     ctx.fillStyle=p.color;ctx.fillRect(p.x-14,p.y-24,28*(p.hp/100),3);
   }
-  // Friendly fire warning glow when FF is on and player is on same team as "me"
   if(settings.friendlyFire){
-    const myTeam = myPlayerIndex===-2 ? -1 : (myPlayerIndex===0?0:1);
-    if(myTeam!==(-1)&&p.team===myTeam&&!isMe){
-      ctx.beginPath();ctx.arc(p.x,p.y,r+6,0,Math.PI*2);
-      ctx.strokeStyle='#ff440033';ctx.lineWidth=2;ctx.stroke();
-    }
+    const myTeam=myPlayerIndex===-2?-1:(myPlayerIndex===0?0:1);
+    if(myTeam!==-1&&p.team===myTeam&&!isMe){ctx.beginPath();ctx.arc(p.x,p.y,r+6,0,Math.PI*2);ctx.strokeStyle='#ff440033';ctx.lineWidth=2;ctx.stroke();}
   }
 }
-
 function drawBullets(){
   for(const b of bullets){
     ctx.save();ctx.shadowColor=b.color;ctx.shadowBlur=8;
@@ -1460,9 +1606,8 @@ function drawBullets(){
     ctx.restore();
   }
 }
-
 function drawRoundOver(){
-  if(roundState==='over'){
+  if(roundState==='over'&&!settings.ctfMode){
     ctx.fillStyle='rgba(0,0,0,0.45)';ctx.fillRect(0,0,W,H);
     const winTeam=players.some(p=>p.team===0&&p.alive)?0:1;
     ctx.fillStyle=(winTeam===0?'#1a6bff':'#ff3a3a')+'99';
@@ -1472,7 +1617,6 @@ function drawRoundOver(){
     ctx.fillText(`SCORE: ${scores[0]} — ${scores[1]}`,W/2,H/2+16);
   }
 }
-
 function loop(){
   if(!gameLoopRunning) return;
   if(gameActive) update();
@@ -1486,10 +1630,7 @@ function loop(){
 // ════════════════════════════════════════
 function showGameOverlay(html){const el=document.getElementById('game-overlay');el.innerHTML=html;el.classList.remove('hidden');}
 function dismissOverlayAndStart(){
-  if(pendingLocalStart){
-    pendingLocalStart = false;
-    initGame();
-  }
+  if(pendingLocalStart){ pendingLocalStart=false; initGame(); }
   document.getElementById('game-overlay').classList.add('hidden');
   gameActive=true;
   if(!gameLoopRunning){gameLoopRunning=true;requestAnimationFrame(loop);}
@@ -1499,6 +1640,63 @@ function copyCode(){
   const code=document.getElementById('room-code').textContent;
   if(code!=='——'){navigator.clipboard.writeText(code).then(()=>{const btn=document.querySelector('.copy-btn');btn.textContent='COPIED!';setTimeout(()=>btn.textContent='COPY',1500);});}
 }
+
+// Boot
+refreshMenuCoins();
+renderActiveBadges();
+</script>
+
+<!-- ══════════ CREDIT BANNER -->
+<div id="noah-credit-banner" style="
+  position: fixed; bottom: 0; left: 0; width: 100%;
+  background-color: #0a0a0a; color: #ffffff; text-align: center;
+  padding: 8px 0; font-family: 'Courier New', monospace; font-size: 14px;
+  z-index: 9999; border-top: 2px solid #c27c15;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+">
+  Games provided by <a id="noah-credit-link" href="https://github.com/NoahsAmazingTutoringHelp/Noahs-Calculus-Tutor" target="_blank" style="color: #c27c15; text-decoration: none; font-weight: bold; transition: color 0.3s ease;">Noah's Tutoring Hub</a> — original creator of these games.
+</div>
+
+<script>
+const THEME_COLORS = {
+  'default':            { primary: '#c27c15', bg: '#0a0a0a' },
+  'theme-rainbow':      { primary: '#ff0080', bg: '#0a0a0a' },
+  'theme-cyber-green':  { primary: '#00ff00', bg: '#000000' },
+  'theme-ice-blue':     { primary: '#00ccff', bg: '#001122' },
+  'theme-solarized':    { primary: '#2aa198', bg: '#002b36' },
+  'theme-purple-haze':  { primary: '#9b59b6', bg: '#1a1a2e' },
+};
+function syncCreditBanner() {
+  const banner = document.getElementById('noah-credit-banner');
+  const link   = document.getElementById('noah-credit-link');
+  if (!banner || !link) return;
+  let colors = THEME_COLORS['default'];
+  for (const cls of document.body.classList) {
+    if (THEME_COLORS['theme-' + cls]) { colors = THEME_COLORS['theme-' + cls]; break; }
+    if (THEME_COLORS[cls])            { colors = THEME_COLORS[cls]; break; }
+  }
+  const savedTheme = localStorage.getItem('selectedTheme');
+  if (savedTheme === 'custom') {
+    const cc = localStorage.getItem('customThemeColor') || '#c27c15';
+    colors = { primary: cc, bg: '#0a0a0a' };
+  } else if (savedTheme && THEME_COLORS['theme-' + savedTheme]) {
+    colors = THEME_COLORS['theme-' + savedTheme];
+  } else if (savedTheme && THEME_COLORS[savedTheme]) {
+    colors = THEME_COLORS[savedTheme];
+  }
+  banner.style.backgroundColor = colors.bg;
+  banner.style.borderTopColor  = colors.primary;
+  link.style.color             = colors.primary;
+}
+new MutationObserver(() => setTimeout(syncCreditBanner, 20))
+  .observe(document.body, { attributes: true, attributeFilter: ['class'] });
+window.addEventListener('storage', syncCreditBanner);
+const _oSPT = window.selectPresetTheme;
+window.selectPresetTheme = function(t){ if(_oSPT) _oSPT(t); setTimeout(syncCreditBanner,80); };
+const _oACT = window.applyCustomTheme;
+window.applyCustomTheme = function(){ if(_oACT) _oACT(); setTimeout(syncCreditBanner,80); };
+document.addEventListener('DOMContentLoaded', syncCreditBanner);
+window.addEventListener('load', ()=>setTimeout(syncCreditBanner,300));
 </script>
 </body>
 </html>
