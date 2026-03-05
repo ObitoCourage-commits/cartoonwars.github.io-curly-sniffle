@@ -62,6 +62,34 @@
   .settings-card:hover { border-color: #888; }
   .arsenal-card .card-title { color: var(--green); }
   .arsenal-card:hover { border-color: var(--green); box-shadow: 0 8px 32px rgba(0,255,136,0.08); }
+  .solo-card .card-title { color: #ff8800; }
+  .solo-card:hover { border-color: #ff8800; box-shadow: 0 8px 32px rgba(255,136,0,0.1); }
+
+  /* ─── SINGLE PLAYER SETUP ─── */
+  #solo-screen { overflow-y: auto; padding: 20px 0; justify-content: flex-start; }
+  .solo-wrap { width: 560px; border: 1px solid var(--border); background: var(--surface); padding: 36px; }
+  .solo-header { display:flex; align-items:center; gap:16px; margin-bottom:28px; padding-bottom:20px; border-bottom:1px solid var(--border); }
+  .solo-title { font-size:24px; font-weight:700; letter-spacing:5px; color:#ff8800; flex:1; }
+  .diff-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:24px; }
+  .diff-card { border:1px solid var(--border); background:#0a0b0d; padding:18px 12px; text-align:center; cursor:pointer; transition:all 0.18s; }
+  .diff-card:hover { transform:translateY(-2px); }
+  .diff-card.easy.selected   { border-color:#00ff88; background:rgba(0,255,136,0.04); }
+  .diff-card.easy:hover      { border-color:#00ff88; }
+  .diff-card.medium.selected { border-color:#ff8800; background:rgba(255,136,0,0.04); }
+  .diff-card.medium:hover    { border-color:#ff8800; }
+  .diff-card.hard.selected   { border-color:#ff3a3a; background:rgba(255,58,58,0.04); }
+  .diff-card.hard:hover      { border-color:#ff3a3a; }
+  .diff-icon { font-size:28px; margin-bottom:8px; display:block; }
+  .diff-name { font-size:15px; font-weight:700; letter-spacing:3px; text-transform:uppercase; }
+  .diff-name.easy   { color:#00ff88; }
+  .diff-name.medium { color:#ff8800; }
+  .diff-name.hard   { color:#ff3a3a; }
+  .diff-desc { font-size:9px; letter-spacing:1px; color:#444; font-family:'Share Tech Mono',monospace; margin-top:5px; line-height:1.8; }
+  .solo-section-label { font-size:10px; letter-spacing:4px; color:#555; font-family:'Share Tech Mono',monospace; text-transform:uppercase; margin-bottom:12px; }
+  .solo-enemies-row { display:flex; align-items:center; justify-content:space-between; padding:12px 0; border-bottom:1px solid #111; margin-bottom:20px; }
+  .solo-map-section { margin-bottom:22px; }
+  .solo-deploy-btn { width:100%; padding:16px; background:transparent; border:2px solid #ff8800; color:#ff8800; font-family:'Rajdhani',sans-serif; font-size:18px; font-weight:700; letter-spacing:6px; text-transform:uppercase; cursor:pointer; transition:all 0.2s; margin-top:8px; }
+  .solo-deploy-btn:hover { background:#ff8800; color:#000; }
 
   #active-settings-wrap { margin-top: 12px; min-height: 20px; text-align: center; }
   .settings-badge { display: inline-block; padding: 2px 8px; border: 1px solid #2a2a2a; font-size: 9px; letter-spacing: 2px; color: var(--gold); font-family: 'Share Tech Mono', monospace; margin: 2px; background: rgba(247,168,0,0.06); }
@@ -287,6 +315,11 @@
       <div class="card-title">Arsenal</div>
       <div class="card-desc">Unlock weapons<br>with earned coins</div>
     </div>
+    <div class="menu-card solo-card" onclick="openSoloSetup()">
+      <span class="card-icon">🤖</span>
+      <div class="card-title">Solo Play</div>
+      <div class="card-desc">1v1 vs CPU<br>choose difficulty</div>
+    </div>
   </div>
   <div id="active-settings-wrap"></div>
 </div>
@@ -348,6 +381,54 @@
     <div class="arsenal-tip">
       EARN COINS: <span>+50</span> WIN · <span>+15</span> PARTICIPATION · <span>+10</span> PER KILL · <span>+25</span> CTF CAPTURE
     </div>
+  </div>
+</div>
+
+<!-- ══════════ SOLO SETUP -->
+<div id="solo-screen" class="screen">
+  <div class="solo-wrap">
+    <div class="solo-header">
+      <button class="back-btn" onclick="showScreen('menu-screen')">◀ BACK</button>
+      <div class="solo-title">🤖 SOLO PLAY</div>
+    </div>
+
+    <div class="solo-section-label" style="margin-bottom:12px;">Select Difficulty</div>
+    <div class="diff-grid">
+      <div class="diff-card easy selected" id="diff-easy" onclick="selectDiff('easy')">
+        <span class="diff-icon">🟢</span>
+        <div class="diff-name easy">EASY</div>
+        <div class="diff-desc">Slow reactions<br>poor aim<br>great for learning</div>
+      </div>
+      <div class="diff-card medium" id="diff-medium" onclick="selectDiff('medium')">
+        <span class="diff-icon">🟠</span>
+        <div class="diff-name medium">MEDIUM</div>
+        <div class="diff-desc">Standard AI<br>decent aim<br>fair challenge</div>
+      </div>
+      <div class="diff-card hard" id="diff-hard" onclick="selectDiff('hard')">
+        <span class="diff-icon">🔴</span>
+        <div class="diff-name hard">HARD</div>
+        <div class="diff-desc">Fast reactions<br>sharp aim<br>punishing</div>
+      </div>
+    </div>
+
+    <div class="solo-enemies-row">
+      <div>
+        <div class="setting-name">ENEMY COUNT</div>
+        <div class="setting-desc" style="font-size:10px;letter-spacing:1px;color:#444;font-family:'Share Tech Mono',monospace;margin-top:3px;">Number of CPU opponents to face</div>
+      </div>
+      <div class="stepper">
+        <button class="stepper-btn" onclick="changeSoloEnemies(-1)">−</button>
+        <div class="stepper-val" id="solo-enemy-count">1</div>
+        <button class="stepper-btn" onclick="changeSoloEnemies(1)">+</button>
+      </div>
+    </div>
+
+    <div class="solo-map-section">
+      <div class="solo-section-label">Select Map</div>
+      <div class="map-picker-grid" id="solo-map-picker-grid"></div>
+    </div>
+
+    <button class="solo-deploy-btn" onclick="startSoloGame()">▶ DEPLOY</button>
   </div>
 </div>
 
@@ -933,6 +1014,150 @@ function playLocal() {
 }
 
 // ════════════════════════════════════════
+// SOLO PLAY
+// ════════════════════════════════════════
+const DIFF_SETTINGS = {
+  easy:   { shootRange: 160, aimJitter: 1.2, moveUpdateRate: [45,70], strafeRange: 80,  reloadThreshold: 0.25 },
+  medium: { shootRange: 260, aimJitter: 0.5, moveUpdateRate: [25,45], strafeRange: 130, reloadThreshold: 0.20 },
+  hard:   { shootRange: 380, aimJitter: 0.1, moveUpdateRate: [10,22], strafeRange: 200, reloadThreshold: 0.15 },
+};
+let soloDifficulty = 'easy';
+let soloEnemyCount = 1;
+
+function openSoloSetup() {
+  selectedMapId = 0;
+  renderSoloMapPicker();
+  showScreen('solo-screen');
+}
+
+function renderSoloMapPicker() {
+  const grid = document.getElementById('solo-map-picker-grid');
+  if (!grid) return;
+  grid.innerHTML = MAPS.map(m => `
+    <div class="map-card ${m.id===selectedMapId?'selected':''}" onclick="selectSoloMap(${m.id})" id="solo-map-card-${m.id}">
+      <canvas class="map-preview" id="solo-map-preview-${m.id}" width="240" height="52"></canvas>
+      <div class="map-card-name">${m.name}</div>
+      <div class="map-card-desc">${m.desc}</div>
+    </div>
+  `).join('');
+  requestAnimationFrame(() => MAPS.forEach(m => {
+    const c = document.getElementById('solo-map-preview-'+m.id);
+    if (!c) return;
+    const cx = c.getContext('2d');
+    const cols = m.grid[0].length, rows = m.grid.length;
+    const tw = c.width/cols, th = c.height/rows;
+    const t = m.theme;
+    for (let row=0; row<rows; row++) {
+      for (let col=0; col<cols; col++) {
+        const cell=m.grid[row][col], x=col*tw, y=row*th;
+        if(cell===1){cx.fillStyle=t.wall2;cx.fillRect(x,y,tw,th);}
+        else if(cell===2){cx.fillStyle=t.floor1;cx.fillRect(x,y,tw,th);cx.fillStyle=t.cover2;cx.fillRect(x+1,y+1,tw-2,th-2);}
+        else{cx.fillStyle=(row+col)%2===0?t.floor1:t.floor2;cx.fillRect(x,y,tw,th);}
+      }
+    }
+    cx.fillStyle='#1a6bff88';
+    for(const[sc,sr]of m.spawns0.slice(0,2)) cx.fillRect(sc*tw+tw/2-1.5,sr*th+th/2-1.5,3,3);
+    cx.fillStyle='#ff3a3a88';
+    for(const[sc,sr]of m.spawns1.slice(0,2)) cx.fillRect(sc*tw+tw/2-1.5,sr*th+th/2-1.5,3,3);
+  }));
+}
+
+function selectSoloMap(id) {
+  selectedMapId = id;
+  document.querySelectorAll('#solo-map-picker-grid .map-card').forEach(c=>c.classList.remove('selected'));
+  const card = document.getElementById('solo-map-card-'+id);
+  if (card) card.classList.add('selected');
+}
+
+function selectDiff(d) {
+  soloDifficulty = d;
+  ['easy','medium','hard'].forEach(x => {
+    document.getElementById('diff-'+x).classList.toggle('selected', x===d);
+  });
+}
+
+function changeSoloEnemies(delta) {
+  soloEnemyCount = Math.max(1, Math.min(3, soloEnemyCount + delta));
+  document.getElementById('solo-enemy-count').textContent = soloEnemyCount;
+}
+
+function startSoloGame() {
+  // myPlayerIndex=-3 signals solo mode (1 human vs N bots)
+  myPlayerIndex = -3;
+  isHost = true;
+  pendingLocalStart = true;
+  matchKills = 0; matchCaptures = 0;
+  showScreen('game-screen');
+  const eq = equippedWeapon();
+  const diffLabel = soloDifficulty.toUpperCase();
+  const diffColors = { easy:'#00ff88', medium:'#ff8800', hard:'#ff3a3a' };
+  const col = diffColors[soloDifficulty];
+  document.getElementById('p1-name-hud').textContent = '▶ YOU · WASD';
+  document.getElementById('p2-name-hud').textContent = `CPU [${diffLabel}] ◀`;
+  showGameOverlay(`
+    <div class="overlay-title" style="color:${col}">SOLO PLAY</div>
+    <div class="overlay-sub">
+      DIFFICULTY: <span style="color:${col};font-weight:700">${diffLabel}</span> · ${soloEnemyCount} ENEMY${soloEnemyCount>1?'S':''}<br>
+      WASD=MOVE · F=SHOOT · R=RELOAD<br>
+      WEAPON: ${eq.emoji} ${eq.name}
+    </div>
+    <button class="btn" style="border-color:${col};color:${col}" onclick="dismissOverlayAndStart()">DEPLOY</button>
+  `);
+}
+
+// Override getBotInput for solo mode to respect difficulty
+function getDiffBotInput(bot) {
+  const diff = DIFF_SETTINGS[soloDifficulty] || DIFF_SETTINGS.medium;
+  const enemies = players.filter(p=>p.alive&&p.team!==bot.team);
+  if (!enemies.length) return {up:0,down:0,left:0,right:0,shoot:0,reload:0};
+
+  let nearest=enemies[0], nd=Infinity;
+  for(const e of enemies){const d=(e.x-bot.x)**2+(e.y-bot.y)**2;if(d<nd){nd=d;nearest=e;}}
+  const dx=nearest.x-bot.x, dy=nearest.y-bot.y;
+  const dist=Math.sqrt(dx*dx+dy*dy);
+
+  // Aim with jitter scaled by difficulty
+  const jitter = (Math.random()-0.5)*diff.aimJitter;
+  bot.angle = Math.atan2(dy,dx) + jitter;
+
+  // Move update rate by difficulty
+  bot.botMoveTimer--;
+  if(bot.botMoveTimer<=0){
+    const [mn,mx] = diff.moveUpdateRate;
+    bot.botMoveTimer = mn + Math.random()*(mx-mn)|0;
+    if(dist > diff.strafeRange){
+      // Advance toward target
+      const jit=(Math.random()-0.5)*0.5;
+      bot.botMoveDir={x:Math.cos(Math.atan2(dy,dx)+jit),y:Math.sin(Math.atan2(dy,dx)+jit)};
+    } else {
+      // Strafe sideways
+      const perp=Math.atan2(dy,dx)+Math.PI/2*(Math.random()<0.5?1:-1);
+      bot.botMoveDir={x:Math.cos(perp),y:Math.sin(perp)};
+    }
+  }
+
+  // CTF overrides
+  if(settings.ctfMode && flags.length){
+    const enemyFlag=flags.find(f=>f.team!==bot.team);
+    const ownFlag=flags.find(f=>f.team===bot.team);
+    let target=null;
+    if(enemyFlag&&enemyFlag.carriedBy===bot.id){const of2=flags.find(f=>f.team===bot.team);target={x:of2.baseX,y:of2.baseY};}
+    else if(enemyFlag&&enemyFlag.carriedBy===null){target={x:enemyFlag.x,y:enemyFlag.y};}
+    else if(ownFlag&&ownFlag.carriedBy!==null){const thief=players.find(p=>p.id===ownFlag.carriedBy);if(thief)target={x:thief.x,y:thief.y};}
+    if(target){const tdx=target.x-bot.x,tdy=target.y-bot.y,td=Math.sqrt(tdx*tdx+tdy*tdy);if(td>10){bot.botMoveTimer=0;bot.botMoveDir={x:tdx/td,y:tdy/td};}}
+  }
+
+  return {
+    up:   bot.botMoveDir.y<-0.15?1:0,
+    down: bot.botMoveDir.y>0.15?1:0,
+    left: bot.botMoveDir.x<-0.15?1:0,
+    right:bot.botMoveDir.x>0.15?1:0,
+    shoot: dist < diff.shootRange ? 1:0,
+    reload: (bot.ammo <= Math.ceil(bot.maxAmmo*diff.reloadThreshold) && !bot.reloading) ? 1:0
+  };
+}
+
+// ════════════════════════════════════════
 // PEER.JS
 // ════════════════════════════════════════
 function genCode(){return Math.random().toString(36).substring(2,8).toUpperCase();}
@@ -1122,12 +1347,17 @@ function makePlayer(id, team, isBot, spawnIdx) {
 function buildPlayers(){
   players=[];
   players.push(makePlayer(players.length, 0, false, 0));
-  if(settings.aiTeammates){
+  if(settings.aiTeammates && myPlayerIndex !== -3){
     for(let i=0;i<settings.teammateCount;i++) players.push(makePlayer(players.length,0,true,i+1));
   }
-  players.push(makePlayer(players.length, 1, false, 0));
-  if(settings.aiEnemies){
-    for(let i=0;i<settings.enemyCount;i++) players.push(makePlayer(players.length,1,true,i+1));
+  // In solo mode, team 1 is ALL bots (no human P2)
+  if(myPlayerIndex === -3){
+    for(let i=0;i<soloEnemyCount;i++) players.push(makePlayer(players.length,1,true,i));
+  } else {
+    players.push(makePlayer(players.length, 1, false, 0));
+    if(settings.aiEnemies){
+      for(let i=0;i<settings.enemyCount;i++) players.push(makePlayer(players.length,1,true,i+1));
+    }
   }
   if(myPlayerIndex===1){
     const gp = players.find(p=>!p.isBot&&p.team===1);
@@ -1138,6 +1368,7 @@ function buildPlayers(){
   const hp2 = players.find(p=>p.team===1&&!p.isBot);
   if(hp1) document.getElementById('p1-weapon-hud').textContent = hp1.weapon.name;
   if(hp2) document.getElementById('p2-weapon-hud').textContent = hp2.weapon.name;
+  else    document.getElementById('p2-weapon-hud').textContent = myPlayerIndex===-3 ? `CPU [${soloDifficulty.toUpperCase()}]` : '';
 }
 
 function initGame(){
@@ -1207,7 +1438,7 @@ function updateCTF(){
             ctfScores[carrier.team]++;
             // Track capture for local human player
             if(!carrier.isBot){
-              const isMyPlayer = (myPlayerIndex===-2&&carrier.team===0)||(carrier.team===myPlayerIndex);
+              const isMyPlayer = (myPlayerIndex===-2&&carrier.team===0)||(myPlayerIndex===-3&&carrier.team===0)||(carrier.team===myPlayerIndex);
               if(isMyPlayer) matchCaptures++;
             }
             flag.x=flag.baseX; flag.y=flag.baseY; flag.carriedBy=null;
@@ -1267,9 +1498,8 @@ function showRoundMsg(msg, dur=2000){
 }
 function endCTFMatch(winner){
   roundState='over'; gameActive=false;
-  if(myPlayerIndex!==-2) send({type:'ctf_match_end', winner, ctfScores:[...ctfScores]});
-  const myTeam = myPlayerIndex===-2 ? 0 : myPlayerIndex;
-  triggerReward(winner, myTeam);
+  if(myPlayerIndex!==-2&&myPlayerIndex!==-3) send({type:'ctf_match_end', winner, ctfScores:[...ctfScores]});
+  triggerReward(winner);
 }
 function drawCTFFlags(){
   if(!settings.ctfMode||!flags.length) return;
@@ -1417,10 +1647,15 @@ function stepPlayer(p, inp){
 let frameCount=0;
 function update(){
   if(roundState!=='playing') return;
-  if(isHost||myPlayerIndex===-2){
+  if(isHost||myPlayerIndex===-2||myPlayerIndex===-3){
     for(const p of players){
-      if(p.isBot){ stepPlayer(p, getBotInput(p)); continue; }
-      if(myPlayerIndex===-2){
+      if(p.isBot){
+        // Use difficulty AI in solo mode, standard AI otherwise
+        const inp = myPlayerIndex===-3 ? getDiffBotInput(p) : getBotInput(p);
+        stepPlayer(p, inp);
+        continue;
+      }
+      if(myPlayerIndex===-2||myPlayerIndex===-3){
         const inp={up:keys[p.keys.up]?1:0,down:keys[p.keys.down]?1:0,left:keys[p.keys.left]?1:0,right:keys[p.keys.right]?1:0,shoot:keys[p.keys.shoot]?1:0,reload:keys[p.keys.reload]?1:0};
         stepPlayer(p,inp);
       } else if(p.team===0&&!p.isBot){
@@ -1448,7 +1683,7 @@ function update(){
             // Count kill for local human player
             const shooter = players.find(s=>s.id===b.owner);
             if(shooter&&!shooter.isBot){
-              const isMine = (myPlayerIndex===-2&&shooter.team===0)||(shooter.team===myPlayerIndex);
+              const isMine = (myPlayerIndex===-2&&shooter.team===0)||(myPlayerIndex===-3&&shooter.team===0)||(shooter.team===myPlayerIndex);
               if(isMine) matchKills++;
             }
             checkRoundEnd();
@@ -1458,7 +1693,7 @@ function update(){
       }
     }
     updateCTF();
-    if(myPlayerIndex!==-2&&frameCount%2===0){
+    if(myPlayerIndex!==-2&&myPlayerIndex!==-3&&frameCount%2===0){
       send({type:'state',
         ps:players.map(p=>({id:p.id,x:p.x,y:p.y,hp:p.hp,ammo:p.ammo,reloading:p.reloading,reloadTimer:p.reloadTimer,alive:p.alive,angle:p.angle})),
         bullets:bullets.map(b=>({x:b.x,y:b.y,vx:b.vx,vy:b.vy,owner:b.owner,ownerTeam:b.ownerTeam,color:b.color,dmgMin:b.dmgMin,dmgMax:b.dmgMax})),
@@ -1467,7 +1702,7 @@ function update(){
       });
     }
     pingTimer++;
-    if(pingTimer>60&&myPlayerIndex!==-2){pingTimer=0;send({type:'ping',t:Date.now()});}
+    if(pingTimer>60&&myPlayerIndex!==-2&&myPlayerIndex!==-3){pingTimer=0;send({type:'ping',t:Date.now()});}
   } else {
     const guestP=players.find(p=>!p.isBot&&p.team===1);
     if(guestP) send({type:'input',up:keys[guestP.keys.up]?1:0,down:keys[guestP.keys.down]?1:0,left:keys[guestP.keys.left]?1:0,right:keys[guestP.keys.right]?1:0,shoot:keys[guestP.keys.shoot]?1:0,reload:keys[guestP.keys.reload]?1:0});
@@ -1510,7 +1745,7 @@ function endRound(winner){
   document.getElementById('s1').textContent=scores[0];
   document.getElementById('s2').textContent=scores[1];
   const matchOver=scores[0]>=settings.roundsToWin||scores[1]>=settings.roundsToWin;
-  if(myPlayerIndex!==-2) send({type:'round_end',winner,round:round+1,matchOver});
+  if(myPlayerIndex!==-2&&myPlayerIndex!==-3) send({type:'round_end',winner,round:round+1,matchOver});
   setTimeout(()=>{
     if(matchOver) triggerReward(winner);
     else{round++;document.getElementById('round-info').textContent=`ROUND ${round}`;initRound();}
@@ -1519,7 +1754,7 @@ function endRound(winner){
 
 function triggerReward(winner) {
   gameActive=false;
-  const myTeam = myPlayerIndex===-2 ? 0 : myPlayerIndex;
+  const myTeam = (myPlayerIndex===-2||myPlayerIndex===-3) ? 0 : myPlayerIndex;
   const won = winner===myTeam;
   setTimeout(()=>{
     showReward({ won, kills: matchKills, ctfCaptures: matchCaptures });
