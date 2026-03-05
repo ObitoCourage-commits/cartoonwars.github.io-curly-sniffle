@@ -1646,57 +1646,5 @@ refreshMenuCoins();
 renderActiveBadges();
 </script>
 
-<!-- ══════════ CREDIT BANNER -->
-<div id="noah-credit-banner" style="
-  position: fixed; bottom: 0; left: 0; width: 100%;
-  background-color: #0a0a0a; color: #ffffff; text-align: center;
-  padding: 8px 0; font-family: 'Courier New', monospace; font-size: 14px;
-  z-index: 9999; border-top: 2px solid #c27c15;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-">
-  Games provided by <a id="noah-credit-link" href="https://github.com/NoahsAmazingTutoringHelp/Noahs-Calculus-Tutor" target="_blank" style="color: #c27c15; text-decoration: none; font-weight: bold; transition: color 0.3s ease;">Noah's Tutoring Hub</a> — original creator of these games.
-</div>
-
-<script>
-const THEME_COLORS = {
-  'default':            { primary: '#c27c15', bg: '#0a0a0a' },
-  'theme-rainbow':      { primary: '#ff0080', bg: '#0a0a0a' },
-  'theme-cyber-green':  { primary: '#00ff00', bg: '#000000' },
-  'theme-ice-blue':     { primary: '#00ccff', bg: '#001122' },
-  'theme-solarized':    { primary: '#2aa198', bg: '#002b36' },
-  'theme-purple-haze':  { primary: '#9b59b6', bg: '#1a1a2e' },
-};
-function syncCreditBanner() {
-  const banner = document.getElementById('noah-credit-banner');
-  const link   = document.getElementById('noah-credit-link');
-  if (!banner || !link) return;
-  let colors = THEME_COLORS['default'];
-  for (const cls of document.body.classList) {
-    if (THEME_COLORS['theme-' + cls]) { colors = THEME_COLORS['theme-' + cls]; break; }
-    if (THEME_COLORS[cls])            { colors = THEME_COLORS[cls]; break; }
-  }
-  const savedTheme = localStorage.getItem('selectedTheme');
-  if (savedTheme === 'custom') {
-    const cc = localStorage.getItem('customThemeColor') || '#c27c15';
-    colors = { primary: cc, bg: '#0a0a0a' };
-  } else if (savedTheme && THEME_COLORS['theme-' + savedTheme]) {
-    colors = THEME_COLORS['theme-' + savedTheme];
-  } else if (savedTheme && THEME_COLORS[savedTheme]) {
-    colors = THEME_COLORS[savedTheme];
-  }
-  banner.style.backgroundColor = colors.bg;
-  banner.style.borderTopColor  = colors.primary;
-  link.style.color             = colors.primary;
-}
-new MutationObserver(() => setTimeout(syncCreditBanner, 20))
-  .observe(document.body, { attributes: true, attributeFilter: ['class'] });
-window.addEventListener('storage', syncCreditBanner);
-const _oSPT = window.selectPresetTheme;
-window.selectPresetTheme = function(t){ if(_oSPT) _oSPT(t); setTimeout(syncCreditBanner,80); };
-const _oACT = window.applyCustomTheme;
-window.applyCustomTheme = function(){ if(_oACT) _oACT(); setTimeout(syncCreditBanner,80); };
-document.addEventListener('DOMContentLoaded', syncCreditBanner);
-window.addEventListener('load', ()=>setTimeout(syncCreditBanner,300));
-</script>
 </body>
 </html>
